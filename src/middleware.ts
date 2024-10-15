@@ -159,6 +159,10 @@ const roleRouteMap: Record<UserRole, string[]> = {
     '/stockreport',
     '/supplier-ledger',
     '/supplier-pay-report',
+    '/retailer-commission-report',
+    '/supplier-commission-report',
+    '/datewise-retailerCommission',
+    '/datewise-supplierCommission',
   ],
   ROLE_SALES: [
     '/orderlist',

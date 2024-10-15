@@ -8,7 +8,7 @@ import DateToDate from "@/app/components/DateToDate";
 
 type Product = {
     date: string;
-    employeeName: string;
+    supplierName: string;
     year: string;
     month: string;
     note: string;
@@ -31,7 +31,7 @@ const Page = () => {
     const [allProducts, setAllProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        fetch(`${apiBaseUrl}/paymentApi/getEmployeePayment?username=${username}`)
+        fetch(`${apiBaseUrl}/paymentApi/getSupplierCommission?username=${username}`)
             .then(response => response.json())
             .then(data => {
                 setAllProducts(data);
@@ -43,10 +43,10 @@ const Page = () => {
 
     useEffect(() => {
         const filtered = allProducts.filter(product =>
-            (product.employeeName.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+            (product.supplierName.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
             (product.year.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
             (product.month.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
-            (product.note.toLowerCase().includes(filterCriteria.toLowerCase()) || '') 
+            (product.note.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
         );
         setFilteredProducts(filtered);
     }, [filterCriteria, allProducts]);
@@ -62,7 +62,7 @@ const Page = () => {
     return (
         <div className="container-2xl">
             <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4">
-            <div className="flex p-5 justify-end items-end"><DateToDate routePath="/datewise-employeepay-report" /></div>
+                <div className="flex p-5 justify-end items-end"><DateToDate routePath="/datewise-supplierCommission" /></div>
                 <div className="overflow-x-auto items-center justify-center">
                     <div className="flex justify-between pl-5 pr-5 pt-1">
                         <label className="input input-bordered flex max-w-xs  items-center gap-2">
@@ -74,14 +74,14 @@ const Page = () => {
                         <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                     </div>
                     <div ref={contentToPrint} className="flex-1 p-5">
-                    <div className="flex flex-col items-center pb-5"><h4 className="font-bold">EMPLOYEE PAYMENT REPORT</h4><CurrentMonthYear /></div>
+                        <div className="flex flex-col items-center pb-5"><h4 className="font-bold">SUPPLIER COMMISSION REPORT</h4><CurrentMonthYear /></div>
                         <table className="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>
                                     <th>DATE</th>
-                                    <th>EMPLOYEE NAME</th>
-                                    <th>SALARY MONTH</th>
+                                    <th>SUPPLIER NAME</th>
+                                    <th>MONTH NAME</th>
                                     <th>REMARK NOTE</th>
                                     <th>AMOUNT</th>
 
@@ -99,7 +99,7 @@ const Page = () => {
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{product?.date}</td>
-                                            <td>{product?.employeeName}</td>
+                                            <td>{product?.supplierName}</td>
                                             <td>{monthName}, {product.year}</td>
                                             <td>{product?.note}</td>
                                             <td>{Number(product?.amount?.toFixed(2)).toLocaleString('en-IN')}</td>
@@ -107,6 +107,7 @@ const Page = () => {
                                     );
                                 })}
                             </tbody>
+                          
                             <tfoot>
                                 <tr className="font-semibold text-lg">
                                     <td colSpan={4}></td>

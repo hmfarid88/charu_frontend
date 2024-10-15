@@ -32,14 +32,14 @@ const Page = () => {
     const [allProducts, setAllProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        fetch(`${apiBaseUrl}/paymentApi/getEmployeePay?username=${username}`)
+        fetch(`${apiBaseUrl}/paymentApi/getDatewiseEmployeePayment?username=${username}&startDate=${startDate}&endDate=${endDate}`)
             .then(response => response.json())
             .then(data => {
                 setAllProducts(data);
                 setFilteredProducts(data);
             })
             .catch(error => console.error('Error fetching products:', error));
-    }, [apiBaseUrl, username]);
+    }, [apiBaseUrl, username, startDate, endDate]);
 
 
     useEffect(() => {
@@ -90,16 +90,24 @@ const Page = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredProducts?.map((product, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{product.date}</td>
-                                        <td>{product.employeeName}</td>
-                                        <td>{product.month}, {product.year}</td>
-                                        <td>{product.note}</td>
-                                        <td>{Number(product.amount.toFixed(2)).toLocaleString('en-IN')}</td>
-                                    </tr>
-                                ))}
+                                {filteredProducts?.map((product, index) => {
+                                    const monthNames = [
+                                        "January", "February", "March", "April", "May", "June",
+                                        "July", "August", "September", "October", "November", "December"
+                                    ];
+                                    const monthName = monthNames[parseInt(product?.month) - 1];
+
+                                    return (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{product?.date}</td>
+                                            <td>{product?.employeeName}</td>
+                                            <td>{monthName}, {product.year}</td>
+                                            <td>{product?.note}</td>
+                                            <td>{Number(product?.amount?.toFixed(2)).toLocaleString('en-IN')}</td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                             <tfoot>
                                 <tr className="font-semibold text-lg">

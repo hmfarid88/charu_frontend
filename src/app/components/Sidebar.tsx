@@ -65,7 +65,7 @@ export const Sidebar = () => {
                                     <li><Link href="/office-pay-report"> OFFICE PAYMENT</Link></li>
                                     <li><Link href="/employee-pay-report"> EMPLOYEE PAYMENT</Link></li>
                                     <li><Link href="/supplier-pay-report"> SUPPLIER PAYMENT</Link></li>
-                                    <li><Link href="/retailer-pay-report"> RETAILER COMMISSION</Link></li>
+                                    <li><Link href="/retailer-commission-report"> RETAILER COMMISSION</Link></li>
                                 </ul>
                             </details>
                         </li>
@@ -75,7 +75,7 @@ export const Sidebar = () => {
                                 <ul>
                                     <li><Link href="/office-receive-report"> OFFICE RECEIVE</Link></li>
                                     <li><Link href="/retailer-pay-report"> RETAILER PAYMENT</Link></li>
-                                    <li><Link href="/office-receive-report"> SUPPLIER COMMISSION</Link></li>
+                                    <li><Link href="/supplier-commission-report"> SUPPLIER COMMISSION</Link></li>
                                 </ul>
                             </details>
                         </li>
