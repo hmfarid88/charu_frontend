@@ -31,5 +31,5 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - name: Change Directory
-      run: cd /home/frontend/ms-charu/actions-runner/_work/charu_frontend/charu_frontend
+      run: cd /home/frontend/frontend/ms-charu/actions-runner/_work/charu_frontend/charu_frontend
     - run: pm2 restart 1
