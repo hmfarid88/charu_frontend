@@ -32,4 +32,4 @@ jobs:
     - run: npm run build --if-present
     - name: Change Directory
       run: cd /home/frontend/frontend/ms-charu/actions-runner/_work/charu_frontend/charu_frontend
-    - run: pm2 restart 1
+    - run: pm2 restart 4
