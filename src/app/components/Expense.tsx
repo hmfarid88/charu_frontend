@@ -21,7 +21,7 @@ const Expense = () => {
     setMaxDate(formattedDate);
     setDate(formattedDate);
   }, []);
-  
+
   // expense
   const [expenseName, setExpenseName] = useState("");
   const [expenseNote, setExpenseNote] = useState("");
@@ -75,8 +75,7 @@ const Expense = () => {
           <select className='select select-bordered' onChange={(e: any) => { setExpenseName(e.target.value) }}>
             <option selected disabled>Select . . .</option>
             <option value="OFFICE COST">OFFICE COST</option>
-            <option value="OFFICE ASSET">OFFICE ASSET</option>
-            <option value="HOUSE RENT">HOUSE RENT</option>
+            <option value="OTHERS">OTHERS</option>
           </select>
 
         </label>

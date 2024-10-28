@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { toast } from "react-toastify";
-import { FcCalendar } from "react-icons/fc";
 import { useAppSelector } from "@/app/store";
 import Select from "react-select";
 
@@ -55,6 +54,8 @@ const EmployeePayment = () => {
             toast.error("Invalid transaction !")
         } finally {
             setPending(false);
+            setYear("");
+            setMonth("");
             setPaymentNote("");
             setPaymentAmount("");
         }
@@ -75,6 +76,17 @@ const EmployeePayment = () => {
             .catch(error => console.error('Error fetching products:', error));
     }, [apiBaseUrl, username]);
 
+    const [totalValue, setTotalValue] = useState([]);
+    useEffect(() => {
+        if (!employeeName || !year || !month) return;
+        fetch(`${apiBaseUrl}/paymentApi/employee-total-taken?username=${username}&employeeName=${employeeName}&year=${year}&month=${month}`)
+            .then(response => response.json())
+            .then(data => {
+                setTotalValue(data);
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    }, [apiBaseUrl, username, employeeName, year, month]);
+
     return (
         <div className='flex flex-col gap-2'>
             <div className="flex">
@@ -90,7 +102,7 @@ const EmployeePayment = () => {
                     <div className="label">
                         <span className="label-text">Pick Employee</span>
                     </div>
-                    <Select className="text-black" name="supplier" onChange={(selectedOption: any) => setEmployeeName(selectedOption.value)} options={employeeOption} />
+                    <Select className="text-black" name="employee" onChange={(selectedOption: any) => setEmployeeName(selectedOption.value)} options={employeeOption} />
                 </label>
             </div>
             <div className="flex">
@@ -134,6 +146,7 @@ const EmployeePayment = () => {
                     </select>
                 </label>
             </div>
+            <p className='pl-2 text-success font-bold'> {totalValue ? `Total Taken : ${totalValue}` : 'N/A'}</p>
 
             <div className="flex">
                 <label className="form-control w-full max-w-xs">

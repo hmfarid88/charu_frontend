@@ -2,10 +2,10 @@ import React from 'react'
 import Link from 'next/link'
 import { IoHomeOutline } from "react-icons/io5";
 import { RiListUnordered } from "react-icons/ri";
-import { PiNotebook } from "react-icons/pi";
+import { PiUserListDuotone } from "react-icons/pi";
 import { GrUserAdmin } from "react-icons/gr";
 import { TbReportSearch } from 'react-icons/tb';
-
+import { BsReverseListColumnsReverse } from "react-icons/bs";
 
 export const SalesSidebar = () => {
     return (
@@ -24,8 +24,8 @@ export const SalesSidebar = () => {
                     <ul className="menu p-4 w-60 min-h-full bg-base-200 text-base-content">
                         <li><Link href="/sales-dashboard"><IoHomeOutline size={20} /> HOME</Link></li>
                         <li><Link href="/sales-order"><RiListUnordered size={20} /> ORDER CREATE</Link></li>
-                        <li><Link href="/order-list"><TbReportSearch size={20} /> ORDER LIST</Link></li>
-                        <li><Link href="/sales-retailer-ledger"><PiNotebook size={20} /> RETAILER LEDGER</Link></li>
+                        <li><Link href="/order-list"><BsReverseListColumnsReverse size={20} /> ORDER LIST</Link></li>
+                        <li><Link href="/sales-retailer-ledger"><PiUserListDuotone size={20} /> RETAILER LEDGER</Link></li>
                         <li><Link href="/sales-admin"><GrUserAdmin size={20} /> ADMINSTRATION</Link></li>
 
                     </ul>

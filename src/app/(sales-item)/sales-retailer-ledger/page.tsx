@@ -6,10 +6,16 @@ import { useReactToPrint } from 'react-to-print';
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import CurrentDate from "@/app/components/CurrentDate";
+import DateToDate from "@/app/components/DateToDate";
 
 type Product = {
-  retailer: string;
-  balance: number;
+    retailerName: string;
+    retailerCode: string;
+    salesPerson: string;
+    totalProductQty: number;
+    totalProductValue: number;
+    totalPayment: number;
+    totalCommission: number;
 };
 
 
@@ -50,7 +56,7 @@ const Page = () => {
       toast.warning("Retailer name is missing!");
       return;
     }
-    router.push(`/sales-details-retailer-ledger?startDate=${startDate}&endDate=${endDate}&retailerName=${encodeURIComponent(supplierName)}`);
+    router.push(`/sales-details-retailer-ledger?salesPerson=${username}&startDate=${startDate}&endDate=${endDate}&retailerName=${encodeURIComponent(supplierName)}`);
     setStartDate("");
     setEndDate("");
   }
@@ -68,7 +74,9 @@ const Page = () => {
 
   useEffect(() => {
     const filtered = allProducts.filter(product =>
-      product.retailer.toLowerCase().includes(filterCriteria.toLowerCase())
+      (product.retailerName.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+      (product.retailerCode.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+      (product.salesPerson.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
     );
     setFilteredProducts(filtered);
   }, [filterCriteria, allProducts]);
@@ -78,13 +86,26 @@ const Page = () => {
   };
 
   const totalQty = filteredProducts.reduce((total, product) => {
-    return total + product.balance;
+    return total + product.totalProductQty;
+  }, 0);
+  const totalValue = filteredProducts.reduce((total, product) => {
+    return total + product.totalProductValue;
+  }, 0);
+  const totalPayment = filteredProducts.reduce((total, product) => {
+    return total + product.totalPayment;
+  }, 0);
+  const totalCommission = filteredProducts.reduce((total, product) => {
+    return total + product.totalCommission;
+  }, 0);
+  const totalBalance = filteredProducts.reduce((total, product) => {
+    return total + product.totalProductValue-product.totalPayment-product.totalCommission;
   }, 0);
 
   return (
     <div className="container-2xl">
-      <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4 items-center justify-center">
-      <div className="flex w-full justify-between pl-5 pr-5 pt-1">
+      <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4">
+      <div className="flex p-5 justify-end items-end"><DateToDate routePath="/sales-datewise-retail-ledger" /></div>
+      <div className="flex w-full justify-between pl-5 pr-5 pt-1 items-center">
             <label className="input input-bordered flex max-w-xs  items-center gap-2">
               <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
@@ -98,11 +119,18 @@ const Page = () => {
           <div className="flex flex-col items-center pb-5"><h4 className="font-bold">RETAILER LEDGER</h4>
           <h4><CurrentDate/></h4>
           </div>
-            <table className="table">
+            <table className="table table-sm">
               <thead>
                 <tr>
                   <th>SN</th>
                   <th>RETAILER NAME</th>
+                  <th>RETAILER CODE</th>
+                  <th>SALE PERSON</th>
+                  <th>TOTAL QTY</th>
+                  <th>TOTAL VALUE</th>
+                  <th>TOTAL PAYMENT</th>
+                  <th>TOTAL COMMISSION</th>
+                  <th>ACHIEVED</th>
                   <th>BALANCE</th>
                   <th>DETAILS</th>
                 </tr>
@@ -111,18 +139,30 @@ const Page = () => {
                 {filteredProducts?.map((product, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td className="uppercase">{product?.retailer}</td>
-                    <td>{Number(product?.balance.toFixed(2)).toLocaleString('en-IN')}</td>
-                    <td><a href="#my_modal_salesretail_ledger"><button onClick={() => setSupplierName(product?.retailer)} className="btn btn-xs btn-info">Details</button></a></td>
+                    <td className="uppercase">{product?.retailerName}</td>
+                    <td className="uppercase">{product?.retailerCode}</td>
+                    <td className="uppercase">{product?.salesPerson}</td>
+                    <td>{Number(product?.totalProductQty.toFixed(2)).toLocaleString('en-IN')}</td>
+                    <td>{Number(product?.totalProductValue.toFixed(2)).toLocaleString('en-IN')}</td>
+                    <td>{Number(product?.totalPayment.toFixed(2)).toLocaleString('en-IN')}</td>
+                    <td>{Number(product?.totalCommission.toFixed(2)).toLocaleString('en-IN')}</td>
+                    <td>{Number((product?.totalPayment*100/product?.totalProductValue).toFixed(2)).toLocaleString('en-IN')} %</td>
+                    <td>{Number((product?.totalProductValue-product?.totalPayment-product?.totalCommission).toFixed(2)).toLocaleString('en-IN')}</td>
+                    <td><a href="#my_modal_salesretail_ledger"><button onClick={() => setSupplierName(product?.retailerName)} className="btn btn-xs btn-info">Details</button></a></td>
                    
                   </tr>
                 ))}
               </tbody>
               <tfoot>
                 <tr className="font-semibold text-lg">
-                  <td colSpan={1}></td>
+                  <td colSpan={3}></td>
                   <td>TOTAL</td>
                   <td>{totalQty.toLocaleString('en-IN')}</td>
+                  <td>{totalValue.toLocaleString('en-IN')}</td>
+                  <td>{totalPayment.toLocaleString('en-IN')}</td>
+                  <td>{totalCommission.toLocaleString('en-IN')}</td>
+                  <td></td>
+                  <td>{totalBalance.toLocaleString('en-IN')}</td>
                 </tr>
               </tfoot>
             </table>

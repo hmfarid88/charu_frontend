@@ -5,7 +5,7 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 import { GoDatabase } from "react-icons/go";
 import { TbReportSearch } from "react-icons/tb";
 import { MdOutlinePayments } from "react-icons/md";
-import { PiNotebook } from "react-icons/pi";
+import { PiNotebook, PiUserListDuotone, PiTargetDuotone} from "react-icons/pi";
 import { VscRepo } from "react-icons/vsc";
 import { MdOutlineInterests } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
@@ -15,6 +15,7 @@ import { BsDatabaseAdd } from 'react-icons/bs';
 import { RiListUnordered } from "react-icons/ri";
 import { TbLayoutDistributeVertical } from "react-icons/tb";
 import { FaHandHoldingMedical } from "react-icons/fa";
+
 
 
 export const Sidebar = () => {
@@ -66,6 +67,7 @@ export const Sidebar = () => {
                                     <li><Link href="/employee-pay-report"> EMPLOYEE PAYMENT</Link></li>
                                     <li><Link href="/supplier-pay-report"> SUPPLIER PAYMENT</Link></li>
                                     <li><Link href="/retailer-commission-report"> RETAILER COMMISSION</Link></li>
+                                    <li><Link href="/payment-receive-summary"> PAYMENT SUMMARY</Link></li>
                                 </ul>
                             </details>
                         </li>
@@ -79,7 +81,8 @@ export const Sidebar = () => {
                                 </ul>
                             </details>
                         </li>
-                        <li><Link href="/retailer-ledger"> <RiListUnordered size={20} /> RETAILER LEDGER</Link></li>
+                        <li><Link href="/retailer-ledger"> <PiUserListDuotone size={20} /> RETAILER LEDGER</Link></li>
+                        <li><Link href="/employee-target-summary"> <PiTargetDuotone  size={20} /> TARGET LEDGER</Link></li>
                         <li>
                             <details>
                                 <summary><a className='flex gap-2'><VscRepo size={20} /> CASH BOOK </a></summary>

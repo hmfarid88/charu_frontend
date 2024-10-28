@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { toast } from "react-toastify";
-import { FcCalendar } from "react-icons/fc";
+import Select from "react-select";
 import { useAppSelector } from '@/app/store';
 
 const OfficeReceive = () => {
@@ -57,6 +57,22 @@ const OfficeReceive = () => {
       setReceiveAmount("");
     }
   };
+  const [paymentPersonOption, setPaymentPersonOption] = useState([]);
+    useEffect(() => {
+
+        fetch(`${apiBaseUrl}/api/getPaymentPerson?username=${username}`)
+            .then(response => response.json())
+            .then(data => {
+                const transformedData = data.map((item: any) => ({
+                    id: item.id,
+                    value: item.paymentPerson,
+                    label: item.paymentPerson
+                }));
+                setPaymentPersonOption(transformedData);
+            })
+            .catch(error => console.error('Error fetching products:', error));
+
+    }, [apiBaseUrl, username]);
   return (
     <div>
       <div className="flex">
@@ -72,7 +88,8 @@ const OfficeReceive = () => {
           <div className="label">
             <span className="label-text">Receive Name</span>
           </div>
-          <input type="text" name='receiveName' autoComplete='receiveName' value={receiveName} onChange={(e) => setReceiveName(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+          <Select className="text-black" name="catagory" onChange={(selectedOption: any) => setReceiveName(selectedOption.value)} options={paymentPersonOption} />
+         
         </label>
       </div>
       <div className="flex">

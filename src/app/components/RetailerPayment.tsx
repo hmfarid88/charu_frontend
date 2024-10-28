@@ -64,7 +64,7 @@ const RetailerPayment = () => {
         const transformedData = data.map((item: any) => ({
           id: item.id,
           value: item.retailerName,
-          label: item.retailerName
+          label: `${item.retailerName} (${item.retailerCode})`
         }));
         setRetailerOption(transformedData);
       })
@@ -91,7 +91,7 @@ const RetailerPayment = () => {
       <div className="flex">
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Payment Note</span>
+            <span className="label-text">Payment Note / Money Recept No</span>
           </div>
           <input type="text" name='retailerNote' autoComplete='retailerNote' value={retailerNote} onChange={(e) => setRetailerNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>

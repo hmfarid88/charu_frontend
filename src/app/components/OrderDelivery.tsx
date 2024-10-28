@@ -40,14 +40,14 @@ const OrderDelivery = () => {
     const [truckno, setTruckNo] = useState("");
     const router = useRouter();
     const invoiceNo = uid();
-    
+
     const handleOrderSubmit = (e: any) => {
         e.preventDefault();
         if (!orderDate || !retailer || !productName || !saleRate || !orderQty || !orderNote) {
             toast.warning("Item is empty !");
             return;
         }
-        const product = { id: uid(), orderId:0, date: orderDate, retailer, orderNote, productName, saleRate, orderQty, username }
+        const product = { id: uid(), orderId: 0, date: orderDate, retailer, orderNote, productName, saleRate, orderQty, username }
         dispatch(addProducts(product));
         setOrderNote("")
         setSaleRate("")
@@ -61,11 +61,11 @@ const OrderDelivery = () => {
     const productInfo = products.map(product => ({
         ...product,
         customer: product.retailer,
-        dpRate:product.saleRate,
-        productQty:product.orderQty,
+        dpRate: product.saleRate,
+        productQty: product.orderQty,
         invoiceNo: invoiceNo,
-        status:'sold',
-        truckNo:truckno
+        status: 'sold',
+        truckNo: truckno
     }));
 
     const handleFinalOrderSubmit = async (e: any) => {
@@ -135,7 +135,7 @@ const OrderDelivery = () => {
                 const transformedData = data.map((item: any) => ({
                     id: item.id,
                     value: item.retailerName,
-                    label: item.retailerName
+                    label: `${item.retailerName} (${item.retailerCode})`
                 }));
                 setRetailerOption(transformedData);
             })
@@ -152,7 +152,7 @@ const OrderDelivery = () => {
                 const transformedData = data.map((item: any) => ({
                     id: item.id,
                     value: item[0],
-                    label: `${item[1]}, ${item[2]}, ${item[3]}`
+                    label: `${item[1]}, ${item[2]}, ${item[3]}, ${item[4]}`
                 }));
                 setOrderOption(transformedData);
             })
@@ -181,7 +181,7 @@ const OrderDelivery = () => {
             }
             const productToOrder = {
                 id: uid(),
-                orderId:productData.orderId,
+                orderId: productData.orderId,
                 date: orderDate,
                 retailer: productData.retailer,
                 orderNote: productData.orderNote,
@@ -232,16 +232,15 @@ const OrderDelivery = () => {
                     </label>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
-                            <span className="label-text-alt">SALE RATE</span>
-                        </div>
-                        <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={saleRate} onChange={(e) => setSaleRate(e.target.value)} placeholder='00' />
-                    </label>
-
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
                             <span className="label-text-alt">QUANTITY</span>
                         </div>
                         <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={orderQty} onChange={(e) => setOrderQty(e.target.value)} placeholder='00' />
+                    </label>
+                    <label className="form-control w-full max-w-xs">
+                        <div className="label">
+                            <span className="label-text-alt">SALE RATE</span>
+                        </div>
+                        <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={saleRate} onChange={(e) => setSaleRate(e.target.value)} placeholder='00' />
                     </label>
 
                     <label className="form-control w-full max-w-xs pt-5">
@@ -259,8 +258,8 @@ const OrderDelivery = () => {
                                     <th>Retailer</th>
                                     <th>Note</th>
                                     <th>Products</th>
-                                    <th>Rate</th>
                                     <th>Qty</th>
+                                    <th>Rate</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -272,8 +271,9 @@ const OrderDelivery = () => {
                                         <td>{item.retailer}</td>
                                         <td>{item.orderNote}</td>
                                         <td>{item.productName}</td>
-                                        <td>{item.saleRate}</td>
                                         <td>{item.orderQty}</td>
+                                        <td>{item.saleRate}</td>
+                                       
                                         <td>
                                             <button onClick={() => {
                                                 handleDeleteProduct(item.id);

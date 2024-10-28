@@ -94,7 +94,6 @@ const Page = () => {
                                         "July", "August", "September", "October", "November", "December"
                                     ];
                                     const monthName = monthNames[parseInt(product?.month) - 1];
-
                                     return (
                                         <tr key={index}>
                                             <td>{index + 1}</td>

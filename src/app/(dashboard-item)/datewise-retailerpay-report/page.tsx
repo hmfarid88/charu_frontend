@@ -3,8 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
 import { FcPrint } from "react-icons/fc";
 import { useReactToPrint } from 'react-to-print';
-import CurrentMonthYear from "@/app/components/CurrentMonthYear";
-import DateToDate from "@/app/components/DateToDate";
 import { useSearchParams } from "next/navigation";
 
 type Product = {

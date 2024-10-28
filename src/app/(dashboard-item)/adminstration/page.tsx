@@ -1,5 +1,7 @@
 import AddEmployee from "@/app/components/AddEmployee"
 import AddRetailer from "@/app/components/AddRetailer"
+import ClosingSetup from "@/app/components/ClosingSetup"
+import EmployeeTarget from "@/app/components/EmployeeTarget"
 import ShopInfo from "@/app/components/ShopInfo"
 
 const Page = () => {
@@ -21,6 +23,18 @@ const Page = () => {
           <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
             <div className="flex w-full">
               <ShopInfo />
+            </div>
+          </div>
+          <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="CLOSING SETUP" />
+          <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+            <div className="flex w-full">
+              <ClosingSetup />
+            </div>
+          </div>
+          <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="TARGET SETUP" />
+          <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+            <div className="flex w-full">
+              <EmployeeTarget />
             </div>
           </div>
 

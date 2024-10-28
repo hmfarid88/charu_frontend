@@ -81,7 +81,7 @@ const ProductStock = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ productName:productItemName, username }),
+                body: JSON.stringify({ productName: productItemName, username }),
             });
 
             if (response.ok) {
@@ -104,7 +104,7 @@ const ProductStock = () => {
             toast.warning("Item is empty !");
             return;
         }
-        const product = { id: uid(), date: stockDate, supplier, productName, costPrice, purchasePrice:costPrice, productQty, username, status: 'stored' }
+        const product = { id: uid(), date: stockDate, supplier, productName, costPrice, purchasePrice: costPrice, productQty, username, status: 'stored' }
         dispatch(addProducts(product));
 
     }
@@ -205,12 +205,6 @@ const ProductStock = () => {
                         <Select className="text-black" name="pname" onChange={(selectedOption: any) => setProductName(selectedOption.value)} options={itemOption} />
 
                     </label>
-                    <label className="form-control w-full max-w-xs pt-2">
-                        <div className="label">
-                            <span className="label-text-alt">PURCHASE RATE</span>
-                        </div>
-                        <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' onChange={(e) => setCostPrice(e.target.value)} placeholder='00' />
-                    </label>
 
                     <label className="form-control w-full max-w-xs pt-2">
                         <div className="label">
@@ -218,6 +212,13 @@ const ProductStock = () => {
                         </div>
                         <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' onChange={(e) => setProductQty(e.target.value)} placeholder='00' />
                     </label>
+                    <label className="form-control w-full max-w-xs pt-2">
+                        <div className="label">
+                            <span className="label-text-alt">PURCHASE RATE</span>
+                        </div>
+                        <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' onChange={(e) => setCostPrice(e.target.value)} placeholder='00' />
+                    </label>
+
 
                     <label className="form-control w-full max-w-xs pt-5">
                         <button onClick={handleProductStock} className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" >ADD PRODUCT</button>
@@ -233,8 +234,8 @@ const ProductStock = () => {
                                     <th>Date</th>
                                     <th>Supplier</th>
                                     <th>Products</th>
-                                    <th>Rate</th>
                                     <th>Qty</th>
+                                    <th>Rate</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -245,8 +246,8 @@ const ProductStock = () => {
                                         <td>{item.date}</td>
                                         <td>{item.supplier}</td>
                                         <td>{item.productName}</td>
-                                        <td>{item.costPrice}</td>
                                         <td>{item.productQty}</td>
+                                        <td>{item.costPrice}</td>
                                         <td>
                                             <button onClick={() => {
                                                 handleDeleteProduct(item.id);
