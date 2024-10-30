@@ -45,9 +45,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { decrypt } from '@/app/lib/auth';
 import { cookies } from 'next/headers';
 
-const adminProtectedRoutes = ['/admin-dashboard', '/adduser'];
-const accountantProtectedRoutes = ['/dashboard', '/adminstration', '/cashbook', '/datewise-distreport', '/datewise-employeepay-report'];
-const salesProtectedRoutes = ['/orderlist', '/sales-admin', '/sales-dashboard', '/sales-details-retailer-ledger', '/sales-order', '/sales-retailer-ledger'];
+const adminProtectedRoutes = [''];
+const accountantProtectedRoutes = [''];
+const salesProtectedRoutes = [''];
 const publicRoutes = ['/'];
 
 export default async function middleware(req: NextRequest) {
