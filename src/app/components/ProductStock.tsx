@@ -181,8 +181,8 @@ const ProductStock = () => {
     }, [supplierName, apiBaseUrl, username]);
     return (
         <div className="container w-full">
-            <div className="flex flex-col md:flex-row gap-5 w-full">
-                <div className="flex flex-col h-96 w-1/2 items-center">
+            <div className="flex flex-col md:flex-row gap-5 w-full items-center">
+                <div className="flex flex-col min-h-96 w-1/2 items-center">
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text-alt">STOCK DATE</span>
@@ -225,9 +225,9 @@ const ProductStock = () => {
                     </label>
                 </div>
 
-                <div className="flex flex-col w-1/2 items-center">
+                <div className="flex flex-col w-1/2 items-center p-2">
                     <div className="overflow-x-auto h-auto">
-                        <table className="table table-pin-rows">
+                        <table className="table table-sm table-pin-rows">
                             <thead>
                                 <tr className="font-bold">
                                     <th>SN</th>

@@ -122,8 +122,8 @@ const OrderCreate = () => {
     }, [apiBaseUrl]);
     return (
         <div className="container w-full">
-            <div className="flex flex-col md:flex-row gap-5 w-full">
-                <div className="flex flex-col h-80 w-1/2 items-center gap-2">
+            <div className="flex flex-col md:flex-row gap-5 w-full items-center p-3">
+                <div className="flex flex-col min-h-80 w-1/2 items-center gap-2">
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text-alt">ORDER DATE</span>

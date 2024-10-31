@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <main>
       <div className="container mx-auto">
-        <div className="flex items-center justify-center">
+        <div className="flex w-full items-center justify-center">
           <EmployeeTargetSummary/>
         </div>
             

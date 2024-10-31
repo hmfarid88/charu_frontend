@@ -88,24 +88,22 @@ const EmployeePayment = () => {
     }, [apiBaseUrl, username, employeeName, year, month]);
 
     return (
-        <div className='flex flex-col gap-2'>
-            <div className="flex">
+        <div className='flex flex-col gap-3 items-center justify-center'>
+            
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text-alt">Date</span>
                     </div>
                     <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
                 </label>
-            </div>
-            <div className="flex">
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text">Pick Employee</span>
                     </div>
                     <Select className="text-black" name="employee" onChange={(selectedOption: any) => setEmployeeName(selectedOption.value)} options={employeeOption} />
                 </label>
-            </div>
-            <div className="flex">
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text">Select Year</span>
@@ -123,8 +121,8 @@ const EmployeePayment = () => {
                         <option value="2030">2030</option>
                     </select>
                 </label>
-            </div>
-            <div className="flex">
+         
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text">Select Month</span>
@@ -145,30 +143,28 @@ const EmployeePayment = () => {
                         <option value="12">DECEMBER</option>
                     </select>
                 </label>
-            </div>
+         
             <p className='pl-2 text-success font-bold'> {totalValue ? `Total Taken : ${totalValue}` : 'N/A'}</p>
 
-            <div className="flex">
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text">Payment Note</span>
                     </div>
                     <input type="text" value={note} onChange={(e) => setPaymentNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                 </label>
-            </div>
-            <div className="flex">
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text">Payment Amount</span>
                     </div>
                     <input type="number" value={amount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                 </label>
-            </div>
-            <div className="flex pt-5">
+           
                 <label className="form-control w-full max-w-xs">
                     <button onClick={handleSupplierPayment} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
                 </label>
-            </div>
+         
         </div>
     )
 }

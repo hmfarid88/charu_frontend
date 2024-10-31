@@ -92,7 +92,7 @@ const DateToDate: React.FC<DateToDateProps> = ({ routePath }) => {
   };
 
   return (
-    <div className='flex gap-3'>
+    <div className='flex flex-col md:flex-row gap-3'>
       <label className="form-control w-full max-w-xs">
         <div className="label">
           <span className="label-text-alt">START DATE</span>

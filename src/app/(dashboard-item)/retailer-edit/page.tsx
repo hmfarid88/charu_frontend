@@ -42,7 +42,7 @@ const Page = () => {
 
     const handleUpdateSubmit = async (e: any) => {
         e.preventDefault();
-        if (!retailerName || !retailerCode|| !thanaName || !zillaName || !areaName || !mobileNumber || !salesPerson ||!status) {
+        if (!retailerName || !retailerCode || !thanaName || !zillaName || !areaName || !mobileNumber || !salesPerson || !status) {
             toast.warning("Item is empty !")
             return;
         }
@@ -113,7 +113,7 @@ const Page = () => {
     }, [apiBaseUrl]);
     return (
         <div className='container-2xl min-h-screen pb-5'>
-            <div className="flex w-full items-center justify-center">
+            <div className="flex flex-col md:flex-row w-full items-center justify-center">
                 <div className="flex flex-col items-center w-1/2">
                     <label className="form-control w-full max-w-xs pt-2">
                         <div className="label">
@@ -146,18 +146,15 @@ const Page = () => {
                         </div>
                         <input type='text' name='zilla' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={zillaName} onChange={(e) => setZillaName(e.target.value)} placeholder='Type Here' />
                     </label>
-                    <label className="form-control w-full max-w-xs pt-5">
-                        <button className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" onClick={handleUpdateSubmit} disabled={pending} >{pending ? "Updating..." : "UPDATE"}</button>
-                    </label>
-                </div>
-                <div className="flex flex-col items-center w-1/2">
-                    
                     <label className="form-control w-full max-w-xs pt-2">
                         <div className="label">
                             <span className="label-text-alt">AREA NAME</span>
                         </div>
                         <input type='text' name='area' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={areaName} onChange={(e) => setAreaName(e.target.value)} placeholder='Type Here' />
                     </label>
+
+                </div>
+                <div className="flex flex-col items-center w-1/2">
                     <label className="form-control w-full max-w-xs pt-2">
                         <div className="label">
                             <span className="label-text-alt">MOBILE NUMBER</span>
@@ -187,17 +184,19 @@ const Page = () => {
 
                     </label>
                     <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">SELECT STATUS</span>
-                    </div>
-                    <select className='select select-sm select-bordered h-[40px] rounded-md' onChange={(e: any) => { setStatus(e.target.value) }}>
-                        <option selected disabled>Select . . .</option>
-                        <option value="Active">Active</option>
-                        <option value="Deactive">Deactive</option>
-                       
-                    </select>
-                </label>
+                        <div className="label">
+                            <span className="label-text-alt">SELECT STATUS</span>
+                        </div>
+                        <select className='select select-sm select-bordered h-[40px] bg-white text-black rounded-md' onChange={(e: any) => { setStatus(e.target.value) }}>
+                            <option selected disabled>Select . . .</option>
+                            <option value="Active">Active</option>
+                            <option value="Deactive">Deactive</option>
 
+                        </select>
+                    </label>
+                    <label className="form-control w-full max-w-xs pt-5">
+                        <button className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" onClick={handleUpdateSubmit} disabled={pending} >{pending ? "Updating..." : "UPDATE"}</button>
+                    </label>
                 </div>
 
             </div>

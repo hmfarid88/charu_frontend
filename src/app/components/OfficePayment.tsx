@@ -105,16 +105,15 @@ const OfficePayment = () => {
 
     }, [paymentPerson, apiBaseUrl, username]);
   return (
-    <div>
-      <div className="flex">
+    <div className='flex flex-col gap-3 items-center justify-center'>
+     
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text-alt">Date</span>
           </div>
           <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
         </label>
-      </div>
-      <div className="flex">
+    
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text">Payment Name</span>
@@ -123,28 +122,25 @@ const OfficePayment = () => {
           <Select className="text-black" name="catagory" onChange={(selectedOption: any) => setPaymentName(selectedOption.value)} options={paymentPersonOption} />
           
         </label>
-      </div>
-      <div className="flex">
+     
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text">Payment Note</span>
           </div>
           <input type="text" name='paymentNote' autoComplete='paymentNote' value={paymentNote} onChange={(e) => setPaymentNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>
-      </div>
-      <div className="flex">
+     
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text">Payment Amount</span>
           </div>
           <input type="number" value={paymentAmount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>
-      </div>
-      <div className="flex pt-5">
+      
         <label className="form-control w-full max-w-xs">
           <button onClick={handlePaymentSubmit} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
         </label>
-      </div>
+    
       <div className="modal sm:modal-middle" role="dialog" id="my_modal_addPaymentName">
         <div className="modal-box">
           <div className="flex w-full items-center justify-center p-2">

@@ -202,9 +202,10 @@ const OrderDelivery = () => {
 
     return (
         <div className="container w-full">
-            <div className="flex items-center justify-center w-full"><a href="#my_modal_orderlist"><button className='btn btn-sm btn-outline btn-ghost'>ORDER LIST</button></a></div>
-            <div className="flex flex-col md:flex-row gap-5 w-full">
-                <div className="flex flex-col h-80 w-1/2 items-center gap-2">
+            <div className="flex items-center justify-center w-full p-3">
+                <a href="#my_modal_orderlist"><button className='btn btn-sm btn-outline btn-ghost'>ORDER LIST</button></a></div>
+            <div className="flex flex-col md:flex-row gap-5 w-full items-center justify-center">
+                <div className="flex flex-col min-h-80 w-1/2 items-center gap-2">
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text-alt">DELIVERY DATE</span>
