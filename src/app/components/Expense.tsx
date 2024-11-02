@@ -62,7 +62,7 @@ const Expense = () => {
 
       <label className="form-control w-full max-w-xs">
         <div className="label">
-          <span className="label-text-alt">Date</span>
+          <span className="label-text-alt">DATE</span>
         </div>
         <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
       </label>
@@ -70,11 +70,15 @@ const Expense = () => {
 
       <label className="form-control w-full max-w-xs">
         <div className="label">
-          <span className="label-text">Expense Name</span>
+          <span className="label-text-alt">EXPENSE NAME</span>
         </div>
         <select className='select select-bordered' onChange={(e: any) => { setExpenseName(e.target.value) }}>
           <option selected disabled>Select . . .</option>
           <option value="OFFICE COST">OFFICE COST</option>
+          <option value="OIL COST">OIL COST</option>
+          <option value="MOTORCYCLE COST">MOTORCYCLE COST</option>
+          <option value="MOBILE BILL">MOBILE BILL</option>
+          <option value="INCENTIVE">INCENTIVE</option>
           <option value="OTHERS">OTHERS</option>
         </select>
 
@@ -82,14 +86,14 @@ const Expense = () => {
 
       <label className="form-control w-full max-w-xs">
         <div className="label">
-          <span className="label-text">Expense Note</span>
+          <span className="label-text-alt">EXPENSE NOTE</span>
         </div>
         <input type="text" name='note' autoComplete='note' value={expenseNote} onChange={(e) => setExpenseNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
       </label>
 
       <label className="form-control w-full max-w-xs">
         <div className="label">
-          <span className="label-text">Expense Amount</span>
+          <span className="label-text-alt">EXPENSE AMOUNT</span>
         </div>
         <input type="number" value={expensAmount} onChange={(e) => setExpenseAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
       </label>

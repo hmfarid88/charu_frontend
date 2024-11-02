@@ -83,7 +83,6 @@ const OfficePayment = () => {
       toast.error("Invalid transaction !")
     } finally {
       setPending(false);
-      setPaymentName("");
       setPaymentNote("");
       setPaymentAmount("");
     }
@@ -109,14 +108,14 @@ const OfficePayment = () => {
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text-alt">Date</span>
+            <span className="label-text-alt">DATE</span>
           </div>
           <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
         </label>
     
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Payment Name</span>
+            <span className="label-text-alt">PAYMENT NAME</span>
             <a href="#my_modal_addPaymentName" className="btn btn-xs btn-circle btn-ghost"><FcPlus size={20} /></a>
           </div>
           <Select className="text-black" name="catagory" onChange={(selectedOption: any) => setPaymentName(selectedOption.value)} options={paymentPersonOption} />
@@ -125,14 +124,14 @@ const OfficePayment = () => {
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Payment Note</span>
+            <span className="label-text-alt">PAYMENT NOTE</span>
           </div>
           <input type="text" name='paymentNote' autoComplete='paymentNote' value={paymentNote} onChange={(e) => setPaymentNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Payment Amount</span>
+            <span className="label-text-alt">PAYMENT AMOUNT</span>
           </div>
           <input type="number" value={paymentAmount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>

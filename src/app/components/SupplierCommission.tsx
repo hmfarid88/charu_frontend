@@ -75,27 +75,25 @@ const SupplierCommission = () => {
     }, [apiBaseUrl, username]);
 
     return (
-        <div className='flex flex-col gap-2'>
-            <div className="flex">
+        <div className='flex flex-col gap-2 items-center justify-center'>
+            
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text-alt">Date</span>
+                        <span className="label-text-alt">DATE</span>
                     </div>
                     <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
                 </label>
-            </div>
-            <div className="flex">
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text">Pick Supplier</span>
+                        <span className="label-text-alt">PICK SUPPLIER</span>
                     </div>
                     <Select className="text-black" name="supplier" onChange={(selectedOption: any) => setSupplierName(selectedOption.value)} options={supplierOption} />
                 </label>
-            </div>
-            <div className="flex">
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text">Select Year</span>
+                        <span className="label-text-alt">SELECT YEAR</span>
                     </div>
                     <select className='select select-bordered' onChange={(e: any) => { setYear(e.target.value) }}>
                         <option selected disabled>Select . . .</option>
@@ -110,11 +108,10 @@ const SupplierCommission = () => {
                         <option value="2030">2030</option>
                     </select>
                 </label>
-            </div>
-            <div className="flex">
+          
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text">Select Month</span>
+                        <span className="label-text-alt">SELECT MONTH</span>
                     </div>
                     <select className='select select-bordered' onChange={(e: any) => { setMonth(e.target.value) }}>
                         <option selected disabled>Select . . .</option>
@@ -132,29 +129,25 @@ const SupplierCommission = () => {
                         <option value="12">DECEMBER</option>
                     </select>
                 </label>
-            </div>
-
-            <div className="flex">
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text">Payment Note</span>
+                        <span className="label-text-alt">PAYMENT NOTE</span>
                     </div>
                     <input type="text" value={note} onChange={(e) => setPaymentNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                 </label>
-            </div>
-            <div className="flex">
+           
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
-                        <span className="label-text">Payment Amount</span>
+                        <span className="label-text-alt">PAYMENT AMOUNT</span>
                     </div>
                     <input type="number" value={amount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
                 </label>
-            </div>
-            <div className="flex pt-5">
+            
                 <label className="form-control w-full max-w-xs">
                     <button onClick={handleSupplierPayment} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
                 </label>
-            </div>
+   
         </div>
     )
 }

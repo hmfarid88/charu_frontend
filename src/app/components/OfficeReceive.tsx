@@ -52,7 +52,6 @@ const OfficeReceive = () => {
       toast.error("Invalid transaction !")
     } finally {
       setPending(false);
-      setReceiveName("");
       setReceiveNote("");
       setReceiveAmount("");
     }
@@ -78,14 +77,14 @@ const OfficeReceive = () => {
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text-alt">Date</span>
+            <span className="label-text-alt">DATE</span>
           </div>
           <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
         </label>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Receive Name</span>
+            <span className="label-text-alt">RECEIVE NAME</span>
           </div>
           <Select className="text-black" name="catagory" onChange={(selectedOption: any) => setReceiveName(selectedOption.value)} options={paymentPersonOption} />
          
@@ -93,14 +92,14 @@ const OfficeReceive = () => {
       
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Receive Note</span>
+            <span className="label-text-alt">RECEIVE NOTE</span>
           </div>
           <input type="text" name='receiveNote' autoComplete='receiveNote' value={receiveNote} onChange={(e) => setReceiveNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Receive Amount</span>
+            <span className="label-text-alt">RECEIVE AMOUNT</span>
           </div>
           <input type="number" value={receiveAmount} onChange={(e) => setReceiveAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>

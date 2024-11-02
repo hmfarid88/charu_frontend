@@ -63,7 +63,7 @@ const ClosingSetup = () => {
                     type="date"
                     name="date"
                     onChange={(e: any) => setStartDate(e.target.value)}
-                    max={maxDate}
+                
                     value={startDate}
                     className="input input-bordered"
                 />
@@ -77,7 +77,7 @@ const ClosingSetup = () => {
                     type="date"
                     name="date"
                     onChange={(e: any) => setEndDate(e.target.value)}
-                    max={maxDate}
+                
                     value={endDate}
                     className="input input-bordered"
                 />

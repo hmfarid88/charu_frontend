@@ -18,7 +18,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (!theme) {
-      setTheme(defaultTheme);  // Set the theme to the default if no theme is selected
+      setTheme(defaultTheme);
     }
   }, [theme, setTheme]);
   useEffect(() => {

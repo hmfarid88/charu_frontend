@@ -76,28 +76,28 @@ const SupplierPayment = () => {
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text-alt">Date</span>
+            <span className="label-text-alt">DATE</span>
           </div>
           <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
         </label>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Pick Supplier</span>
+            <span className="label-text-alt">PICK SUPPLIER</span>
           </div>
           <Select className="text-black" name="supplier" onChange={(selectedOption: any) => setSupplierName(selectedOption.value)} options={supplierOption} />
         </label>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Payment Note</span>
+            <span className="label-text-alt">PAYMENT NOTE</span>
           </div>
           <input type="text" value={supplierNote} onChange={(e) => setSupplierNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
-            <span className="label-text">Payment Amount</span>
+            <span className="label-text-alt">PAYMENT AMOUNT</span>
           </div>
           <input type="number" value={supplierAmount} onChange={(e) => setSupplierAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
         </label>
