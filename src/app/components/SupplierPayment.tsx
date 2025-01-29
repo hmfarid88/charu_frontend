@@ -72,13 +72,13 @@ const SupplierPayment = () => {
   }, [apiBaseUrl, username]);
 
   return (
-    <div className='flex flex-col gap-3 items-center justify-center'>
+    <div className='flex flex-col gap-2 items-center justify-center'>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text-alt">DATE</span>
           </div>
-          <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
+          <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="input input-bordered bg-white text-black  w-full max-w-xs h-[38px]" />
         </label>
      
         <label className="form-control w-full max-w-xs">
@@ -92,17 +92,17 @@ const SupplierPayment = () => {
           <div className="label">
             <span className="label-text-alt">PAYMENT NOTE</span>
           </div>
-          <input type="text" value={supplierNote} onChange={(e) => setSupplierNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+          <input type="text" name='note' value={supplierNote} onChange={(e) => setSupplierNote(e.target.value)} placeholder="Type here" className="input input-bordered text-black bg-white w-full max-w-xs h-[38px]" />
         </label>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text-alt">PAYMENT AMOUNT</span>
           </div>
-          <input type="number" value={supplierAmount} onChange={(e) => setSupplierAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+          <input type="number" value={supplierAmount} onChange={(e) => setSupplierAmount(e.target.value)} placeholder="Type here" className="input input-bordered text-black bg-white w-full max-w-xs h-[38px]" />
         </label>
     
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control w-full max-w-xs pt-3">
           <button onClick={handleSupplierPayment} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
         </label>
      

@@ -32,33 +32,15 @@ const Page = () => {
   const [filterCriteria, setFilterCriteria] = useState('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
-  const [maxDate, setMaxDate] = useState('');
-  const [supplierName, setSupplierName] = useState('');
-  useEffect(() => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    setMaxDate(formattedDate);
-  }, []);
-
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-
-  const handleDetails = (e:any) => {
-    e.preventDefault();
-    if (!startDate || !endDate) {
-      toast.warning("Start date and end date required !");
-      return;
-    }
-    if (!supplierName) {
+  
+  
+  const handleDetails = (retailerName:string) => {
+      if (!retailerName) {
       toast.warning("Retailer name is missing!");
       return;
     }
-    router.push(`/sales-details-retailer-ledger?salesPerson=${username}&startDate=${startDate}&endDate=${endDate}&retailerName=${encodeURIComponent(supplierName)}`);
-    setStartDate("");
-    setEndDate("");
+    router.push(`/sales-details-retailer-ledger?salesPerson=${encodeURIComponent(username)}&retailerName=${encodeURIComponent(retailerName)}`);
+   
   }
   
   useEffect(() => {
@@ -104,7 +86,7 @@ const Page = () => {
   return (
     <div className="container-2xl">
       <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4">
-      <div className="flex p-5 justify-end items-end"><DateToDate routePath="/sales-datewise-retail-ledger" /></div>
+      <div className="flex p-5 justify-center md:justify-end"><DateToDate routePath="/sales-datewise-retail-ledger" /></div>
       <div className="flex w-full justify-between pl-5 pr-5 pt-1 items-center">
             <label className="input input-bordered flex max-w-xs  items-center gap-2">
               <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />
@@ -124,12 +106,12 @@ const Page = () => {
                 <tr>
                   <th>SN</th>
                   <th>RETAILER NAME</th>
-                  <th>RETAILER CODE</th>
+                  <th>CODE</th>
                   <th>SALE PERSON</th>
-                  <th>TOTAL QTY</th>
-                  <th>TOTAL VALUE</th>
-                  <th>TOTAL PAYMENT</th>
-                  <th>TOTAL COMMISSION</th>
+                  <th>QTY</th>
+                  <th>VALUE</th>
+                  <th>PAYMENT</th>
+                  <th>COMMISSION</th>
                   <th>ACHIEVED</th>
                   <th>BALANCE</th>
                   <th>DETAILS</th>
@@ -148,7 +130,7 @@ const Page = () => {
                     <td>{Number(product?.totalCommission.toFixed(2)).toLocaleString('en-IN')}</td>
                     <td>{Number((product?.totalPayment*100/product?.totalProductValue).toFixed(2)).toLocaleString('en-IN')} %</td>
                     <td>{Number((product?.totalProductValue-product?.totalPayment-product?.totalCommission).toFixed(2)).toLocaleString('en-IN')}</td>
-                    <td><a href="#my_modal_salesretail_ledger"><button onClick={() => setSupplierName(product?.retailerName)} className="btn btn-xs btn-info">Details</button></a></td>
+                    <td><button onClick={() => handleDetails(product?.retailerName)} className="btn btn-xs btn-info">Details</button></td>
                    
                   </tr>
                 ))}
@@ -169,36 +151,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="modal sm:modal-middle" role="dialog" id="my_modal_salesretail_ledger">
-        <div className="modal-box">
-          <div className='flex flex-col gap-3 items-center justify-center'>
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text-alt">START DATE</span>
-              </div>
-              <input type="date" name="date" onChange={(e: any) => setStartDate(e.target.value)} max={maxDate} value={startDate} className="input input-bordered" />
-            </label>
-
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text-alt">END DATE</span>
-              </div>
-              <input type="date" name="date" onChange={(e: any) => setEndDate(e.target.value)} max={maxDate} value={endDate} className="input input-bordered" />
-            </label>
-            <label className="form-control w-full max-w-xs">
-
-              <button onClick={handleDetails} className='btn btn-outline btn-success'>DETAILS LEDGER</button>
-            </label>
-          </div>
-          <div className="modal-action">
-            <a href="#" className="btn btn-square btn-ghost">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
+      
     </div>
   )
 }

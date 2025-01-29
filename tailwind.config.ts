@@ -52,5 +52,9 @@ const config: Config = {
       "sunset",
     ],
   },
+  /* for removing up and down arrow from number field */
+  corePlugins: {
+    preflight: true,
+  },
 };
 export default config;

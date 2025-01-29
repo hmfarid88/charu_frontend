@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Select from "react-select";
 import { uid } from "uid";
 import { useAppDispatch, useAppSelector } from "@/app/store";
-import { addProducts, deleteProduct, deleteAllProducts } from "@/app/store/deliverySlice";
+import { addProducts, deleteProduct, deleteAllProducts, selectTotalQuantity } from "@/app/store/deliverySlice";
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
@@ -17,6 +17,7 @@ const OrderDelivery = () => {
     const username = uname ? uname.username : 'Guest';
 
     const products = useAppSelector((state) => state.deliveryProducts.products);
+    const totalQuantity = useAppSelector(selectTotalQuantity);
 
     const [maxDate, setMaxDate] = useState('');
     useEffect(() => {
@@ -40,20 +41,107 @@ const OrderDelivery = () => {
     const [truckno, setTruckNo] = useState("");
     const router = useRouter();
     const invoiceNo = uid();
+    const [temporary, setTemporary] = useState(false);
 
-    const handleOrderSubmit = (e: any) => {
+    const confirmOrderDelivery = (e: any) => {
         e.preventDefault();
-        if (!orderDate || !retailer || !productName || !saleRate || !orderQty || !orderNote) {
+        const isConfirmed = window.confirm("Are you confirm to delivery ?");
+        if (isConfirmed) {
+            handleFinalOrderSubmit(e);
+        }
+    };
+
+    const handleOrderSubmit = async (e: any) => {
+        e.preventDefault();
+        if (!orderDate || !retailer || !productName || !saleRate || !orderQty || !orderNote || !truckno) {
             toast.warning("Item is empty !");
             return;
         }
-        const product = { id: uid(), orderId: 0, date: orderDate, retailer, orderNote, productName, saleRate, orderQty, username }
-        dispatch(addProducts(product));
-        setOrderNote("")
-        setSaleRate("")
-        setOrderQty("")
+        try {
+            const response = await fetch(`${apiBaseUrl}/api/findLastQty?username=${username}&productName=${productName}`);
+            if (!response.ok) {
+                toast.error("Failed to fetch remaining quantity!");
+                return;
+            }
 
+            const data = await response.json();
+            const remainingQty = data;
+            const totalSoldQty = products
+                .filter(p => p.productName === productName && p.username === username)
+                .reduce((total, p) => total + Number(p.orderQty || 0), 0);
+            if (remainingQty < Number(orderQty) + totalSoldQty) {
+                toast.warning("Insufficient stock quantity !");
+                return;
+            }
+
+            const product = { id: uid(), orderId: 0, date: orderDate, retailer, orderNote, productName, saleRate, orderQty, truckNo: truckno, username }
+            dispatch(addProducts(product));
+            setOrderNote("")
+            setSaleRate("")
+            setOrderQty("")
+            setTruckNo("")
+        } catch (error) {
+            console.error("Error submitting order:", error);
+            toast.error("An error occurred while submitting the order.");
+        }
     }
+    const handleSingleOrder = async (e: any) => {
+        e.preventDefault();
+
+        if (!orderId || !orderedQty) {
+            toast.warning("Need to select order & quantity!");
+            return;
+        }
+        try {
+            const response = await fetch(`${apiBaseUrl}/api/getExistingSingleOrder?orderId=${orderId}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            const productData = data[0];
+            if (productData.orderQty < orderedQty) {
+                toast.warning("Sorry, not enough qty!");
+                return;
+            }
+            const qtyresponse = await fetch(`${apiBaseUrl}/api/findLastQty?username=${username}&productName=${productData.productName}`);
+            if (!qtyresponse.ok) {
+                toast.error("Failed to fetch remaining quantity!");
+                return;
+            }
+
+            const qtydata = await qtyresponse.json();
+            const remainingQty = qtydata;
+           
+            const totalSoldQty = products
+                .filter(p => p.productName === productData.productName && p.username === username)
+                .reduce((total, p) => total + Number(p.orderQty || 0), 0);
+            if (remainingQty < Number(orderedQty) + totalSoldQty) {
+                toast.warning("Insufficient stock quantity !");
+                return;
+            }
+            const productToOrder = {
+                id: uid(),
+                orderId: productData.orderId,
+                date: orderDate,
+                retailer: productData.retailer,
+                orderNote: productData.orderNote,
+                productName: productData.productName,
+                saleRate: productData.saleRate,
+                orderQty: orderedQty,
+                truckNo: truckno,
+                username: username
+
+            };
+
+            dispatch(addProducts(productToOrder));
+            setOrderedQty("");
+            setTruckNo("");
+        } catch (error) {
+            console.error('Error fetching product:', error);
+        }
+
+    };
+
     const handleDeleteProduct = (id: any) => {
         dispatch(deleteProduct(id));
     };
@@ -64,8 +152,8 @@ const OrderDelivery = () => {
         dpRate: product.saleRate,
         productQty: product.orderQty,
         invoiceNo: invoiceNo,
-        status: 'sold',
-        truckNo: truckno
+        status: 'sold'
+
     }));
 
     const handleFinalOrderSubmit = async (e: any) => {
@@ -75,10 +163,6 @@ const OrderDelivery = () => {
             return;
         }
 
-        if (!truckno) {
-            toast.warning("Truck no is required!");
-            return;
-        }
         setPending(true);
         try {
             const response = await fetch(`${apiBaseUrl}/api/productDistribution`, {
@@ -96,7 +180,7 @@ const OrderDelivery = () => {
                 dispatch(deleteAllProducts());
                 setTruckNo('')
                 toast.success("Product delivery successfull !");
-                router.push(`/invoice?invoiceNo=${invoiceNo}`);
+                // router.push(`/invoice?invoiceNo=${invoiceNo}`);
             }
 
         } catch (error) {
@@ -110,12 +194,12 @@ const OrderDelivery = () => {
     useEffect(() => {
 
         const fetchMadeProducts = () => {
-            fetch(`${apiBaseUrl}/api/getProductName`)
+            fetch(`${apiBaseUrl}/api/getProductStock?username=${username}`)
                 .then(response => response.json())
                 .then(data => {
                     const transformedData = data.map((product: any) => ({
                         value: product.productName,
-                        label: product.productName
+                        label: `${product.productName} (${product.remainingQty}, ${product.costPrice.toFixed(2)})`
                     }));
                     setItemOption(transformedData);
                 })
@@ -160,69 +244,50 @@ const OrderDelivery = () => {
 
     }, [apiBaseUrl, username]);
 
-
-    const handleSingleOrder = async (e: any) => {
-        e.preventDefault();
-
-        if (!orderId || !orderedQty) {
-            toast.warning("Need to select order & quantity!");
-            return;
-        }
-        try {
-            const response = await fetch(`${apiBaseUrl}/api/getExistingSingleOrder?orderId=${orderId}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            const productData = data[0];
-            if (productData.orderQty < orderedQty) {
-                toast.warning("Sorry, not enough qty!");
-                return;
-            }
-            const productToOrder = {
-                id: uid(),
-                orderId: productData.orderId,
-                date: orderDate,
-                retailer: productData.retailer,
-                orderNote: productData.orderNote,
-                productName: productData.productName,
-                saleRate: productData.saleRate,
-                orderQty: orderedQty,
-                username: username
-
-            };
-
-            dispatch(addProducts(productToOrder));
-            setOrderedQty("");
-        } catch (error) {
-            console.error('Error fetching product:', error);
-        }
-
-    };
-
     return (
         <div className="container w-full">
             <div className="flex items-center justify-center w-full p-3">
                 <a href="#my_modal_orderlist"><button className='btn btn-sm btn-outline btn-ghost'>ORDER LIST</button></a></div>
             <div className="flex flex-col md:flex-row gap-5 w-full items-center justify-center">
-                <div className="flex flex-col min-h-80 w-1/2 items-center gap-2">
+                <div className="flex flex-col min-h-80 w-1/2 items-center">
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text-alt">DELIVERY DATE</span>
                         </div>
                         <input type="date" name="date" onChange={(e: any) => setOrderDate(e.target.value)} max={maxDate} value={orderDate} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
                     </label>
-                    <label className="form-control w-full max-w-xs">
+                    <div className="flex w-full max-w-xs justify-between">
                         <div className="label">
                             <span className="label-text-alt">RETAILER NAME</span>
                         </div>
-                        <Select className="text-black" name="retailer" onChange={(selectedOption: any) => setRetailer(selectedOption.value)} options={retailerOption} />
+                        <div className="label gap-2">
+                            <span className="label-text-alt">TEMPORARY</span>
+                            <input type="checkbox" className="checkbox checkbox-success w-[20px] h-[20px]" checked={temporary}
+                                onChange={(e) => setTemporary(e.target.checked)} />
+                        </div>
+                    </div>
+                    <label className="form-control w-full max-w-xs">
+
+                        {!temporary && (
+                            <Select className="text-black" name="retailer" onChange={(selectedOption: any) => setRetailer(selectedOption.value)} options={retailerOption} />
+                        )}
+                        {temporary && (
+                            <label className="form-control w-full max-w-xs">
+                                <input
+                                    type="text"
+                                    name="temporary"
+                                    onChange={(e: any) => setRetailer(e.target.value)}
+                                    placeholder="Type Here" value={retailer}
+                                    className="input input-bordered rounded-md w-full max-w-xs h-[40px] bg-white text-black" />
+
+                            </label>
+                        )}
                     </label>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text-alt">DELIVERY NOTE</span>
                         </div>
-                        <input type='text' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={orderNote} onChange={(e) => setOrderNote(e.target.value)} placeholder='Type Here' />
+                        <input type='text' name='note' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={orderNote} onChange={(e) => setOrderNote(e.target.value)} placeholder='Type Here' />
                     </label>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
@@ -243,6 +308,12 @@ const OrderDelivery = () => {
                         </div>
                         <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={saleRate} onChange={(e) => setSaleRate(e.target.value)} placeholder='00' />
                     </label>
+                    <label className="form-control w-full max-w-xs">
+                        <div className="label">
+                            <span className="label-text-alt">TRUCK NO</span>
+                        </div>
+                        <input type='text' name='truckno' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={truckno} onChange={(e) => setTruckNo(e.target.value)} placeholder='Type Here' />
+                    </label>
 
                     <label className="form-control w-full max-w-xs pt-5">
                         <button onClick={handleOrderSubmit} className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" >ADD PRODUCT</button>
@@ -250,6 +321,15 @@ const OrderDelivery = () => {
                 </div>
 
                 <div className="flex flex-col w-1/2 items-center p-5">
+                    <div className="flex">
+                        <div className="avatar-group -space-x-6 rtl:space-x-reverse">
+                            <div className="avatar placeholder">
+                                <div className="bg-neutral text-neutral-content w-12">
+                                    <span>{totalQuantity}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="overflow-x-auto h-auto">
                         <table className="table table-pin-rows table-xs">
                             <thead>
@@ -261,6 +341,7 @@ const OrderDelivery = () => {
                                     <th>Products</th>
                                     <th>Qty</th>
                                     <th>Rate</th>
+                                    <th>Truck No</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -274,7 +355,8 @@ const OrderDelivery = () => {
                                         <td>{item.productName}</td>
                                         <td>{item.orderQty}</td>
                                         <td>{item.saleRate}</td>
-                                       
+                                        <td>{item.truckNo}</td>
+
                                         <td>
                                             <button onClick={() => {
                                                 handleDeleteProduct(item.id);
@@ -287,32 +369,36 @@ const OrderDelivery = () => {
 
                     </div>
                     <div className="flex flex-col items-center justify-center gap-3 pt-10">
-                        <label className="form-control w-full max-w-xs">
-                            <div className="label">
-                                <span className="label-text-alt">TRUCK NO</span>
-                            </div>
-                            <input type='text' name='truck' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={truckno} onChange={(e) => setTruckNo(e.target.value)} placeholder='Type Here' />
-                        </label>
-                        <button onClick={handleFinalOrderSubmit} className="btn btn-success btn-sm w-full max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT ALL"}</button>
+                        <button onClick={confirmOrderDelivery} className="btn btn-success btn-sm w-full max-w-xs" disabled={pending} >{pending ? "Submitting..." : "FINAL SUBMIT"}</button>
                     </div>
                 </div>
                 <div className="modal sm:modal-middle" role="dialog" id="my_modal_orderlist">
                     <div className="modal-box">
-                        <div className="flex w-full h-72 p-2">
+                        <div className="flex flex-col md:flex-row w-full justify-between gap-2 h-72 p-2">
                             <label className="form-control w-full max-w-xs">
                                 <div className="label">
                                     <span className="label-text-alt">SELECT ORDER</span>
                                 </div>
-                                <Select className="text-black" name="retailer" onChange={(selectedOption: any) => setOrderId(selectedOption.value)} options={orderOption} />
+                                <Select className="text-black w-[200px]" name="retailer" onChange={(selectedOption: any) => setOrderId(selectedOption.value)} options={orderOption} />
                             </label>
                             <label className="form-control w-full max-w-xs">
-                                <div className="label ml-3">
+                                <div className="label">
                                     <span className="label-text-alt">ORDER QTY</span>
                                 </div>
-                                <div className="flex gap-3">
-                                    <input type="number" value={orderedQty} name="qty" onChange={(e: any) => setOrderedQty(e.target.value)} placeholder="Type here" className="input input-bordered w-[100px] h-[40px] ml-3 max-w-xs bg-white text-black border border-slate-400" />
-                                    <button disabled={pending} onClick={handleSingleOrder} className="btn btn-sm btn-success h-[40px]">{pending ? "Adding..." : "ADD"}</button>
+                                <div className="flex">
+                                    <input type="number" value={orderedQty} name="qty" onChange={(e: any) => setOrderedQty(e.target.value)} placeholder="Type..." className="input input-bordered w-[80px] h-[40px] max-w-xs bg-white text-black border border-slate-400" />
                                 </div>
+                            </label>
+                            <label className="form-control w-full max-w-xs">
+                                <div className="label">
+                                    <span className="label-text-alt">TRUCK NO</span>
+                                </div>
+                                <div className="flex">
+                                    <input type="text" value={truckno} name="truckno" onChange={(e: any) => setTruckNo(e.target.value)} placeholder="Type ...." className="input input-bordered w-[100px] h-[40px] max-w-xs bg-white text-black border border-slate-400" />
+                                </div>
+                            </label>
+                            <label className="form-control w-full mt-8 max-w-xs">
+                                <button disabled={pending} onClick={handleSingleOrder} className="btn btn-sm btn-success w-[50px] h-[40px]">{pending ? "Adding..." : "ADD"}</button>
                             </label>
                         </div>
                         <div className="modal-action">

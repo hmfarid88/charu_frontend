@@ -97,7 +97,7 @@ const EmployeeTarget = () => {
                 <div className="label">
                     <span className="label-text-alt">SELECT YEAR</span>
                 </div>
-                <select className='select select-bordered' onChange={(e: any) => { setYear(e.target.value) }}>
+                <select className='select select-bordered bg-white text-black' onChange={(e: any) => { setYear(e.target.value) }}>
                     <option selected disabled>Select . . .</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
@@ -115,7 +115,7 @@ const EmployeeTarget = () => {
                 <div className="label">
                     <span className="label-text-alt">SELECT MONTH</span>
                 </div>
-                <select className='select select-bordered' onChange={(e: any) => { setMonth(e.target.value) }}>
+                <select className='select select-bordered bg-white text-black' onChange={(e: any) => { setMonth(e.target.value) }}>
                     <option selected disabled>Select . . .</option>
                     <option value="1">JANUARY</option>
                     <option value="2">FEBRUARY</option>
@@ -136,17 +136,17 @@ const EmployeeTarget = () => {
                 <div className="label">
                     <span className="label-text-alt">TARGET NAME</span>
                 </div>
-                <input type="text" value={targetName} onChange={(e) => setTargetName(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                <input type="text" value={targetName} onChange={(e) => setTargetName(e.target.value)} placeholder="Type here" className="input input-bordered bg-white text-black w-full max-w-xs" />
             </label>
 
             <label className="form-control w-full max-w-xs">
                 <div className="label">
                     <span className="label-text-alt">TARGET QUANTITY</span>
                 </div>
-                <input type="number" value={amount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+                <input type="number" value={amount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered bg-white text-black w-full max-w-xs" />
             </label>
 
-            <label className="form-control w-full max-w-xs">
+            <label className="form-control w-full max-w-xs pt-3">
                 <button onClick={handleSupplierPayment} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
             </label>
         </div>

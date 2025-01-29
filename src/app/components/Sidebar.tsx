@@ -5,7 +5,7 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 import { GoDatabase } from "react-icons/go";
 import { TbReportSearch } from "react-icons/tb";
 import { MdOutlinePayments } from "react-icons/md";
-import { PiNotebook, PiUserListDuotone, PiTargetDuotone} from "react-icons/pi";
+import { PiUserListDuotone, PiTargetDuotone} from "react-icons/pi";
 import { VscRepo } from "react-icons/vsc";
 import { MdOutlineInterests } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
@@ -15,6 +15,8 @@ import { BsDatabaseAdd } from 'react-icons/bs';
 import { RiListUnordered } from "react-icons/ri";
 import { TbLayoutDistributeVertical } from "react-icons/tb";
 import { FaHandHoldingMedical } from "react-icons/fa";
+import { CgUserList } from "react-icons/cg";
+import { FaUsers } from "react-icons/fa6";
 
 
 
@@ -37,7 +39,7 @@ export const Sidebar = () => {
                         <li><Link href="/dashboard"><IoHomeOutline size={20} /> HOME</Link></li>
                         <li><Link href="/purchase"><BsDatabaseAdd size={20} /> PURCHASE</Link></li>
                         <li><Link href="/order-create"><RiListUnordered size={20} /> ORDER CREATE</Link></li>
-                        <li><Link href="/order-delivery"><TbLayoutDistributeVertical size={20} /> DISTRIBUTION</Link></li>
+                        <li><Link href="/order-delivery"><TbLayoutDistributeVertical size={20} /> ORDER DELIVERY</Link></li>
                         <li>
                             <details>
                                 <summary><RiSecurePaymentLine size={20} /> TRANSACTION</summary>
@@ -52,22 +54,22 @@ export const Sidebar = () => {
                                 <summary><GoDatabase size={20} /> STOCK REPORT</summary>
                                 <ul>
                                     <li><Link href="/stockreport">PRODUCT STOCK</Link></li>
-                                    <li><Link href="/purchase-ledger">PURCHASE LEDGER</Link></li>
-                                    <li><Link href="/supplier-ledger">SUPPLIER LEDGER</Link></li>
+                                    <li><Link href="/purchase-ledger">PURCHASE REPORT</Link></li>
+                                    
                                 </ul>
                             </details>
                         </li>
-                        <li><Link href="/dp-dist-report"><TbReportSearch size={20} /> DIST REPORT</Link></li>
+                        <li><Link href="/dp-dist-report"><TbReportSearch size={20} /> DELIVERY REPORT</Link></li>
                         <li>
                             <details>
                                 <summary><MdOutlinePayments size={20} /> PAYMENT REPORT</summary>
                                 <ul>
                                     <li><Link href="/expense-report"> EXPENSE REPORT</Link></li>
-                                    <li><Link href="/office-pay-report"> OFFICE PAYMENT</Link></li>
+                                    <li><Link href="/office-pay-report"> CASH PAYMENT</Link></li>
                                     <li><Link href="/employee-pay-report"> EMPLOYEE PAYMENT</Link></li>
                                     <li><Link href="/supplier-pay-report"> SUPPLIER PAYMENT</Link></li>
                                     <li><Link href="/retailer-commission-report"> RETAILER COMMISSION</Link></li>
-                                    <li><Link href="/payment-receive-summary"> PAYMENT SUMMARY</Link></li>
+                                    
                                 </ul>
                             </details>
                         </li>
@@ -75,13 +77,15 @@ export const Sidebar = () => {
                             <details>
                                 <summary><FaHandHoldingMedical size={20} /> RECEIVE REPORT</summary>
                                 <ul>
-                                    <li><Link href="/office-receive-report"> OFFICE RECEIVE</Link></li>
+                                    <li><Link href="/office-receive-report"> CASH RECEIVE</Link></li>
                                     <li><Link href="/retailer-pay-report"> RETAILER PAYMENT</Link></li>
                                     <li><Link href="/supplier-commission-report"> SUPPLIER COMMISSION</Link></li>
                                 </ul>
                             </details>
                         </li>
                         <li><Link href="/retailer-ledger"> <PiUserListDuotone size={20} /> RETAILER LEDGER</Link></li>
+                        <li><Link href="/supplier-ledger"> <CgUserList size={20} /> SUPPLIER LEDGER</Link></li>
+                        <li><Link href="/payment-receive"> <FaUsers size={20} /> PAY-RECV LEDGER</Link></li>
                         <li><Link href="/employee-target-summary"> <PiTargetDuotone  size={20} /> TARGET LEDGER</Link></li>
                         <li>
                             <details>
@@ -93,7 +97,7 @@ export const Sidebar = () => {
                                 </ul>
                             </details>
                         </li>
-                        <li>
+                        {/* <li>
                             <details>
                                 <summary><a className='flex gap-2'><PiNotebook size={20} />FIND INVOICE </a></summary>
                                 <ul>
@@ -102,7 +106,7 @@ export const Sidebar = () => {
                                     </li>
                                 </ul>
                             </details>
-                        </li>
+                        </li> */}
                         <li><Link href="/profit-report"><MdOutlineInterests size={20} /> PROFIT / LOSS</Link></li>
                         <li><Link href="/adminstration"><GrUserAdmin size={20} /> ADMINSTRATION</Link></li>
 

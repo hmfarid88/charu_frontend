@@ -57,9 +57,12 @@ const Page = () => {
   const totalQty = filteredProducts.reduce((acc, item) => acc + item.productQty, 0);
   return (
     <div className="container-2xl">
-      <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4">
+      <div className="flex flex-col w-full min-h-[calc(100vh-228px)] items-center justify-center p-4">
+
         <div className="flex p-5 justify-end items-end"><DateToDate routePath="/datewise-distreport" /></div>
-        <div className="overflow-x-auto items-center justify-center">
+
+        <div className="overflow-x-auto">
+
           <div className="flex justify-between pl-5 pr-5 pt-1">
             <label className="input input-bordered flex max-w-xs  items-center gap-2">
               <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />
@@ -69,6 +72,7 @@ const Page = () => {
             </label>
             <Print contentRef={contentToPrint} />
           </div>
+
           <div ref={contentToPrint} className="flex-1 p-5">
             <div className="flex flex-col items-center pb-5"><h4 className="font-bold">DISTRIBUTION REPORT</h4><CurrentMonthYear /></div>
             <table className="table table-sm text-center">

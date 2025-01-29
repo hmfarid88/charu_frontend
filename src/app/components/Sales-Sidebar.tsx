@@ -4,7 +4,6 @@ import { IoHomeOutline } from "react-icons/io5";
 import { RiListUnordered } from "react-icons/ri";
 import { PiUserListDuotone } from "react-icons/pi";
 import { GrUserAdmin } from "react-icons/gr";
-import { TbReportSearch } from 'react-icons/tb';
 import { BsReverseListColumnsReverse } from "react-icons/bs";
 
 export const SalesSidebar = () => {

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Select from "react-select";
 import { useAppSelector } from "@/app/store";
 import { FcPlus } from 'react-icons/fc';
+import { BiColor } from 'react-icons/bi';
 
 const OfficePayment = () => {
   const uname = useAppSelector((state) => state.username.username);
@@ -102,15 +103,15 @@ const OfficePayment = () => {
             })
             .catch(error => console.error('Error fetching products:', error));
 
-    }, [paymentPerson, apiBaseUrl, username]);
+    }, [apiBaseUrl, username, paymentPerson]);
   return (
-    <div className='flex flex-col gap-3 items-center justify-center'>
+    <div className='flex flex-col gap-2 items-center justify-center'>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text-alt">DATE</span>
           </div>
-          <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
+          <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="input input-bordered text-black bg-white w-full max-w-xs h-[38px]" />
         </label>
     
         <label className="form-control w-full max-w-xs">
@@ -118,7 +119,7 @@ const OfficePayment = () => {
             <span className="label-text-alt">PAYMENT NAME</span>
             <a href="#my_modal_addPaymentName" className="btn btn-xs btn-circle btn-ghost"><FcPlus size={20} /></a>
           </div>
-          <Select className="text-black" name="catagory" onChange={(selectedOption: any) => setPaymentName(selectedOption.value)} options={paymentPersonOption} />
+          <Select className="text-black" name="payment" onChange={(selectedOption: any) => setPaymentName(selectedOption.value)} options={paymentPersonOption} />
           
         </label>
      
@@ -126,17 +127,17 @@ const OfficePayment = () => {
           <div className="label">
             <span className="label-text-alt">PAYMENT NOTE</span>
           </div>
-          <input type="text" name='paymentNote' autoComplete='paymentNote' value={paymentNote} onChange={(e) => setPaymentNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+          <input type="text" name='paymentNote' autoComplete='paymentNote' value={paymentNote} onChange={(e) => setPaymentNote(e.target.value)} placeholder="Type here" className="input input-bordered text-black bg-white w-full max-w-xs h-[38px]" />
         </label>
      
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text-alt">PAYMENT AMOUNT</span>
           </div>
-          <input type="number" value={paymentAmount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+          <input type="number" value={paymentAmount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered text-black bg-white w-full max-w-xs h-[38px]" />
         </label>
       
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control w-full max-w-xs pt-3">
           <button onClick={handlePaymentSubmit} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
         </label>
     

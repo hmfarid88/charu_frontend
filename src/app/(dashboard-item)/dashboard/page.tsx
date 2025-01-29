@@ -1,9 +1,7 @@
  "use client"
 
-import Areachart from "@/app/components/Areachart";
 import Barchart from "@/app/components/Barchart";
 import HomeSummary from "@/app/components/HomeSummary";
-import Linechart from "@/app/components/Linechart";
 
 export default function Home() {
 

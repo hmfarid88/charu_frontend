@@ -4,12 +4,13 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Select from "react-select";
 import { uid } from "uid";
 import { useAppDispatch, useAppSelector } from "@/app/store";
-import { addProducts, deleteProduct, deleteAllProducts } from "@/app/store/orderSlice";
+import { addProducts, deleteProduct, deleteAllProducts, selectTotalQuantity } from "@/app/store/orderSlice";
 import { toast } from 'react-toastify';
 
 const SalesOrder = () => {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [pending, setPending] = useState(false);
+    const [temporary, setTemporary] = useState(false); 
 
     const dispatch = useAppDispatch();
     const uname = useAppSelector((state) => state.username.username);
@@ -17,6 +18,7 @@ const SalesOrder = () => {
 
     const orderProducts = useAppSelector((state) => state.orderProducts.products);
     const filteredProducts = orderProducts.filter((p) => p.username === username);
+    const totalQuantity = useAppSelector(selectTotalQuantity(username));
 
     const [maxDate, setMaxDate] = useState('');
     useEffect(() => {
@@ -130,11 +132,32 @@ const SalesOrder = () => {
                         </div>
                         <input type="date" name="date" onChange={(e: any) => setOrderDate(e.target.value)} max={maxDate} value={orderDate} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
                     </label>
-                    <label className="form-control w-full max-w-xs">
+                    <div className="flex w-full max-w-xs justify-between">
                         <div className="label">
                             <span className="label-text-alt">RETAILER NAME</span>
                         </div>
-                        <Select className="text-black" name="retailer" onChange={(selectedOption: any) => setRetailer(selectedOption.value)} options={retailerOption} />
+                        <div className="label gap-2">
+                            <span className="label-text-alt">TEMPORARY</span>
+                            <input type="checkbox" className="checkbox checkbox-success w-[20px] h-[20px]" checked={temporary}
+                                onChange={(e) => setTemporary(e.target.checked)} />
+                        </div>
+                    </div>
+                    <label className="form-control w-full max-w-xs">
+                      
+                       {!temporary && (
+                            <Select className="text-black" name="retailer" onChange={(selectedOption: any) => setRetailer(selectedOption.value)} options={retailerOption} />
+                        )}
+                        {temporary && (
+                            <label className="form-control w-full max-w-xs">
+                                <input
+                                    type="text"
+                                    name="temporary"
+                                    onChange={(e: any) => setRetailer(e.target.value)}
+                                    placeholder="Type Here" value={retailer}
+                                    className="input input-bordered rounded-md w-full max-w-xs h-[40px] bg-white text-black" />
+
+                            </label>
+                        )}
                     </label>
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
@@ -168,6 +191,15 @@ const SalesOrder = () => {
                 </div>
 
                 <div className="flex flex-col w-1/2 items-center p-5">
+                <div className="flex">
+                        <div className="avatar-group -space-x-6 rtl:space-x-reverse">
+                            <div className="avatar placeholder">
+                                <div className="bg-neutral text-neutral-content w-12">
+                                    <span>{totalQuantity}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="overflow-x-auto h-auto">
                         <table className="table table-pin-rows table-xs">
                             <thead>

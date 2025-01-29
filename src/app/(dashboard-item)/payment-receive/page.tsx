@@ -1,27 +1,25 @@
 'use client'
 import React, { useState, useEffect, useRef } from "react";
+import { useAppSelector } from "@/app/store";
 import { FcPrint } from "react-icons/fc";
 import { useReactToPrint } from 'react-to-print';
-import { useSearchParams } from "next/navigation";
 import CurrentDate from "@/app/components/CurrentDate";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 type Product = {
-    date: string;
-    productName: string;
-    productQty: number;
-    productValue: number;
-    payment: number;
-    commission: number;
-   
+    name: string;
+    totalPayment: number;
+    totalReceive: number;
+   balance:number;
 };
 
 
 const Page = () => {
-
+    const router = useRouter();
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const searchParams = useSearchParams();
-    const retailerName = searchParams.get('retailerName');
-    const username = searchParams.get('username');
+    const uname = useAppSelector((state) => state.username.username);
+    const username = uname ? uname.username : 'Guest';
 
     const contentToPrint = useRef(null);
     const handlePrint = useReactToPrint({
@@ -31,22 +29,28 @@ const Page = () => {
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
 
-
+   const handleDetails = (name:string) => {
+       if (!name) {
+         toast.warning("balance name is empty!");
+         return;
+       }
+       router.push(`/details-pay-receive?name=${encodeURIComponent(name)}&username=${encodeURIComponent(username)}`);
+     
+     }
     useEffect(() => {
-        fetch(`${apiBaseUrl}/retailer/retailer-details?retailerName=${retailerName}&username=${username}`)
+        fetch(`${apiBaseUrl}/finance/balance`)
             .then(response => response.json())
             .then(data => {
                 setAllProducts(data);
                 setFilteredProducts(data);
             })
             .catch(error => console.error('Error fetching products:', error));
-    }, [apiBaseUrl, username, retailerName]);
+    }, [apiBaseUrl, username]);
 
 
     useEffect(() => {
         const filtered = allProducts.filter(product =>
-            (product.date.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
-            (product.productName.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
+           (product.name.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
         );
         setFilteredProducts(filtered);
     }, [filterCriteria, allProducts]);
@@ -55,7 +59,11 @@ const Page = () => {
         setFilterCriteria(e.target.value);
     };
 
-    let cumulativeBalance = 0;
+    const totalbalance = filteredProducts.reduce((total, product) => {
+        return total + product.balance;
+    }, 0);
+
+   
     return (
         <div className="container-2xl">
             <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4 items-center justify-center">
@@ -70,49 +78,45 @@ const Page = () => {
                 </div>
                 <div className="overflow-x-auto">
                     <div ref={contentToPrint} className="flex-1 p-5">
-                        <div className="flex flex-col items-center pb-5"><h4 className="font-bold">RETAILER LEDGER</h4>
-                            <h4 className="font-bold capitalize">Retailer : {retailerName}</h4>
-                            <h4><CurrentDate/></h4>
+                        <div className="flex flex-col items-center pb-5"><h4 className="font-bold">PAYMENT-RECEIVE LEDGER</h4>
+                            <h4><CurrentDate /></h4>
                         </div>
                         <table className="table">
                             <thead>
                                 <tr>
                                     <th>SN</th>
-                                    <th>DATE</th>
-                                    <th>PRODUCT NAME</th>
-                                    <th>PRODUCT QTY</th>
-                                    <th>PRODUCT VALUE</th>
+                                    <th>NAME</th>
                                     <th>PAYMENT</th>
-                                    <th>COMMISSION</th>
+                                    <th>RECEIVE</th>
                                     <th>BALANCE</th>
+                                    <th>DETAILS</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
-                            {filteredProducts?.map((product, index) => {
-                                    const currentBalance = product.productValue - product.payment - product.commission;
-                                    cumulativeBalance += currentBalance;
-
-                                    return (
+                                {filteredProducts?.map((product, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td>{product?.date}</td>
-                                        <td>{product?.productName}</td>
-                                        <td>{Number(product?.productQty.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.productValue.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.payment.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.commission.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(cumulativeBalance.toFixed(2)).toLocaleString('en-IN')}</td>
-
+                                        <td className="capitalize">{product?.name}</td>
+                                        <td>{Number((product?.totalPayment ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                        <td>{Number((product?.totalReceive ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                        <td>{Number((product?.balance ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                        <td><button onClick={() => handleDetails(product?.name)}  className="btn btn-xs btn-info">Details</button></td>
                                     </tr>
-                                );
-                            })}
+                                ))}
                             </tbody>
-                           
+                            <tfoot>
+                                <tr className="font-semibold text-lg">
+                                    <td colSpan={3}></td>
+                                    <td>TOTAL</td>
+                                    <td>{totalbalance.toLocaleString('en-IN')}</td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
-
+           
         </div>
     )
 }

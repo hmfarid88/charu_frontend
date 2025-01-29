@@ -8,3 +8,16 @@
     filter: invert(1);
 }
 
+/* for removing up and down arrow from number field */
+@layer utilities {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+  

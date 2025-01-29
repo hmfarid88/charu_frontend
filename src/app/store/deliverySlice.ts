@@ -1,14 +1,15 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit'
 
 interface Product {
     id: string;
-    orderId:number;
+    orderId: number;
     date: string;
     retailer: string;
     orderNote: string;
     productName: string;
     saleRate: string;
     orderQty: string;
+    truckNo: string;
     username: string;
 
 }
@@ -30,11 +31,12 @@ export const deliverySlice = createSlice({
                 (pro) =>
                     pro.username === action.payload.username &&
                     pro.retailer === action.payload.retailer &&
-                    pro.productName === action.payload.productName
+                    pro.productName === action.payload.productName &&
+                    pro.saleRate === action.payload.saleRate &&
+                    pro.truckNo === action.payload.truckNo
 
             );
             if (exist) {
-                // Add the orderQty to the existing product's quantity
                 exist.orderQty = (
                     parseFloat(exist.orderQty) + parseFloat(action.payload.orderQty)
                 ).toString();
@@ -52,6 +54,14 @@ export const deliverySlice = createSlice({
         },
     },
 });
+export const selectTotalQuantity = createSelector(
+    (state: { deliveryProducts: ProductState }) => state.deliveryProducts.products,
+    (products) =>
+        products.reduce(
+            (total, product) => total + parseFloat(product.orderQty || "0"),
+            0
+        )
+);
 
 export const { addProducts, deleteProduct, deleteAllProducts } = deliverySlice.actions;
 

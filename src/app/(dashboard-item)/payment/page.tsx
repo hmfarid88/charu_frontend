@@ -14,7 +14,7 @@ const Payment = () => {
           <div role="tabpanel" className="tab-content p-10">
             <Expense />
           </div>
-          <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="OFFICE PAYMENT" />
+          <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="CASH PAYMENT" />
           <div role="tabpanel" className="tab-content p-10">
             <OfficePayment />
           </div>

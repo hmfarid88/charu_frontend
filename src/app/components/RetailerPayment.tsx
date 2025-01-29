@@ -12,6 +12,8 @@ const RetailerPayment = () => {
   const [pending, setPending] = useState(false);
   const [date, setDate] = useState("");
   const [maxDate, setMaxDate] = useState('');
+  const [temporary, setTemporary] = useState(false);
+
   useEffect(() => {
     const today = new Date();
     const year = today.getFullYear();
@@ -71,39 +73,60 @@ const RetailerPayment = () => {
       .catch(error => console.error('Error fetching products:', error));
   }, [apiBaseUrl, username]);
   return (
-    <div className='flex flex-col gap-3 items-center justify-center'>
-      
-        <label className="form-control w-full max-w-xs">
-          <div className="label">
-            <span className="label-text-alt">DATE</span>
-          </div>
-          <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
-        </label>
-     
-        <label className="form-control w-full max-w-xs">
-          <div className="label">
-            <span className="label-text-alt">PICK RETAILER</span>
-          </div>
+    <div className='flex flex-col gap-2 items-center justify-center'>
+
+      <label className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text-alt">DATE</span>
+        </div>
+        <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="input input-bordered bg-white text-black h-[38px]  w-full max-w-xs" />
+      </label>
+      <div className="flex w-full max-w-xs justify-between">
+        <div className="label">
+          <span className="label-text-alt">RETAILER NAME</span>
+        </div>
+        <div className="label gap-2">
+          <span className="label-text-alt">TEMPORARY</span>
+          <input type="checkbox" className="checkbox checkbox-success w-[20px] h-[20px]" checked={temporary}
+            onChange={(e) => setTemporary(e.target.checked)} />
+        </div>
+      </div>
+
+      <label className="form-control w-full max-w-xs">
+        {!temporary && (
           <Select className="text-black h-[38px] w-full max-w-xs" onChange={(selectedOption: any) => setRetailerName(selectedOption.value)} options={retailerOption} />
-        </label>
-     
-        <label className="form-control w-full max-w-xs">
-          <div className="label">
-            <span className="label-text-alt">NOTE / MONEY RECEPT NO</span>
-          </div>
-          <input type="text" name='retailerNote' autoComplete='retailerNote' value={retailerNote} onChange={(e) => setRetailerNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-        </label>
-     
-        <label className="form-control w-full max-w-xs">
-          <div className="label">
-            <span className="label-text-alt">PAYMENT AMOUNT</span>
-          </div>
-          <input type="number" value={retailerAmount} onChange={(e) => setRetailerAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-        </label>
-      
-        <label className="form-control w-full max-w-xs">
-          <button onClick={handleRetailerSubmit} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
-        </label>
+        )}
+        {temporary && (
+          <label className="form-control w-full max-w-xs">
+            <input
+              type="text"
+              name="temporary"
+              onChange={(e: any) => setRetailerName(e.target.value)}
+              placeholder="Type Here" value={retailerName}
+              className="input input-bordered rounded-md w-full max-w-xs h-[40px] bg-white text-black" />
+
+          </label>
+
+        )}
+      </label>
+
+      <label className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text-alt">NOTE / MONEY RECEPT NO</span>
+        </div>
+        <input type="text" name='retailerNote' autoComplete='retailerNote' value={retailerNote} onChange={(e) => setRetailerNote(e.target.value)} placeholder="Type here" className="input input-bordered bg-white text-black h-[38px] w-full max-w-xs" />
+      </label>
+
+      <label className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text-alt">PAYMENT AMOUNT</span>
+        </div>
+        <input type="number" value={retailerAmount} onChange={(e) => setRetailerAmount(e.target.value)} placeholder="Type here" className="input input-bordered bg-white text-black h-[38px] w-full max-w-xs" />
+      </label>
+
+      <label className="form-control w-full max-w-xs pt-3">
+        <button onClick={handleRetailerSubmit} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
+      </label>
 
     </div>
   )

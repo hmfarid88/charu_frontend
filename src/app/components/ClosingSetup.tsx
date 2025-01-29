@@ -65,7 +65,7 @@ const ClosingSetup = () => {
                     onChange={(e: any) => setStartDate(e.target.value)}
                 
                     value={startDate}
-                    className="input input-bordered"
+                    className="input input-bordered bg-white text-black"
                 />
             </label>
 
@@ -79,11 +79,11 @@ const ClosingSetup = () => {
                     onChange={(e: any) => setEndDate(e.target.value)}
                 
                     value={endDate}
-                    className="input input-bordered"
+                    className="input input-bordered bg-white text-black"
                 />
             </label>
 
-            <label className="form-control w-full max-w-xs">
+            <label className="form-control w-full max-w-xs pt-3">
                 <button onClick={handleSubmit} className='btn btn-success' disabled={pending} >{pending ? "Adding..." : "ADD"}</button>
             </label>
         </div>
