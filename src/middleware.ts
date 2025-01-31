@@ -248,8 +248,8 @@ type UserRole = 'ROLE_ADMIN' | 'ROLE_ACCOUNTANT' | 'ROLE_SALES';
 // Role-based protected routes mapping
 const roleRouteMap: Record<UserRole, string[]> = {
   ROLE_ADMIN: [
-    '/admin-dashboard',
-               '/adduser'
+    // '/admin-dashboard',
+    //            '/adduser'
               ],
     ROLE_ACCOUNTANT: [
     // '/dashboard',
