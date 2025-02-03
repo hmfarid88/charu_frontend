@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
 import { FcPrint } from "react-icons/fc";
+import { MdOutlineEditNote } from "react-icons/md";
 import { useReactToPrint } from 'react-to-print';
 import CurrentMonthYear from "@/app/components/CurrentMonthYear";
 import DateToDate from "@/app/components/DateToDate";
@@ -16,6 +17,7 @@ type Product = {
     costPrice: number;
     productQty: number;
     remainingQty: number;
+    productId: number;
 
 };
 
@@ -32,6 +34,10 @@ const Page = () => {
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
+
+    const handleEdit = (productId:number) => {
+      
+    };
 
     useEffect(() => {
         fetch(`${apiBaseUrl}/api/getAllProduct?username=${username}`)
@@ -63,10 +69,10 @@ const Page = () => {
 
     return (
         <div className="container-2xl">
-            <div className="flex flex-col w-full min-h-[calc(100vh-228px)] items-center justify-center p-4">
-                <div className="flex items-end justify-end p-5"><DateToDate routePath="/datewise-purchase-ledger" /></div>
-                <div className="overflow-x-auto">
-                    <div className="flex justify-between pl-5 pr-5 pt-1">
+            <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4">
+                <div className="flex items-center justify-center p-5"><DateToDate routePath="/datewise-purchase-ledger" /></div>
+               
+                    <div className="flex w-full justify-between pl-5 pr-5 pt-1">
                         <label className="input input-bordered flex max-w-xs  items-center gap-2">
                             <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
@@ -75,21 +81,22 @@ const Page = () => {
                         </label>
                         <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                     </div>
-
+                    <div className="overflow-x-auto">
                     <div ref={contentToPrint} className="flex-1 p-5">
                         <div className="flex flex-col items-center pb-5"><h4 className="font-bold">PURCHASE LEDGER</h4><CurrentMonthYear /></div>
-                        <table className="table table-sm text-center">
+                        <table className="table table-sm">
                             <thead>
                                 <tr>
                                     <th>SN</th>
                                     <th>DATE</th>
-                                    <th>SUPPLIER</th>
-                                    <th>PRODUCT NAME</th>
-                                    <th>PURCHASE PRICE</th>
-                                    <th>COST PRICE</th>
+                                    <th>SUPPLIER NAME</th>
+                                    <th>PRODUCT</th>
+                                    <th>P.PRICE</th>
+                                    <th>AV.PRICE</th>
                                     <th>STATUS</th>
-                                    <th>QTY</th>
-                                    <th>REMAINING QTY</th>
+                                    <th>ENTRY QTY</th>
+                                    <th>TOTAL QTY</th>
+                                    {/* <th>EDIT</th> */}
 
                                 </tr>
                             </thead>
@@ -105,6 +112,7 @@ const Page = () => {
                                         <td>{product?.status}</td>
                                         <td>{Number(product?.productQty?.toFixed(2)).toLocaleString('en-IN')}</td>
                                         <td>{Number(product?.remainingQty?.toFixed(2)).toLocaleString('en-IN')}</td>
+                                        {/* <td><button onClick={()=>handleEdit(product.productId)} className="btn btn-primary btn-sm"><MdOutlineEditNote size={24} /></button></td> */}
                                     </tr>
                                 ))}
                             </tbody>

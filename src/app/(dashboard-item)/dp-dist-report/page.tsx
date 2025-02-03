@@ -4,6 +4,7 @@ import { useAppSelector } from "@/app/store";
 import Print from "@/app/components/Print";
 import CurrentMonthYear from "@/app/components/CurrentMonthYear";
 import DateToDate from "@/app/components/DateToDate";
+import { MdOutlineEditNote } from "react-icons/md";
 
 type Product = {
   date: string;
@@ -13,6 +14,7 @@ type Product = {
   truckNo: string;
   dpRate: number;
   productQty: number;
+  productId: number;
 };
 
 
@@ -25,7 +27,9 @@ const Page = () => {
   const [filterCriteria, setFilterCriteria] = useState('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const handleEdit=(productId:number)=>{
 
+}
 
   useEffect(() => {
     fetch(`${apiBaseUrl}/api/getSoldProduct?username=${username}`)
@@ -61,9 +65,7 @@ const Page = () => {
 
         <div className="flex p-5 justify-end items-end"><DateToDate routePath="/datewise-distreport" /></div>
 
-        <div className="overflow-x-auto">
-
-          <div className="flex justify-between pl-5 pr-5 pt-1">
+          <div className="flex w-full justify-between pl-5 pr-5 pt-1">
             <label className="input input-bordered flex max-w-xs  items-center gap-2">
               <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
@@ -72,9 +74,9 @@ const Page = () => {
             </label>
             <Print contentRef={contentToPrint} />
           </div>
-
+          <div className="overflow-x-auto">
           <div ref={contentToPrint} className="flex-1 p-5">
-            <div className="flex flex-col items-center pb-5"><h4 className="font-bold">DISTRIBUTION REPORT</h4><CurrentMonthYear /></div>
+            <div className="flex flex-col items-center pb-5"><h4 className="font-bold">DELIVERY REPORT</h4><CurrentMonthYear /></div>
             <table className="table table-sm text-center">
               <thead>
                 <tr>
@@ -87,6 +89,7 @@ const Page = () => {
                   <th>QUANTITY</th>
                   <th>SALE RATE</th>
                   <th>SUB TOTAL</th>
+                  <th>EDIT</th>
                 </tr>
               </thead>
               <tbody>
@@ -101,6 +104,7 @@ const Page = () => {
                     <td>{product.productQty.toLocaleString('en-IN')}</td>
                     <td>{Number(product.dpRate.toFixed(2)).toLocaleString('en-IN')}</td>
                     <td>{Number((product.dpRate * product.productQty).toFixed(2)).toLocaleString('en-IN')}</td>
+                    <td><button onClick={()=>handleEdit(product.productId)} className="btn btn-primary btn-sm"><MdOutlineEditNote size={24} /></button></td>
                   </tr>
                 ))}
               </tbody>
