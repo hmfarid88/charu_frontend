@@ -119,15 +119,15 @@ const Page = () => {
                         <div className="label">
                             <span className="label-text-alt">RETAILER NAME</span>
                         </div>
-                        <input type='text' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={retailerName} readOnly />
+                        <input type='text' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={retailerName} onChange={(e) => setRetailerName(e.target.value)} />
                     </label>
-                    <label className="form-control w-full max-w-xs pt-2">
+                    {/* <label className="form-control w-full max-w-xs pt-2">
                         <div className="label">
                             <span className="label-text-alt">SELECT NEW</span>
                         </div>
 
                         <Select className="text-black" onChange={(selectedOption: any) => setRetailerName(selectedOption.value)} options={retailerOption} />
-                    </label>
+                    </label> */}
                     <label className="form-control w-full max-w-xs pt-2">
                         <div className="label">
                             <span className="label-text-alt">RETAILER CODE</span>
