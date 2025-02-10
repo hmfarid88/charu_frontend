@@ -152,7 +152,8 @@ const OrderDelivery = () => {
         dpRate: product.saleRate,
         productQty: product.orderQty,
         invoiceNo: invoiceNo,
-        status: 'sold'
+        status: 'sold',
+        note: product.orderNote
 
     }));
 

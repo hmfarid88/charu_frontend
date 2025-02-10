@@ -8,6 +8,7 @@ import CurrentDate from "@/app/components/CurrentDate";
 
 type Product = {
     date: string;
+    note: string;
     productName: string;
     productQty: number;
     productValue: number;
@@ -48,6 +49,7 @@ const Page = () => {
     useEffect(() => {
         const filtered = allProducts.filter(product =>
             (product.date.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+            (product.note?.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
             (product.productName.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
         );
         setFilteredProducts(filtered);
@@ -75,11 +77,12 @@ const Page = () => {
                             <h4 className="font-bold capitalize">Retailer : {retailerName}</h4>
                             <h4><CurrentDate/></h4>
                         </div>
-                        <table className="table">
+                        <table className="table table-sm">
                             <thead>
                                 <tr>
                                     <th>SN</th>
                                     <th>DATE</th>
+                                    <th>NOTE</th>
                                     <th>PRODUCT NAME</th>
                                     <th>PRODUCT Qty</th>
                                     <th>PRODUCT VALUE</th>
@@ -97,6 +100,7 @@ const Page = () => {
                                     <tr key={index}>
                                         <td>{index + 1}</td>
                                         <td>{product?.date}</td>
+                                        <td>{product?.note}</td>
                                         <td>{product?.productName}</td>
                                         <td>{Number(product?.productQty.toFixed(2)).toLocaleString('en-IN')}</td>
                                         <td>{Number(product?.productValue.toFixed(2)).toLocaleString('en-IN')}</td>

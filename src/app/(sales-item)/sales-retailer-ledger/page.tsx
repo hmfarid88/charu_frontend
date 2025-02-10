@@ -86,7 +86,7 @@ const Page = () => {
   return (
     <div className="container-2xl">
       <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4">
-      <div className="flex p-5 justify-center md:justify-end"><DateToDate routePath="/sales-datewise-retail-ledger" /></div>
+      <div className="flex p-5 justify-center"><DateToDate routePath="/sales-datewise-retail-ledger" /></div>
       <div className="flex w-full justify-between pl-5 pr-5 pt-1 items-center">
             <label className="input input-bordered flex max-w-xs  items-center gap-2">
               <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />

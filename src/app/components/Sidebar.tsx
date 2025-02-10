@@ -5,7 +5,7 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 import { GoDatabase } from "react-icons/go";
 import { TbReportSearch } from "react-icons/tb";
 import { MdOutlinePayments } from "react-icons/md";
-import { PiUserListDuotone, PiTargetDuotone} from "react-icons/pi";
+import { PiUserListDuotone, PiTargetDuotone, PiUsersFourFill } from "react-icons/pi";
 import { VscRepo } from "react-icons/vsc";
 import { MdOutlineInterests } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
@@ -55,7 +55,7 @@ export const Sidebar = () => {
                                 <ul>
                                     <li><Link href="/stockreport">PRODUCT STOCK</Link></li>
                                     <li><Link href="/purchase-ledger">PURCHASE REPORT</Link></li>
-                                    
+
                                 </ul>
                             </details>
                         </li>
@@ -69,7 +69,7 @@ export const Sidebar = () => {
                                     <li><Link href="/employee-pay-report"> EMPLOYEE PAYMENT</Link></li>
                                     <li><Link href="/supplier-pay-report"> SUPPLIER PAYMENT</Link></li>
                                     <li><Link href="/retailer-commission-report"> RETAILER COMMISSION</Link></li>
-                                    
+
                                 </ul>
                             </details>
                         </li>
@@ -86,7 +86,16 @@ export const Sidebar = () => {
                         <li><Link href="/retailer-ledger"> <PiUserListDuotone size={20} /> RETAILER LEDGER</Link></li>
                         <li><Link href="/supplier-ledger"> <CgUserList size={20} /> SUPPLIER LEDGER</Link></li>
                         <li><Link href="/payment-receive"> <FaUsers size={20} /> PAY-RECV LEDGER</Link></li>
-                        <li><Link href="/employee-target-summary"> <PiTargetDuotone  size={20} /> TARGET LEDGER</Link></li>
+                        <li><Link href="/employee-target-summary"> <PiTargetDuotone size={20} /> TARGET LEDGER</Link></li>
+                        <li>
+                            <details>
+                                <summary><PiUsersFourFill size={20} /> BUSINESS PERSON</summary>
+                                <ul>
+                                    <li><Link href="/retailer-list"> RETAILER LIST</Link></li>
+                                    <li><Link href="/employee-list"> EMPLOYEE LIST</Link></li>
+                                </ul>
+                            </details>
+                        </li>
                         <li>
                             <details>
                                 <summary><a className='flex gap-2'><VscRepo size={20} /> CASH BOOK </a></summary>
