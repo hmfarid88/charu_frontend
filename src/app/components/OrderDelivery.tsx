@@ -331,8 +331,8 @@ const OrderDelivery = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="overflow-x-auto h-auto">
-                        <table className="table table-pin-rows table-xs">
+                    <div className="w-full overflow-x-auto h-auto">
+                    <table className="table table-xs md:table-sm table-pin-rows">
                             <thead>
                                 <tr className="font-bold">
                                     <th>SN</th>

@@ -182,82 +182,86 @@ const ProductStock = () => {
     return (
         <div className="container w-full">
             <div className="flex flex-col md:flex-row gap-5 w-full items-center">
-                <div className="flex flex-col min-h-96 w-1/2 items-center">
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
-                            <span className="label-text-alt">STOCK DATE</span>
-                        </div>
-                        <input type="date" name="date" onChange={(e: any) => setStockDate(e.target.value)} max={maxDate} value={stockDate} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
-                    </label>
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
-                            <span className="label-text-alt">SUPPLIER NAME</span>
-                            <a href="#my_modal_supplieradd" className="btn btn-xs btn-circle btn-ghost"><FcPlus size={20} /></a>
-                        </div>
-                        <Select className="text-black" name="catagory" onChange={(selectedOption: any) => setSupplier(selectedOption.value)} options={supplierOption} />
-                    </label>
+                <div className="flex flex-col min-h-96 w-1/2 items-center justify-center">
+                    <div className="overflow-x-auto">
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text-alt">STOCK DATE</span>
+                            </div>
+                            <input type="date" name="date" onChange={(e: any) => setStockDate(e.target.value)} max={maxDate} value={stockDate} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text-alt">SUPPLIER NAME</span>
+                                <a href="#my_modal_supplieradd" className="btn btn-xs btn-circle btn-ghost"><FcPlus size={20} /></a>
+                            </div>
+                            <Select className="text-black" name="catagory" onChange={(selectedOption: any) => setSupplier(selectedOption.value)} options={supplierOption} />
+                        </label>
 
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
-                            <span className="label-text-alt">PRODUCT NAME</span>
-                            <a href="#my_modal_productadd" className="btn btn-xs btn-circle btn-ghost"><FcPlus size={20} /></a>
-                        </div>
-                        <Select className="text-black" name="pname" onChange={(selectedOption: any) => setProductName(selectedOption.value)} options={itemOption} />
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text-alt">PRODUCT NAME</span>
+                                <a href="#my_modal_productadd" className="btn btn-xs btn-circle btn-ghost"><FcPlus size={20} /></a>
+                            </div>
+                            <Select className="text-black" name="pname" onChange={(selectedOption: any) => setProductName(selectedOption.value)} options={itemOption} />
 
-                    </label>
+                        </label>
 
-                    <label className="form-control w-full max-w-xs pt-2">
-                        <div className="label">
-                            <span className="label-text-alt">PURCHASE QUANTITY</span>
-                        </div>
-                        <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' onChange={(e) => setProductQty(e.target.value)} placeholder='00' />
-                    </label>
-                    <label className="form-control w-full max-w-xs pt-2">
-                        <div className="label">
-                            <span className="label-text-alt">PURCHASE RATE</span>
-                        </div>
-                        <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' onChange={(e) => setCostPrice(e.target.value)} placeholder='00' />
-                    </label>
+                        <label className="form-control w-full max-w-xs pt-2">
+                            <div className="label">
+                                <span className="label-text-alt">PURCHASE QUANTITY</span>
+                            </div>
+                            <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' onChange={(e) => setProductQty(e.target.value)} placeholder='00' />
+                        </label>
+                        <label className="form-control w-full max-w-xs pt-2">
+                            <div className="label">
+                                <span className="label-text-alt">PURCHASE RATE</span>
+                            </div>
+                            <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' onChange={(e) => setCostPrice(e.target.value)} placeholder='00' />
+                        </label>
 
 
-                    <label className="form-control w-full max-w-xs pt-5">
-                        <button onClick={handleProductStock} className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" >ADD PRODUCT</button>
-                    </label>
+                        <label className="form-control w-full max-w-xs pt-5">
+                            <button onClick={handleProductStock} className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" >ADD PRODUCT</button>
+                        </label>
+                    </div>
                 </div>
 
                 <div className="flex flex-col w-1/2 items-center p-2">
-                    <div className="overflow-x-auto h-auto">
-                        <table className="table table-sm table-pin-rows">
-                            <thead>
-                                <tr className="font-bold">
-                                    <th>SN</th>
-                                    <th>Date</th>
-                                    <th>Supplier</th>
-                                    <th>Products</th>
-                                    <th>Qty</th>
-                                    <th>Rate</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products?.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{item.date}</td>
-                                        <td>{item.supplier}</td>
-                                        <td>{item.productName}</td>
-                                        <td>{item.productQty}</td>
-                                        <td>{item.costPrice}</td>
-                                        <td>
-                                            <button onClick={() => {
-                                                handleDeleteProduct(item.id);
-                                            }} className="btn-xs rounded-md btn-outline btn-error"><RiDeleteBin6Line size={16} /></button>
-                                        </td>
+                    <div className="flex justify-center w-full">
+                        <div className="overflow-x-auto h-auto">
+                            <table className="table table-xs md:table-sm table-pin-rows">
+                                <thead>
+                                    <tr className="font-bold">
+                                        <th>SN</th>
+                                        <th>Date</th>
+                                        <th>Supplier</th>
+                                        <th>Products</th>
+                                        <th>Qty</th>
+                                        <th>Rate</th>
+                                        <th>Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {products?.map((item, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{item.date}</td>
+                                            <td>{item.supplier}</td>
+                                            <td>{item.productName}</td>
+                                            <td>{item.productQty}</td>
+                                            <td>{item.costPrice}</td>
+                                            <td>
+                                                <button onClick={() => {
+                                                    handleDeleteProduct(item.id);
+                                                }} className="btn-xs rounded-md btn-outline btn-error"><RiDeleteBin6Line size={16} /></button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
 
+                        </div>
                     </div>
                     <div className="flex items-center justify-center pt-10">
                         <button onClick={handleFinalStockSubmit} className="btn btn-success btn-outline btn-sm max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT ALL"}</button>

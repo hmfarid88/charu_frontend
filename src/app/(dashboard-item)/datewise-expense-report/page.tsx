@@ -71,18 +71,18 @@ const Page = () => {
                         </label>
                         <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                     </div>
-                    <div className="overflow-x-auto">
+                    <div className="w-full overflow-x-auto">
                     <div ref={contentToPrint} className="flex-1 p-5">
                     <div className="flex flex-col items-center pb-5"><h4 className="font-bold">EXPENSE REPORT</h4>
                     <h4>{startDate} TO {endDate}</h4>
                     </div>
-                        <table className="table text-center">
+                    <table className="table table-xs md:table-sm table-pin-rows">
                             <thead>
                                 <tr>
                                     <th>SN</th>
                                     <th>DATE</th>
                                     <th>EXPENSE NAME</th>
-                                    <th>EXPENSE NOTE</th>
+                                    <th>NOTE</th>
                                     <th>AMOUNT</th>
 
                                 </tr>

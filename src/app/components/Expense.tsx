@@ -58,51 +58,51 @@ const Expense = () => {
     }
   };
   return (
-    <div className='flex flex-col gap-2 items-center justify-center'>
+    <div className='flex flex-col gap-2 items-center justify-center p-2'>
+      <div className="overflow-x-auto">
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text-alt">DATE</span>
+          </div>
+          <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="input input-bordered text-black bg-white w-full max-w-xs h-[38px]" />
+        </label>
 
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text-alt">DATE</span>
-        </div>
-        <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="input input-bordered text-black bg-white w-full max-w-xs h-[38px]" />
-      </label>
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text-alt">EXPENSE NAME</span>
+          </div>
+          <select className='select select-bordered text-black bg-white' onChange={(e: any) => { setExpenseName(e.target.value) }}>
+            <option selected disabled>Select . . .</option>
+            <option value="OFFICE COST">OFFICE COST</option>
+            <option value="OIL COST">OIL COST</option>
+            <option value="MOTORCYCLE COST">MOTORCYCLE COST</option>
+            <option value="MOBILE BILL">MOBILE BILL</option>
+            <option value="INCENTIVE">INCENTIVE</option>
+            <option value="OTHERS">OTHERS</option>
+          </select>
+
+        </label>
+
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text-alt">EXPENSE NOTE</span>
+          </div>
+          <input type="text" name='note' autoComplete='note' value={expenseNote} onChange={(e) => setExpenseNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs text-black bg-white h-[38px]" />
+        </label>
+
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text-alt">EXPENSE AMOUNT</span>
+          </div>
+          <input type="number" value={expensAmount} onChange={(e) => setExpenseAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs text-black bg-white h-[38px]" />
+        </label>
 
 
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text-alt">EXPENSE NAME</span>
-        </div>
-        <select className='select select-bordered text-black bg-white' onChange={(e: any) => { setExpenseName(e.target.value) }}>
-          <option selected disabled>Select . . .</option>
-          <option value="OFFICE COST">OFFICE COST</option>
-          <option value="OIL COST">OIL COST</option>
-          <option value="MOTORCYCLE COST">MOTORCYCLE COST</option>
-          <option value="MOBILE BILL">MOBILE BILL</option>
-          <option value="INCENTIVE">INCENTIVE</option>
-          <option value="OTHERS">OTHERS</option>
-        </select>
+        <label className="form-control w-full max-w-xs pt-3">
+          <button onClick={handleExpenseSubmit} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
+        </label>
 
-      </label>
-
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text-alt">EXPENSE NOTE</span>
-        </div>
-        <input type="text" name='note' autoComplete='note' value={expenseNote} onChange={(e) => setExpenseNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs text-black bg-white h-[38px]" />
-      </label>
-
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text-alt">EXPENSE AMOUNT</span>
-        </div>
-        <input type="number" value={expensAmount} onChange={(e) => setExpenseAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs text-black bg-white h-[38px]" />
-      </label>
-
-
-      <label className="form-control w-full max-w-xs pt-3">
-        <button onClick={handleExpenseSubmit} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
-      </label>
-
+      </div>
     </div>
   )
 }

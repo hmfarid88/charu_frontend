@@ -4,7 +4,6 @@ import { useAppSelector } from "@/app/store";
 import Print from "@/app/components/Print";
 import CurrentMonthYear from "@/app/components/CurrentMonthYear";
 import DateToDate from "@/app/components/DateToDate";
-import { MdOutlineEditNote } from "react-icons/md";
 
 type Product = {
   date: string;
@@ -27,12 +26,10 @@ const Page = () => {
   const [filterCriteria, setFilterCriteria] = useState('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
-  const handleEdit=(productId:number)=>{
 
-}
 
   useEffect(() => {
-    fetch(`${apiBaseUrl}/api/getSoldProduct?username=${username}`)
+    fetch(`${apiBaseUrl}/api/getSalesPersonSoldProduct?username=${username}`)
       .then(response => response.json())
       .then(data => {
         setAllProducts(data);
@@ -63,7 +60,7 @@ const Page = () => {
     <div className="container-2xl">
       <div className="flex flex-col w-full min-h-[calc(100vh-228px)] items-center justify-center p-4">
 
-        <div className="flex p-5 justify-end items-end"><DateToDate routePath="/datewise-distreport" /></div>
+        <div className="flex p-5 justify-end items-end"><DateToDate routePath="/datewise-dist-report" /></div>
 
           <div className="flex w-full justify-between pl-5 pr-5 pt-1">
             <label className="input input-bordered flex max-w-xs  items-center gap-2">
@@ -89,7 +86,7 @@ const Page = () => {
                   <th>QTY</th>
                   <th>SALE RATE</th>
                   <th>SUB TOTAL</th>
-                  <th>EDIT</th>
+          
                 </tr>
               </thead>
               <tbody>
@@ -104,7 +101,7 @@ const Page = () => {
                     <td>{product.productQty.toLocaleString('en-IN')}</td>
                     <td>{Number(product.dpRate.toFixed(2)).toLocaleString('en-IN')}</td>
                     <td>{Number((product.dpRate * product.productQty).toFixed(2)).toLocaleString('en-IN')}</td>
-                    <td><button onClick={()=>handleEdit(product.productId)} className="btn btn-primary btn-sm"><MdOutlineEditNote size={24} /></button></td>
+                  
                   </tr>
                 ))}
               </tbody>

@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const OrderCreate = () => {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [pending, setPending] = useState(false);
-    const [temporary, setTemporary] = useState(false); 
+    const [temporary, setTemporary] = useState(false);
 
     const dispatch = useAppDispatch();
     const uname = useAppSelector((state) => state.username.username);
@@ -126,72 +126,74 @@ const OrderCreate = () => {
         <div className="container w-full">
             <div className="flex flex-col md:flex-row gap-5 w-full items-center p-3">
                 <div className="flex flex-col min-h-80 w-1/2 items-center gap-2">
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
-                            <span className="label-text-alt">ORDER DATE</span>
+                    <div className="overflow-x-auto">
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text-alt">ORDER DATE</span>
+                            </div>
+                            <input type="date" name="date" onChange={(e: any) => setOrderDate(e.target.value)} max={maxDate} value={orderDate} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
+                        </label>
+                        <div className="flex w-full max-w-xs justify-between">
+                            <div className="label">
+                                <span className="label-text-alt">RETAILER NAME</span>
+                            </div>
+                            <div className="label gap-2">
+                                <span className="label-text-alt">TEMPORARY</span>
+                                <input type="checkbox" className="checkbox checkbox-success w-[20px] h-[20px]" checked={temporary}
+                                    onChange={(e) => setTemporary(e.target.checked)} />
+                            </div>
                         </div>
-                        <input type="date" name="date" onChange={(e: any) => setOrderDate(e.target.value)} max={maxDate} value={orderDate} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
-                    </label>
-                    <div className="flex w-full max-w-xs justify-between">
-                        <div className="label">
-                            <span className="label-text-alt">RETAILER NAME</span>
-                        </div>
-                        <div className="label gap-2">
-                            <span className="label-text-alt">TEMPORARY</span>
-                            <input type="checkbox" className="checkbox checkbox-success w-[20px] h-[20px]" checked={temporary}
-                                onChange={(e) => setTemporary(e.target.checked)} />
-                        </div>
+                        <label className="form-control w-full max-w-xs">
+
+                            {!temporary && (
+                                <Select className="text-black" name="retailer" onChange={(selectedOption: any) => setRetailer(selectedOption.value)} options={retailerOption} />
+                            )}
+                            {temporary && (
+                                <label className="form-control w-full max-w-xs">
+                                    <input
+                                        type="text"
+                                        name="temporary"
+                                        onChange={(e: any) => setRetailer(e.target.value)}
+                                        placeholder="Type Here" value={retailer}
+                                        className="input input-bordered rounded-md w-full max-w-xs h-[40px] bg-white text-black" />
+
+                                </label>
+                            )}
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text-alt">ORDER NOTE</span>
+                            </div>
+                            <input type='text' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={orderNote} onChange={(e) => setOrderNote(e.target.value)} placeholder='Type Here' />
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text-alt">PRODUCT NAME</span>
+                            </div>
+                            <Select className="text-black" name="pname" onChange={(selectedOption: any) => setProductName(selectedOption.value)} options={itemOption} />
+
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text-alt">QUANTITY</span>
+                            </div>
+                            <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={orderQty} onChange={(e) => setOrderQty(e.target.value)} placeholder='00' />
+                        </label>
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text-alt">SALE RATE</span>
+                            </div>
+                            <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={saleRate} onChange={(e) => setSaleRate(e.target.value)} placeholder='00' />
+                        </label>
+
+                        <label className="form-control w-full max-w-xs pt-5">
+                            <button onClick={handleOrderSubmit} className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" >ADD ORDER</button>
+                        </label>
                     </div>
-                    <label className="form-control w-full max-w-xs">
-                      
-                       {!temporary && (
-                            <Select className="text-black" name="retailer" onChange={(selectedOption: any) => setRetailer(selectedOption.value)} options={retailerOption} />
-                        )}
-                        {temporary && (
-                            <label className="form-control w-full max-w-xs">
-                                <input
-                                    type="text"
-                                    name="temporary"
-                                    onChange={(e: any) => setRetailer(e.target.value)}
-                                    placeholder="Type Here" value={retailer}
-                                    className="input input-bordered rounded-md w-full max-w-xs h-[40px] bg-white text-black" />
-
-                            </label>
-                        )}
-                    </label>
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
-                            <span className="label-text-alt">ORDER NOTE</span>
-                        </div>
-                        <input type='text' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={orderNote} onChange={(e) => setOrderNote(e.target.value)} placeholder='Type Here' />
-                    </label>
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
-                            <span className="label-text-alt">PRODUCT NAME</span>
-                        </div>
-                        <Select className="text-black" name="pname" onChange={(selectedOption: any) => setProductName(selectedOption.value)} options={itemOption} />
-
-                    </label>
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
-                            <span className="label-text-alt">QUANTITY</span>
-                        </div>
-                        <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={orderQty} onChange={(e) => setOrderQty(e.target.value)} placeholder='00' />
-                    </label>
-                    <label className="form-control w-full max-w-xs">
-                        <div className="label">
-                            <span className="label-text-alt">SALE RATE</span>
-                        </div>
-                        <input type='number' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={saleRate} onChange={(e) => setSaleRate(e.target.value)} placeholder='00' />
-                    </label>
-
-                    <label className="form-control w-full max-w-xs pt-5">
-                        <button onClick={handleOrderSubmit} className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" >ADD ORDER</button>
-                    </label>
                 </div>
 
                 <div className="flex flex-col w-1/2 items-center p-5">
-                <div className="flex">
+                    <div className="flex">
                         <div className="avatar-group -space-x-6 rtl:space-x-reverse">
                             <div className="avatar placeholder">
                                 <div className="bg-neutral text-neutral-content w-12">
@@ -200,41 +202,43 @@ const OrderCreate = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="overflow-x-auto h-auto">
-                        <table className="table table-pin-rows table-xs">
-                            <thead>
-                                <tr className="font-bold">
-                                    <th>SN</th>
-                                    <th>Date</th>
-                                    <th>Retailer</th>
-                                    <th>Note</th>
-                                    <th>Products</th>
-                                    <th>Qty</th>
-                                    <th>Rate</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredProducts?.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{item.date}</td>
-                                        <td>{item.retailer}</td>
-                                        <td>{item.orderNote}</td>
-                                        <td>{item.productName}</td>
-                                        <td>{item.orderQty}</td>
-                                        <td>{item.saleRate}</td>
-                                        
-                                        <td>
-                                            <button onClick={() => {
-                                                handleDeleteProduct(item.id);
-                                            }} className="btn-xs rounded-md btn-outline btn-error"><RiDeleteBin6Line size={16} /></button>
-                                        </td>
+                    <div className="flex justify-center w-full">
+                        <div className="overflow-x-auto h-auto">
+                            <table className="table table-xs md:table-sm table-pin-rows">
+                                <thead>
+                                    <tr className="font-bold">
+                                        <th>SN</th>
+                                        <th>Date</th>
+                                        <th>Retailer</th>
+                                        <th>Note</th>
+                                        <th>Products</th>
+                                        <th>Qty</th>
+                                        <th>Rate</th>
+                                        <th>Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {filteredProducts?.map((item, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{item.date}</td>
+                                            <td>{item.retailer}</td>
+                                            <td>{item.orderNote}</td>
+                                            <td>{item.productName}</td>
+                                            <td>{item.orderQty}</td>
+                                            <td>{item.saleRate}</td>
 
+                                            <td>
+                                                <button onClick={() => {
+                                                    handleDeleteProduct(item.id);
+                                                }} className="btn-xs rounded-md btn-outline btn-error"><RiDeleteBin6Line size={16} /></button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                     <div className="flex items-center justify-center pt-10">
                         <button onClick={handleFinalOrderSubmit} className="btn btn-success btn-outline btn-sm max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT ALL"}</button>

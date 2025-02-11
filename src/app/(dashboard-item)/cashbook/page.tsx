@@ -72,14 +72,17 @@ const CashBook = () => {
       <div className="w-full card">
         <div ref={contentToPrint} className="flex w-full items-center justify-center pt-5">
           <div className="overflow-x-auto">
-            <div className="flex w-full items-center justify-between font-bold p-5">
+            <div className="flex flex-col items-center font-bold">
+              <h4>CASH BOOK</h4>
+              <h4>{date}</h4>
+            </div>
+            <div className="flex w-full justify-between font-bold p-5">
               <h4>DEBIT</h4>
-              <h4>CASH BOOK ({date})</h4>
               <h4>CREDIT</h4>
             </div>
             <div className="flex w-full gap-10">
               <div className="flex">
-                <table className="table table-sm">
+                <table className="table table-xs md:table-sm table-pin-rows">
                   <thead>
                     <tr>
                       <th>DATE</th>
@@ -117,7 +120,7 @@ const CashBook = () => {
                 </table>
               </div>
               <div>
-                <table className="table table-sm">
+                <table className="table table-xs md:table-sm table-pin-rows">
 
                   <thead>
                     <tr>
@@ -137,7 +140,7 @@ const CashBook = () => {
                     <tr className='font-semibold'>
                       <td>{date}</td>
                       <td>TOTAL CREDIT</td>
-                      <td>{Number (totalCredit()).toLocaleString('en-IN')}</td>
+                      <td>{Number(totalCredit()).toLocaleString('en-IN')}</td>
                     </tr>
                     <tr className='font-semibold'>
                       <td>{date}</td>

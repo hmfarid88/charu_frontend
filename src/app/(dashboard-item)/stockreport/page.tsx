@@ -75,11 +75,11 @@ const Page = () => {
               <div className="flex flex-col items-center pb-5"><h4 className="font-bold">PRODUCT STOCK</h4>
                 <h4><CurrentDate /></h4>
               </div>
-              <table className="table">
+              <table className="table table-xs md:table-sm table-pin-rows">
                 <thead>
                   <tr>
                     <th>SN</th>
-                    <th>PRODUCT NAME</th>
+                    <th>PRODUCT</th>
                     <th>COST PRICE</th>
                     <th>QUANTITY</th>
                     <th>SUB TOTAL</th>

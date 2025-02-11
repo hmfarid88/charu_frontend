@@ -19,7 +19,7 @@ const AddRetailer = () => {
     const [retailer, setRetailer] = useState("");
     const handleEdit = (e: any) => {
         e.preventDefault();
-        if(!retailer){
+        if (!retailer) {
             toast.warning("Retailer name  is required !");
             return;
         }
@@ -28,7 +28,7 @@ const AddRetailer = () => {
     }
     const handleRetailerSubmit = async (e: any) => {
         e.preventDefault();
-        if (!retailerName ||!retailerCode || !thanaName || !zillaName || !areaName || !mobileNumber || !salesPerson) {
+        if (!retailerName || !retailerCode || !thanaName || !zillaName || !areaName || !mobileNumber || !salesPerson) {
             toast.warning("Item is empty !")
             return;
         }
@@ -39,7 +39,7 @@ const AddRetailer = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ retailerName, retailerCode, thanaName, zillaName, areaName, mobileNumber, salesPerson, status:'Active' }),
+                body: JSON.stringify({ retailerName, retailerCode, thanaName, zillaName, areaName, mobileNumber, salesPerson, status: 'Active' }),
             });
 
             if (!response.ok) {
@@ -96,56 +96,59 @@ const AddRetailer = () => {
     }, [apiBaseUrl, retailerName]);
     return (
         <div className='container'>
-            <div className="flex flex-col w-full items-center p-2">
-                <div className="flex w-full items-end justify-end">
-                    <a href="#my_modal_retailer_edit" className="btn btn-square btn-ghost"><FaRegEdit size={24} /></a>
-                </div>
-                <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">RETAILER NAME</span>
-                    </div>
-                    <input type='text' name='retailer' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={retailerName} onChange={(e) => setRetailerName(e.target.value)} placeholder='Type Here' />
-                </label>
-                <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">RETAILER CODE</span>
-                    </div>
-                    <input type='text' name='code' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={retailerCode} onChange={(e) => setRetailerCode(e.target.value)} placeholder='Type Here' />
-                </label>
-                <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">THANA NAME</span>
-                    </div>
-                    <input type='text' name='thana' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={thanaName} onChange={(e) => setThanaName(e.target.value)} placeholder='Type Here' />
-                </label>
-                <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">ZILLA NAME</span>
-                    </div>
-                    <input type='text' name='zilla' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={zillaName} onChange={(e) => setZillaName(e.target.value)} placeholder='Type Here' />
-                </label>
-                <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">AREA NAME</span>
-                    </div>
-                    <input type='text' name='area' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={areaName} onChange={(e) => setAreaName(e.target.value)} placeholder='Type Here' />
-                </label>
-                <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">MOBILE NUMBER</span>
-                    </div>
-                    <input type='text' maxLength={11} minLength={11} className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={mobileNumber} onChange={(e: any) => setMobileNumber(e.target.value.replace(/\D/g, ""))} placeholder='Type Here' />
-                </label>
-                <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">SALES PERSON</span>
-                    </div>
-                    <Select className="text-black" name="sales person" onChange={(selectedOption: any) => setSalesPerson(selectedOption.value)} options={personOption} />
 
-                </label>
-                <label className="form-control w-full max-w-xs pt-5">
-                    <button className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" onClick={handleRetailerSubmit} disabled={pending} >{pending ? "Submitting..." : "ADD RETAILER"}</button>
-                </label>
+            <div className="flex flex-col w-full items-center p-2">
+                <div className="overflow-x-auto">
+                    <div className="flex w-full items-end justify-end">
+                        <a href="#my_modal_retailer_edit" className="btn btn-square btn-ghost"><FaRegEdit size={24} /></a>
+                    </div>
+                    <label className="form-control w-full max-w-xs pt-2">
+                        <div className="label">
+                            <span className="label-text-alt">RETAILER NAME</span>
+                        </div>
+                        <input type='text' name='retailer' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={retailerName} onChange={(e) => setRetailerName(e.target.value)} placeholder='Type Here' />
+                    </label>
+                    <label className="form-control w-full max-w-xs pt-2">
+                        <div className="label">
+                            <span className="label-text-alt">RETAILER CODE</span>
+                        </div>
+                        <input type='text' name='code' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={retailerCode} onChange={(e) => setRetailerCode(e.target.value)} placeholder='Type Here' />
+                    </label>
+                    <label className="form-control w-full max-w-xs pt-2">
+                        <div className="label">
+                            <span className="label-text-alt">THANA NAME</span>
+                        </div>
+                        <input type='text' name='thana' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={thanaName} onChange={(e) => setThanaName(e.target.value)} placeholder='Type Here' />
+                    </label>
+                    <label className="form-control w-full max-w-xs pt-2">
+                        <div className="label">
+                            <span className="label-text-alt">ZILLA NAME</span>
+                        </div>
+                        <input type='text' name='zilla' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={zillaName} onChange={(e) => setZillaName(e.target.value)} placeholder='Type Here' />
+                    </label>
+                    <label className="form-control w-full max-w-xs pt-2">
+                        <div className="label">
+                            <span className="label-text-alt">AREA NAME</span>
+                        </div>
+                        <input type='text' name='area' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={areaName} onChange={(e) => setAreaName(e.target.value)} placeholder='Type Here' />
+                    </label>
+                    <label className="form-control w-full max-w-xs pt-2">
+                        <div className="label">
+                            <span className="label-text-alt">MOBILE NUMBER</span>
+                        </div>
+                        <input type='text' maxLength={11} minLength={11} className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={mobileNumber} onChange={(e: any) => setMobileNumber(e.target.value.replace(/\D/g, ""))} placeholder='Type Here' />
+                    </label>
+                    <label className="form-control w-full max-w-xs pt-2">
+                        <div className="label">
+                            <span className="label-text-alt">SALES PERSON</span>
+                        </div>
+                        <Select className="text-black" name="sales person" onChange={(selectedOption: any) => setSalesPerson(selectedOption.value)} options={personOption} />
+
+                    </label>
+                    <label className="form-control w-full max-w-xs pt-5">
+                        <button className="btn btn-success rounded-md btn-sm h-[40px] w-full max-w-xs" onClick={handleRetailerSubmit} disabled={pending} >{pending ? "Submitting..." : "ADD RETAILER"}</button>
+                    </label>
+                </div>
             </div>
             <div className="modal sm:modal-middle" role="dialog" id="my_modal_retailer_edit">
                 <div className="modal-box">

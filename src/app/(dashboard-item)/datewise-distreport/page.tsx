@@ -73,21 +73,21 @@ const Page = () => {
                         </label>
                         <Print contentRef={contentToPrint} />
                     </div>
-                    <div className="overflow-x-auto">
+                    <div className="w-full overflow-x-auto">
                     <div ref={contentToPrint} className="flex-1 p-5">
                         <div className="flex flex-col items-center pb-5"><h4 className="font-bold">DELIVERY REPORT</h4>
                         <h4>{startDate} TO {endDate}</h4>
                         </div>
-                        <table className="table table-sm text-center">
+                        <table className="table table-xs md:table-sm table-pin-rows">
                             <thead>
                                 <tr>
                                     <th>SN</th>
                                     <th>DATE</th>
                                     <th>RETAILER</th>
-                                    <th>PRODUCT NAME</th>
+                                    <th>PRODUCT</th>
                                     <th>INVOICE NO</th>
                                     <th>TRUCK NO</th>
-                                    <th>QUANTITY</th>
+                                    <th>QTY</th>
                                     <th>SALE RATE</th>
                                     <th>SUB TOTAL</th>
                                 </tr>
@@ -112,6 +112,7 @@ const Page = () => {
                                     <td colSpan={5}></td>
                                     <td>TOTAL</td>
                                     <td>{totalQty}</td>
+                                    <td></td>
                                     <td>{Number(totalValue.toFixed(2)).toLocaleString('en-IN')}</td>
                                 </tr>
                             </tfoot>

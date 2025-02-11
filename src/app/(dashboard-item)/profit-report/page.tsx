@@ -65,10 +65,11 @@ const Page = () => {
             </label>
             <Print contentRef={contentToPrint} />
           </div>
+          <div className="flex w-full justify-center">
           <div className="overflow-x-auto">
           <div ref={contentToPrint} className="flex-1 p-5">
           <div className="flex flex-col items-center pb-5"><h4 className="font-bold">PROFIT REPORT</h4><CurrentMonthYear /></div>
-            <table className="table">
+          <table className="table table-xs md:table-sm table-pin-rows">
               <thead>
                 <tr>
                   <th>SN</th>
@@ -105,6 +106,7 @@ const Page = () => {
               </tfoot>
             </table>
           </div>
+        </div>
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { RiListUnordered } from "react-icons/ri";
 import { PiUserListDuotone } from "react-icons/pi";
 import { GrUserAdmin } from "react-icons/gr";
 import { BsReverseListColumnsReverse } from "react-icons/bs";
+import { TbReportSearch } from 'react-icons/tb';
 
 export const SalesSidebar = () => {
     return (
@@ -24,6 +25,7 @@ export const SalesSidebar = () => {
                         <li><Link href="/sales-dashboard"><IoHomeOutline size={20} /> HOME</Link></li>
                         <li><Link href="/sales-order"><RiListUnordered size={20} /> ORDER CREATE</Link></li>
                         <li><Link href="/order-list"><BsReverseListColumnsReverse size={20} /> ORDER LIST</Link></li>
+                        <li><Link href="/dist-report"><TbReportSearch size={20} /> DELIVERY REPORT</Link></li>
                         <li><Link href="/sales-retailer-ledger"><PiUserListDuotone size={20} /> RETAILER LEDGER</Link></li>
                         <li><Link href="/sales-admin"><GrUserAdmin size={20} /> ADMINSTRATION</Link></li>
 

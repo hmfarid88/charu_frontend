@@ -66,10 +66,10 @@ const Page = () => {
                         </label>
                         <Print contentRef={contentToPrint} />
                     </div>
-                    <div className="overflow-x-auto">
+                    <div className="w-full overflow-x-auto">
                     <div ref={contentToPrint} className="flex-1 p-5">
                         <div className="flex flex-col items-center pb-5"><h4 className="font-bold">ORDER REPORT</h4><CurrentDate /></div>
-                        <table className="table table-sm">
+                        <table className="table table-xs md:table-sm table-pin-rows">
                             <thead>
                                 <tr>
                                     <th>SN</th>

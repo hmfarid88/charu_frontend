@@ -54,38 +54,40 @@ const ClosingSetup = () => {
     };
 
     return (
-        <div className='flex flex-col w-full items-center justify-center gap-3'>
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text-alt">START DATE</span>
-                </div>
-                <input
-                    type="date"
-                    name="date"
-                    onChange={(e: any) => setStartDate(e.target.value)}
-                
-                    value={startDate}
-                    className="input input-bordered bg-white text-black"
-                />
-            </label>
+        <div className='flex flex-col w-full items-center justify-center p-2'>
+            <div className="overflow-x-auto">
+                <label className="form-control w-full max-w-xs">
+                    <div className="label">
+                        <span className="label-text-alt">START DATE</span>
+                    </div>
+                    <input
+                        type="date"
+                        name="date"
+                        onChange={(e: any) => setStartDate(e.target.value)}
 
-            <label className="form-control w-full max-w-xs">
-                <div className="label">
-                    <span className="label-text-alt">END DATE</span>
-                </div>
-                <input
-                    type="date"
-                    name="date"
-                    onChange={(e: any) => setEndDate(e.target.value)}
-                
-                    value={endDate}
-                    className="input input-bordered bg-white text-black"
-                />
-            </label>
+                        value={startDate}
+                        className="input input-bordered bg-white text-black"
+                    />
+                </label>
 
-            <label className="form-control w-full max-w-xs pt-3">
-                <button onClick={handleSubmit} className='btn btn-success' disabled={pending} >{pending ? "Adding..." : "ADD"}</button>
-            </label>
+                <label className="form-control w-full max-w-xs">
+                    <div className="label">
+                        <span className="label-text-alt">END DATE</span>
+                    </div>
+                    <input
+                        type="date"
+                        name="date"
+                        onChange={(e: any) => setEndDate(e.target.value)}
+
+                        value={endDate}
+                        className="input input-bordered bg-white text-black"
+                    />
+                </label>
+
+                <label className="form-control w-full max-w-xs pt-3">
+                    <button onClick={handleSubmit} className='btn btn-success' disabled={pending} >{pending ? "Adding..." : "ADD"}</button>
+                </label>
+            </div>
         </div>
     );
 };
