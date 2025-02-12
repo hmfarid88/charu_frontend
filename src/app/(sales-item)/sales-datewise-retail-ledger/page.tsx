@@ -33,14 +33,14 @@ const Page = () => {
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
-       
-    const handleDetails = (retailerName:string) => {
-          if (!retailerName) {
+
+    const handleDetails = (retailerName: string) => {
+        if (!retailerName) {
             toast.warning("Retailer name is missing!");
             return;
         }
         router.push(`/sales-datewise-retail-details?salesPerson=${username}&startDate=${newstartDate}&endDate=${newendDate}&retailerName=${retailerName}`);
-       
+
     }
 
     useEffect(() => {
@@ -95,62 +95,64 @@ const Page = () => {
                     </label>
                     <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                 </div>
-                <div className="w-full overflow-x-auto">
-                    <div ref={contentToPrint} className="flex-1 p-5">
-                        <div className="flex flex-col items-center pb-5"><h4 className="font-bold">RETAILER LEDGER</h4>
-                            <h4>{newstartDate} TO {newendDate}</h4>
-                        </div>
-                        <table className="table table-xs md:table-sm table-pin-rows">
-                            <thead>
-                                <tr>
-                                    <th>SN</th>
-                                    <th>RETAILER NAME</th>
-                                    <th>CODE</th>
-                                    <th>SALE PERSON</th>
-                                    <th>QTY</th>
-                                    <th>VALUE</th>
-                                    <th>PAYMENT</th>
-                                    <th>COMMISSION</th>
-                                    <th>ACHIEVED</th>
-                                    <th>BALANCE</th>
-                                    <th>DETAILS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredProducts?.map((product, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td className="uppercase">{product?.retailerName}</td>
-                                        <td className="uppercase">{product?.retailerCode}</td>
-                                        <td className="uppercase">{product?.salesPerson}</td>
-                                        <td>{Number(product?.totalProductQty.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.totalProductValue.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.totalPayment.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.totalCommission.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number((product?.totalPayment * 100 / product?.totalProductValue).toFixed(2)).toLocaleString('en-IN')} %</td>
-                                        <td>{Number((product?.totalProductValue - product?.totalPayment - product?.totalCommission).toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td><button onClick={() => handleDetails(product?.retailerName)} className="btn btn-xs btn-info">Details</button></td>
-
+                <div className="flex w-full justify-center">
+                    <div className="overflow-x-auto">
+                        <div ref={contentToPrint} className="flex-1 p-5">
+                            <div className="flex flex-col items-center pb-5"><h4 className="font-bold">RETAILER LEDGER</h4>
+                                <h4>{newstartDate} TO {newendDate}</h4>
+                            </div>
+                            <table className="table table-xs md:table-sm table-pin-rows">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>RETAILER NAME</th>
+                                        <th>CODE</th>
+                                        <th>SALE PERSON</th>
+                                        <th>QTY</th>
+                                        <th>VALUE</th>
+                                        <th>PAYMENT</th>
+                                        <th>COMMISSION</th>
+                                        <th>ACHIEVED</th>
+                                        <th>BALANCE</th>
+                                        <th>DETAILS</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                            <tfoot>
-                                <tr className="font-semibold text-lg">
-                                    <td colSpan={3}></td>
-                                    <td>TOTAL</td>
-                                    <td>{totalQty.toLocaleString('en-IN')}</td>
-                                    <td>{totalValue.toLocaleString('en-IN')}</td>
-                                    <td>{totalPayment.toLocaleString('en-IN')}</td>
-                                    <td>{totalCommission.toLocaleString('en-IN')}</td>
-                                    <td></td>
-                                    <td>{totalBalance.toLocaleString('en-IN')}</td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {filteredProducts?.map((product, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td className="uppercase">{product?.retailerName}</td>
+                                            <td className="uppercase">{product?.retailerCode}</td>
+                                            <td className="uppercase">{product?.salesPerson}</td>
+                                            <td>{Number(product?.totalProductQty.toFixed(2)).toLocaleString('en-IN')}</td>
+                                            <td>{Number(product?.totalProductValue.toFixed(2)).toLocaleString('en-IN')}</td>
+                                            <td>{Number(product?.totalPayment.toFixed(2)).toLocaleString('en-IN')}</td>
+                                            <td>{Number(product?.totalCommission.toFixed(2)).toLocaleString('en-IN')}</td>
+                                            <td>{Number((product?.totalPayment * 100 / product?.totalProductValue).toFixed(2)).toLocaleString('en-IN')} %</td>
+                                            <td>{Number((product?.totalProductValue - product?.totalPayment - product?.totalCommission).toFixed(2)).toLocaleString('en-IN')}</td>
+                                            <td><button onClick={() => handleDetails(product?.retailerName)} className="btn btn-xs btn-info">Details</button></td>
+
+                                        </tr>
+                                    ))}
+                                </tbody>
+                                <tfoot>
+                                    <tr className="font-semibold text-lg">
+                                        <td colSpan={3}></td>
+                                        <td>TOTAL</td>
+                                        <td>{totalQty.toLocaleString('en-IN')}</td>
+                                        <td>{totalValue.toLocaleString('en-IN')}</td>
+                                        <td>{totalPayment.toLocaleString('en-IN')}</td>
+                                        <td>{totalCommission.toLocaleString('en-IN')}</td>
+                                        <td></td>
+                                        <td>{totalBalance.toLocaleString('en-IN')}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </div>
-           
         </div>
     )
 }

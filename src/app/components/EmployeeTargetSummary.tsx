@@ -55,63 +55,65 @@ const EmployeeTargetSummary = () => {
     return (
         <div className="container-2xl">
             <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4 items-center justify-center">
-                
-                    <div className="flex w-full justify-between pl-5 pr-5 pt-1">
-                        <label className="input input-bordered flex max-w-xs  items-center gap-2">
-                            <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
-                                <path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" />
-                            </svg>
-                        </label>
-                        <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
-                    </div>
-                    <div className="w-full overflow-x-auto">
-                    <div ref={contentToPrint} className="flex-1 p-5">
-                        <div className="flex flex-col items-center pb-5"><h4 className="font-bold">TARGET LEDGER</h4>
-                            <h4 className="uppercase font-semibold">NAME: {allProducts[0]?.employeeName}</h4>
-                            <h4><CurrentDate /></h4>
+
+                <div className="flex w-full justify-between pl-5 pr-5 pt-1">
+                    <label className="input input-bordered flex max-w-xs  items-center gap-2">
+                        <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
+                            <path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" />
+                        </svg>
+                    </label>
+                    <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
+                </div>
+                <div className="flex w-full justify-center">
+                    <div className="overflow-x-auto">
+                        <div ref={contentToPrint} className="flex-1 p-5">
+                            <div className="flex flex-col items-center pb-5"><h4 className="font-bold">TARGET LEDGER</h4>
+                                <h4 className="uppercase font-semibold">NAME: {allProducts[0]?.employeeName}</h4>
+                                <h4><CurrentDate /></h4>
+                            </div>
+                            <table className="table table-xs md:table-sm table-pin-rows">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>MONTH</th>
+                                        <th>TARGET</th>
+                                        <th>SALE</th>
+                                        <th>SALE VALUE</th>
+                                        <th>COLLECTION</th>
+                                        <th>SALE</th>
+                                        <th>COLLECTION</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredProducts?.map((product, index) => {
+                                        const monthNames = [
+                                            "January", "February", "March", "April", "May", "June",
+                                            "July", "August", "September", "October", "November", "December"
+                                        ];
+                                        const monthName = monthNames[parseInt(product?.month) - 1];
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>{monthName}, {product?.year}</td>
+                                                <td>{Number((product?.targetAmount ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number((product?.productQty ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number((product?.soldValue ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number((product?.paymentValue ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(((product?.productQty * 100) / product?.targetAmount).toFixed(2)).toLocaleString('en-IN')} %</td>
+                                                <td>{Number(((product?.paymentValue * 100) / product?.soldValue).toFixed(2)).toLocaleString('en-IN')} %</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+
+                            </table>
                         </div>
-                        <table className="table table-xs md:table-sm table-pin-rows">
-                            <thead>
-                                <tr>
-                                    <th>SN</th>
-                                    <th>MONTH</th>
-                                    <th>TARGET</th>
-                                    <th>SALE</th>
-                                    <th>SALE VALUE</th>
-                                    <th>COLLECTION</th>
-                                    <th>SALE</th>
-                                    <th>COLLECTION</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredProducts?.map((product, index) => {
-                                    const monthNames = [
-                                        "January", "February", "March", "April", "May", "June",
-                                        "July", "August", "September", "October", "November", "December"
-                                    ];
-                                    const monthName = monthNames[parseInt(product?.month) - 1];
-                                    return (
-                                        <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>{monthName}, {product?.year}</td>
-                                            <td>{Number((product?.targetAmount ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
-                                            <td>{Number((product?.productQty ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
-                                            <td>{Number((product?.soldValue ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
-                                            <td>{Number((product?.paymentValue ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
-                                            <td>{Number(((product?.productQty * 100) / product?.targetAmount).toFixed(2)).toLocaleString('en-IN')} %</td>
-                                            <td>{Number(((product?.paymentValue * 100) / product?.soldValue).toFixed(2)).toLocaleString('en-IN')} %</td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-
-                        </table>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     )
 }

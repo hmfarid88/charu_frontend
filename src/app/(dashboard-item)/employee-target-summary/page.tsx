@@ -17,7 +17,7 @@ type Product = {
 
 
 const Page = () => {
-   
+
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const uname = useAppSelector((state) => state.username.username);
     const username = uname ? uname.username : 'Guest';
@@ -29,7 +29,7 @@ const Page = () => {
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
-   
+
     useEffect(() => {
         fetch(`${apiBaseUrl}/paymentApi/employee-targetList`)
             .then(response => response.json())
@@ -44,7 +44,7 @@ const Page = () => {
     useEffect(() => {
         const filtered = allProducts.filter(product =>
             (product.employeeName.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
-          
+
         );
         setFilteredProducts(filtered);
     }, [filterCriteria, allProducts]);
@@ -65,54 +65,56 @@ const Page = () => {
                     </label>
                     <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                 </div>
-                <div className="w-full overflow-x-auto">
-                    <div ref={contentToPrint} className="flex-1 p-5">
-                        <div className="flex flex-col items-center pb-5"><h4 className="font-bold">EMPLOYEE TARGET LEDGER</h4>
-                            <h4><CurrentDate /></h4>
+                <div className="flex w-full justify-center">
+                    <div className="overflow-x-auto">
+                        <div ref={contentToPrint} className="flex-1 p-5">
+                            <div className="flex flex-col items-center pb-5"><h4 className="font-bold">EMPLOYEE TARGET LEDGER</h4>
+                                <h4><CurrentDate /></h4>
+                            </div>
+                            <table className="table table-xs md:table-sm table-pin-rows">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>EMPLOYEE NAME</th>
+                                        <th>MONTH</th>
+                                        <th>TARGET QTY</th>
+                                        <th>SALE QTY</th>
+                                        <th>SALE VALUE</th>
+                                        <th>COLLECTION VALUE</th>
+                                        <th>SALE ACHIVE</th>
+                                        <th>COLLECTION ACHIVE</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredProducts?.map((product, index) => {
+                                        const monthNames = [
+                                            "January", "February", "March", "April", "May", "June",
+                                            "July", "August", "September", "October", "November", "December"
+                                        ];
+                                        const monthName = monthNames[parseInt(product?.month) - 1];
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td className="capitalize">{product?.employeeName}</td>
+                                                <td>{monthName}, {product?.year}</td>
+                                                <td>{Number((product?.targetAmount ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number((product?.productQty ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number((product?.soldValue ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number((product?.paymentValue ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(((product?.productQty * 100) / product?.targetAmount).toFixed(2)).toLocaleString('en-IN')} %</td>
+                                                <td>{Number(((product?.paymentValue * 100) / product?.soldValue).toFixed(2)).toLocaleString('en-IN')} %</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+
+                            </table>
                         </div>
-                        <table className="table table-xs md:table-sm table-pin-rows">
-                            <thead>
-                                <tr>
-                                    <th>SN</th>
-                                    <th>EMPLOYEE NAME</th>
-                                    <th>MONTH</th>
-                                    <th>TARGET QTY</th>
-                                    <th>SALE QTY</th>
-                                    <th>SALE VALUE</th>
-                                    <th>COLLECTION VALUE</th>
-                                    <th>SALE ACHIVE</th>
-                                    <th>COLLECTION ACHIVE</th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredProducts?.map((product, index) => {
-                                     const monthNames = [
-                                        "January", "February", "March", "April", "May", "June",
-                                        "July", "August", "September", "October", "November", "December"
-                                    ];
-                                    const monthName = monthNames[parseInt(product?.month) - 1];
-                                    return (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td className="capitalize">{product?.employeeName}</td>
-                                        <td>{monthName}, {product?.year}</td>
-                                        <td>{Number((product?.targetAmount ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number((product?.productQty ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number((product?.soldValue ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number((product?.paymentValue ?? 0).toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(((product?.productQty *100)/product?.targetAmount).toFixed(2)).toLocaleString('en-IN')} %</td>
-                                        <td>{Number(((product?.paymentValue *100)/product?.soldValue).toFixed(2)).toLocaleString('en-IN')} %</td>
-                                   </tr>
-                                  );
-                                })}
-                            </tbody>
-                           
-                        </table>
                     </div>
                 </div>
+
             </div>
-           
         </div>
     )
 }

@@ -62,10 +62,8 @@ const Page = () => {
   return (
     <div className="container-2xl">
       <div className="flex flex-col w-full min-h-[calc(100vh-228px)] items-center justify-center p-4">
-
-        <div className="flex p-5 justify-end items-end"><DateToDate routePath="/datewise-distreport" /></div>
-
-          <div className="flex w-full justify-between pl-5 pr-5 pt-1">
+        <div className="flex p-2"><DateToDate routePath="/datewise-distreport" /></div>
+          <div className="flex w-full justify-between pl-5 pr-10 pt-1">
             <label className="input input-bordered flex max-w-xs  items-center gap-2">
               <input type="text" value={filterCriteria} onChange={handleFilterChange} className="grow" placeholder="Search" />
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
@@ -74,7 +72,8 @@ const Page = () => {
             </label>
             <Print contentRef={contentToPrint} />
           </div>
-          <div className="w-full overflow-x-auto">
+          <div className="flex w-full items-center justify-center">
+          <div className="overflow-x-auto">
           <div ref={contentToPrint} className="flex-1 p-5">
             <div className="flex flex-col items-center pb-5"><h4 className="font-bold">DELIVERY REPORT</h4><CurrentMonthYear /></div>
             <table className="table table-xs md:table-sm table-pin-rows">
@@ -119,6 +118,7 @@ const Page = () => {
               </tfoot>
             </table>
           </div>
+        </div>
         </div>
       </div>
     </div>

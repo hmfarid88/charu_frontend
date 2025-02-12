@@ -3,6 +3,7 @@ import AddRetailer from "@/app/components/AddRetailer"
 import ClosingSetup from "@/app/components/ClosingSetup"
 import EmployeeTarget from "@/app/components/EmployeeTarget"
 import ShopInfo from "@/app/components/ShopInfo"
+import Theme from "@/app/components/Theme"
 
 const Page = () => {
   return (
@@ -29,6 +30,10 @@ const Page = () => {
             <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="TARGET SETUP" />
             <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
               <EmployeeTarget />
+            </div>
+            <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="THEME SETUP" />
+            <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+              <Theme />
             </div>
           </div>
         </div>

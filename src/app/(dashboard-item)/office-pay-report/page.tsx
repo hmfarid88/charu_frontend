@@ -69,7 +69,8 @@ const Page = () => {
                         </label>
                         <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                     </div>
-                    <div className="w-full overflow-x-auto">
+                    <div className="flex w-full justify-center">
+                    <div className="overflow-x-auto">
                     <div ref={contentToPrint} className="flex-1 p-5">
                     <div className="flex flex-col items-center pb-5"><h4 className="font-bold">CASH PAYMENT REPORT</h4><CurrentMonthYear /></div>
                     <table className="table table-xs md:table-sm table-pin-rows">
@@ -105,6 +106,7 @@ const Page = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

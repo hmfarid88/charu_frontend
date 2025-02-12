@@ -12,7 +12,7 @@ type Product = {
     productValue: number;
     payment: number;
     commission: number;
-   };
+};
 
 
 const Page = () => {
@@ -58,7 +58,7 @@ const Page = () => {
         setFilterCriteria(e.target.value);
     };
     let cumulativeBalance = 0;
-  
+
     return (
         <div className="container-2xl">
             <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4 items-center justify-center">
@@ -71,53 +71,55 @@ const Page = () => {
                     </label>
                     <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                 </div>
-                <div className="w-full overflow-x-auto">
-                    <div ref={contentToPrint} className="flex-1 p-5">
-                        <div className="flex flex-col items-center pb-5"><h4 className="font-bold">RETAILER LEDGER</h4>
-                            <h4 className="font-bold capitalize">Retailer : {retailerName}</h4>
-                            <h4>{startDate} TO {endDate}</h4>
-                        </div>
-                        <table className="table table-xs md:table-sm table-pin-rows">
-                            <thead>
-                                <tr>
-                                    <th>SN</th>
-                                    <th>DATE</th>
-                                    <th>NOTE</th>
-                                    <th>PRODUCT NAME</th>
-                                    <th>PRODUCT QTY</th>
-                                    <th>PRODUCT VALUE</th>
-                                    <th>PAYMENT</th>
-                                    <th>COMMISSION</th>
-                                    <th>BALANCE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {filteredProducts?.map((product, index) => {
-                                    const currentBalance = product.productValue - product.payment - product.commission;
-                                    cumulativeBalance += currentBalance;
-
-                                    return (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{product?.date}</td>
-                                        <td className="capitalize">{product?.note}</td>
-                                        <td>{product?.productName}</td>
-                                        <td>{Number(product?.productQty.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.productValue.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.payment.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.commission.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(cumulativeBalance.toFixed(2)).toLocaleString('en-IN')}</td>
-
+                <div className="flex w-full justify-center">
+                    <div className="overflow-x-auto">
+                        <div ref={contentToPrint} className="flex-1 p-5">
+                            <div className="flex flex-col items-center pb-5"><h4 className="font-bold">RETAILER LEDGER</h4>
+                                <h4 className="font-bold capitalize">Retailer : {retailerName}</h4>
+                                <h4>{startDate} TO {endDate}</h4>
+                            </div>
+                            <table className="table table-xs md:table-sm table-pin-rows">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>DATE</th>
+                                        <th>NOTE</th>
+                                        <th>PRODUCT NAME</th>
+                                        <th>PRODUCT QTY</th>
+                                        <th>PRODUCT VALUE</th>
+                                        <th>PAYMENT</th>
+                                        <th>COMMISSION</th>
+                                        <th>BALANCE</th>
                                     </tr>
-                                );
-                            })}
-                            </tbody>
-                          
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {filteredProducts?.map((product, index) => {
+                                        const currentBalance = product.productValue - product.payment - product.commission;
+                                        cumulativeBalance += currentBalance;
+
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>{product?.date}</td>
+                                                <td className="capitalize">{product?.note}</td>
+                                                <td>{product?.productName}</td>
+                                                <td>{Number(product?.productQty.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(product?.productValue.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(product?.payment.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(product?.commission.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(cumulativeBalance.toFixed(2)).toLocaleString('en-IN')}</td>
+
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     )
 }

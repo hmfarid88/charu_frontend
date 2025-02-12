@@ -12,13 +12,13 @@ type Product = {
     productValue: number;
     payment: number;
     commission: number;
-   };
+};
 
 
 const Page = () => {
 
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-   
+
     const searchParams = useSearchParams();
     const supplierName = searchParams.get('supplierName');
     const username = searchParams.get('username');
@@ -68,51 +68,53 @@ const Page = () => {
                     </label>
                     <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                 </div>
-                <div className="w-full overflow-x-auto">
-                    <div ref={contentToPrint} className="flex-1 p-5">
-                        <div className="flex flex-col items-center pb-5"><h4 className="font-bold">SUPPLIER LEDGER</h4>
-                            <h4 className="font-bold capitalize">Supplier : {supplierName}</h4>
-                            <h4><CurrentDate/></h4>
-                        </div>
-                        <table className="table table-xs md:table-sm table-pin-rows">
-                            <thead>
-                                <tr>
-                                    <th>SN</th>
-                                    <th>DATE</th>
-                                    <th>PRODUCT NAME</th>
-                                    <th>PRODUCT QTY</th>
-                                    <th>PRODUCT VALUE</th>
-                                    <th>PAYMENT</th>
-                                    <th>COMMISSION</th>
-                                    <th>BALANCE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {filteredProducts?.map((product, index) => {
-                                    const currentBalance = product.productValue - product.payment - product.commission;
-                                    cumulativeBalance += currentBalance;
-
-                                    return (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{product?.date}</td>
-                                        <td>{product?.productName}</td>
-                                        <td>{Number(product?.productQty.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.productValue.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.payment.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(product?.commission.toFixed(2)).toLocaleString('en-IN')}</td>
-                                        <td>{Number(cumulativeBalance.toFixed(2)).toLocaleString('en-IN')}</td>
-
+                <div className="flex w-full justify-center">
+                    <div className="overflow-x-auto">
+                        <div ref={contentToPrint} className="flex-1 p-5">
+                            <div className="flex flex-col items-center pb-5"><h4 className="font-bold">SUPPLIER LEDGER</h4>
+                                <h4 className="font-bold capitalize">Supplier : {supplierName}</h4>
+                                <h4><CurrentDate /></h4>
+                            </div>
+                            <table className="table table-xs md:table-sm table-pin-rows">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>DATE</th>
+                                        <th>PRODUCT NAME</th>
+                                        <th>PRODUCT QTY</th>
+                                        <th>PRODUCT VALUE</th>
+                                        <th>PAYMENT</th>
+                                        <th>COMMISSION</th>
+                                        <th>BALANCE</th>
                                     </tr>
-                                );
-                            })}
-                            </tbody>
-                           
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {filteredProducts?.map((product, index) => {
+                                        const currentBalance = product.productValue - product.payment - product.commission;
+                                        cumulativeBalance += currentBalance;
+
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>{product?.date}</td>
+                                                <td>{product?.productName}</td>
+                                                <td>{Number(product?.productQty.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(product?.productValue.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(product?.payment.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(product?.commission.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(cumulativeBalance.toFixed(2)).toLocaleString('en-IN')}</td>
+
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     )
 }
