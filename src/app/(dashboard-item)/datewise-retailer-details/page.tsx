@@ -10,6 +10,7 @@ type Product = {
     note: string;
     productName: string;
     productQty: number;
+    dpRate: number;
     productValue: number;
     payment: number;
     commission: number;
@@ -85,9 +86,10 @@ const Page = () => {
                                         <th>SN</th>
                                         <th>DATE</th>
                                         <th>NOTE</th>
-                                        <th>PRODUCT NAME</th>
-                                        <th>PRODUCT QTY</th>
-                                        <th>PRODUCT VALUE</th>
+                                        <th>PRODUCT</th>
+                                        <th>QTY</th>
+                                        <th>RATE</th>
+                                        <th>TOTAL VALUE</th>
                                         <th>PAYMENT</th>
                                         <th>COMMISSION</th>
                                         <th>BALANCE</th>
@@ -105,6 +107,7 @@ const Page = () => {
                                                 <td className="capitalize">{product?.note}</td>
                                                 <td>{product?.productName}</td>
                                                 <td>{Number(product?.productQty.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td>{Number(product?.dpRate.toFixed(2)).toLocaleString('en-IN')}</td>
                                                 <td>{Number(product?.productValue.toFixed(2)).toLocaleString('en-IN')}</td>
                                                 <td>{Number(product?.payment.toFixed(2)).toLocaleString('en-IN')}</td>
                                                 <td>{Number(product?.commission.toFixed(2)).toLocaleString('en-IN')}</td>

@@ -9,6 +9,7 @@ import { useSearchParams } from "next/navigation";
 type Product = {
     date: string;
     customer: string;
+    note: string;
     productName: string;
     invoiceNo: string;
     truckNo: string;
@@ -45,6 +46,7 @@ const Page = () => {
     useEffect(() => {
         const filtered = allProducts.filter(product =>
             (product.customer.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+            (product.note?.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
             (product.date.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
             (product.productName.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
             (product.invoiceNo.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
@@ -83,6 +85,7 @@ const Page = () => {
                                         <th>SN</th>
                                         <th>DATE</th>
                                         <th>RETAILER</th>
+                                        <th>NOTE</th>
                                         <th>PRODUCT</th>
                                         <th>INVOICE NO</th>
                                         <th>TRUCK NO</th>
@@ -97,6 +100,7 @@ const Page = () => {
                                             <td>{index + 1}</td>
                                             <td>{product.date}</td>
                                             <td className="capitalize">{product.customer}</td>
+                                            <td className="capitalize">{product.note}</td>
                                             <td className="capitalize">{product.productName}</td>
                                             <td className="uppercase">{product.invoiceNo}</td>
                                             <td className="uppercase">{product.truckNo}</td>
@@ -108,7 +112,7 @@ const Page = () => {
                                 </tbody>
                                 <tfoot>
                                     <tr className="font-semibold text-lg">
-                                        <td colSpan={5}></td>
+                                        <td colSpan={6}></td>
                                         <td>TOTAL</td>
                                         <td>{totalQty}</td>
                                         <td></td>

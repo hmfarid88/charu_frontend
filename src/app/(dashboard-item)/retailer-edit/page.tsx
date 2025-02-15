@@ -61,20 +61,14 @@ const Page = () => {
                 toast.error(error.message);
             } else {
                 toast.success("Information updated successfully.");
+               
             }
 
-        } catch (error) {
-            toast.error("Invalid retailer item !")
+        } catch (error:any) {
+            toast.error(error.message)
         } finally {
             setPending(false);
-            setRetailerName("")
-            setRetailerCode("")
-            setThanaName("")
-            setZillaName("")
-            setAreaName("")
-            setMobileNumber("")
-            setSalesPerson("")
-            setStatus("")
+           
         }
     };
 
@@ -144,7 +138,7 @@ const Page = () => {
                         <span className="label-text-alt">SALES PERSON</span>
                     </div>
                     <div className="flex justify-between gap-2">
-                        <p className='capitalize'>{salesPerson}</p>
+                        <p className='capitalize w-[50%] p-2 bg-white text-black rounded-md'>{salesPerson}</p>
                         <Select className="text-black w-[50%]" onChange={(selectedOption: any) => setSalesPerson(selectedOption.value)} options={personOption} />
                     </div>
                 </label>
@@ -154,7 +148,7 @@ const Page = () => {
                         <span className="label-text-alt">STATUS</span>
                     </div>
                     <div className="flex justify-between gap-2">
-                        <p className='capitalize'>{status}</p>
+                        <p className='capitalize w-[50%] p-2 bg-white text-black rounded-md'>{status}</p>
                         <select className='select select-sm select-bordered h-[40px] w-[50%] bg-white text-black rounded-md' onChange={(e: any) => { setStatus(e.target.value) }}>
                             <option selected disabled>Select . . .</option>
                             <option value="Active">Active</option>
@@ -164,7 +158,18 @@ const Page = () => {
                     </div>
                 </label>
                 <label className="form-control w-full max-w-xs pt-5">
-                    <button className="btn btn-success w-full" onClick={handleUpdateSubmit} disabled={pending} >{pending ? "Updating..." : "UPDATE"}</button>
+                <button
+                        className="btn btn-success w-full"
+                        onClick={(e) => {
+                            if (window.confirm("Are you sure you want to update this item?")) {
+                                handleUpdateSubmit(e);
+                            }
+                        }}
+                        disabled={pending}
+                    >
+                        {pending ? "Updating..." : "UPDATE"}
+                    </button>
+                
                 </label>
             </div>
 

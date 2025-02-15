@@ -3,9 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
 import { FcPrint } from "react-icons/fc";
 import { useReactToPrint } from 'react-to-print';
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { MdOutlineEditNote } from "react-icons/md";
+import { toast } from "react-toastify";
 
 type Product = {
+    id: number;
     date: string;
     retailerName: string;
     note: string;
@@ -18,7 +21,7 @@ const Page = () => {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const uname = useAppSelector((state) => state.username.username);
     const username = uname ? uname.username : 'Guest';
-
+    const router = useRouter();
     const searchParams = useSearchParams();
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
@@ -29,7 +32,15 @@ const Page = () => {
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
+    
+    const handleEdit = (id: number) => {
+        if (!id) {
+            toast.warning("Payment id is required !");
+            return;
+        }
+        router.push(`/paymentinfo-edit?id=${id}`);
 
+    }
     useEffect(() => {
         fetch(`${apiBaseUrl}/paymentApi/getDatewiseRetailerPayment?username=${username}&startDate=${startDate}&endDate=${endDate}`)
             .then(response => response.json())
@@ -84,6 +95,7 @@ const Page = () => {
                                         <th>RETAILER NAME</th>
                                         <th>PAYMENT NOTE</th>
                                         <th>AMOUNT</th>
+                                        <th>EDIT</th>
 
                                     </tr>
                                 </thead>
@@ -95,6 +107,7 @@ const Page = () => {
                                             <td>{product.retailerName}</td>
                                             <td>{product.note}</td>
                                             <td>{Number(product.amount.toFixed(2)).toLocaleString('en-IN')}</td>
+                                            <td><button onClick={() => handleEdit(product.id)} className="btn btn-primary btn-xs"><MdOutlineEditNote size={24} /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>
