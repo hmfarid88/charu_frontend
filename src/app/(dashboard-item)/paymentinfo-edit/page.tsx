@@ -11,6 +11,7 @@ const Page = () => {
     const id = searchParams.get('id');
     const [pending, setPending] = useState(false);
     const [maxDate, setMaxDate] = useState('');
+
     useEffect(() => {
         const today = new Date();
         const year = today.getFullYear();
@@ -113,7 +114,6 @@ const Page = () => {
                         <Select className="text-black w-[50%]" name="retailer" onChange={(selectedOption: any) => setRetailerName(selectedOption.value)} options={retailerOption} />
                     </div>
                 </label>
-
 
                 <label className="form-control w-full max-w-xs pt-2">
                     <div className="label">
