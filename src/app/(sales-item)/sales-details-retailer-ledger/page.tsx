@@ -37,7 +37,7 @@ const Page = () => {
 
 
     useEffect(() => {
-        fetch(`${apiBaseUrl}/retailer/sales-retailer-details?retailerName=${retailerName}&salesPerson=${salesPerson}`)
+        fetch(`${apiBaseUrl}/retailer/sales-retailer-details?retailerName=${encodeURIComponent(retailerName ?? "")}&salesPerson=${encodeURIComponent(salesPerson ?? "")}`)
             .then(response => response.json())
             .then(data => {
                 setAllProducts(data);

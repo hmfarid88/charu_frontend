@@ -32,7 +32,7 @@ const Page = () => {
     const [allProducts, setAllProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        fetch(`${apiBaseUrl}/paymentApi/getDatewiseSupplierCommission?username=${username}&startDate=${startDate}&endDate=${endDate}`)
+        fetch(`${apiBaseUrl}/paymentApi/getDatewiseSupplierCommission?username=${encodeURIComponent(username)}&startDate=${startDate}&endDate=${endDate}`)
             .then(response => response.json())
             .then(data => {
                 setAllProducts(data);

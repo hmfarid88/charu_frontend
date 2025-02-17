@@ -27,7 +27,7 @@ const Page = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetch(`${apiBaseUrl}/api/getProductStock?username=${username}`)
+    fetch(`${apiBaseUrl}/api/getProductStock?username=${encodeURIComponent(username)}`)
       .then(response => response.json())
       .then(data => {
         setAllProducts(data);

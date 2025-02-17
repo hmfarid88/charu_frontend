@@ -30,7 +30,7 @@ const EmployeeTargetSummary = () => {
     const [allProducts, setAllProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        fetch(`${apiBaseUrl}/paymentApi/singleEmployee-targetList?employeeName=${username}`)
+        fetch(`${apiBaseUrl}/paymentApi/singleEmployee-targetList?employeeName=${encodeURIComponent(username)}`)
             .then(response => response.json())
             .then(data => {
                 setAllProducts(data);

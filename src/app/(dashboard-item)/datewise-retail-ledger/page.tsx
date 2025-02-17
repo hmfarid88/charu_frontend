@@ -39,7 +39,7 @@ const Page = () => {
             toast.warning("Retailer name is empty!");
             return;
         }
-        router.push(`/datewise-retailer-details?startDate=${newstartDate}&endDate=${newendDate}&retailerName=${encodeURIComponent(retailerName)}&username=${username}`);
+        router.push(`/datewise-retailer-details?startDate=${newstartDate}&endDate=${newendDate}&retailerName=${encodeURIComponent(retailerName)}&username=${encodeURIComponent(username)}`);
 
     }
 

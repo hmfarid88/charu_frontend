@@ -40,7 +40,7 @@ const Page = () => {
     };
 
     useEffect(() => {
-        fetch(`${apiBaseUrl}/api/getAllProduct?username=${username}`)
+        fetch(`${apiBaseUrl}/api/getAllProduct?username=${encodeURIComponent(username)}`)
             .then(response => response.json())
             .then(data => {
                 setAllProducts(data);

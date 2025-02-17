@@ -40,16 +40,17 @@ const Invoice = () => {
     }
     const [shopInfo, setShopInfo] = useState<shopData>();
     useEffect(() => {
-        fetch(`${apiBaseUrl}/invoice/getShopInfo?username=${username}`)
+        fetch(`${apiBaseUrl}/invoice/getShopInfo?username=${encodeURIComponent(username)}`)
             .then(response => response.json())
             .then(data => {
                 setShopInfo(data);
             })
             .catch(error => console.error('Error fetching products:', error));
     }, [apiBaseUrl, username]);
+
     useEffect(() => {
         if (username && invoiceNo) {
-            fetch(`${apiBaseUrl}/api/getInvoiceData?username=${username}&invoiceNo=${invoiceNo}`)
+            fetch(`${apiBaseUrl}/api/getInvoiceData?username=${encodeURIComponent(username)}&invoiceNo=${encodeURIComponent(invoiceNo)}`)
                 .then(response => response.json())
                 .then(data => {
                     setInvoiceData(data);

@@ -39,7 +39,7 @@ const Page = () => {
             toast.warning("Retailer name is missing!");
             return;
         }
-        router.push(`/sales-datewise-retail-details?salesPerson=${username}&startDate=${newstartDate}&endDate=${newendDate}&retailerName=${retailerName}`);
+        router.push(`/sales-datewise-retail-details?salesPerson=${encodeURIComponent(username)}&startDate=${newstartDate}&endDate=${newendDate}&retailerName=${encodeURIComponent(retailerName)}`);
 
     }
 
