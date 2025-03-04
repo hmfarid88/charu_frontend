@@ -3,9 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
 import { FcPrint } from "react-icons/fc";
 import { useReactToPrint } from 'react-to-print';
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
+import { MdOutlineEditNote } from "react-icons/md";
 
 type Product = {
+    id: number;
     date: string;
     expenseName: string;
     expenseNote: string;
@@ -18,7 +21,7 @@ const Page = () => {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const uname = useAppSelector((state) => state.username.username);
     const username = uname ? uname.username : 'Guest';
-
+    const router = useRouter();
     const searchParams = useSearchParams();
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
@@ -57,6 +60,14 @@ const Page = () => {
         return total + product.amount;
     }, 0);
 
+    const handleEdit = (id: number) => {
+        if (!id) {
+            toast.warning("Payment id is required !");
+            return;
+        }
+        router.push(`/expense-edit?id=${encodeURIComponent(id)}`);
+
+    }
 
     return (
         <div className="container-2xl">
@@ -85,6 +96,7 @@ const Page = () => {
                                         <th>EXPENSE NAME</th>
                                         <th>NOTE</th>
                                         <th>AMOUNT</th>
+                                        <th>EDIT</th>
 
                                     </tr>
                                 </thead>
@@ -96,6 +108,7 @@ const Page = () => {
                                             <td>{product.expenseName}</td>
                                             <td>{product.expenseNote}</td>
                                             <td>{Number(product.amount.toFixed(2)).toLocaleString('en-IN')}</td>
+                                            <td><button onClick={() => handleEdit(product.id)} className="btn btn-primary btn-xs"><MdOutlineEditNote size={24} /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>

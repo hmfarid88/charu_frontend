@@ -124,7 +124,7 @@ if (!productId) {
                 <tr className="font-semibold text-lg">
                   <td colSpan={6}></td>
                   <td>TOTAL</td>
-                  <td>{totalQty}</td>
+                  <td>{Number(totalQty.toFixed(2)).toLocaleString('en-IN')}</td>
                   <td></td>
                   <td>{Number(totalValue.toFixed(2)).toLocaleString('en-IN')}</td>
                 </tr>

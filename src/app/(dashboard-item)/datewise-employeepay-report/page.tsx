@@ -3,9 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
 import { FcPrint } from "react-icons/fc";
 import { useReactToPrint } from 'react-to-print';
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
+import { MdOutlineEditNote } from "react-icons/md";
 
 type Product = {
+    id: number;
     date: string;
     employeeName: string;
     year: string;
@@ -20,6 +23,7 @@ const Page = () => {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const uname = useAppSelector((state) => state.username.username);
     const username = uname ? uname.username : 'Guest';
+    const router = useRouter();
     const searchParams = useSearchParams();
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
@@ -58,7 +62,14 @@ const Page = () => {
     const totalValue = filteredProducts.reduce((total, product) => {
         return total + product.amount;
     }, 0);
+    const handleEdit = (id: number) => {
+        if (!id) {
+            toast.warning("Payment id is required !");
+            return;
+        }
+        router.push(`/employeepay-edit?id=${id}`);
 
+    }
 
     return (
         <div className="container-2xl">
@@ -88,6 +99,7 @@ const Page = () => {
                                         <th>SALARY MONTH</th>
                                         <th>REMARK NOTE</th>
                                         <th>AMOUNT</th>
+                                        <th>EDIT</th>
 
                                     </tr>
                                 </thead>
@@ -107,6 +119,7 @@ const Page = () => {
                                                 <td>{monthName}, {product.year}</td>
                                                 <td>{product?.note}</td>
                                                 <td>{Number(product?.amount?.toFixed(2)).toLocaleString('en-IN')}</td>
+                                                <td><button onClick={() => handleEdit(product.id)} className="btn btn-primary btn-xs"><MdOutlineEditNote size={24} /></button></td>
                                             </tr>
                                         );
                                     })}

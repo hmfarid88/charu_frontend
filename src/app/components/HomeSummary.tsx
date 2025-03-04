@@ -31,7 +31,7 @@ const HomeSummary = () => {
     { id: 1, title: "Product Stock" },
     { id: 2, title: "Delivery Today" },
     { id: 3, title: "Monthly Delivery" },
-    { id: 4, title: "Achievement" },
+    { id: 4, title: "Collection" },
     { id: 5, title: "Cash Balance" }
   ];
 
