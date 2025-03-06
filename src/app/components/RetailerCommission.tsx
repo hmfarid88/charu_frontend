@@ -75,7 +75,7 @@ const RetailerCommission = () => {
 
     return (
         <div className='flex flex-col gap-2 items-center justify-center p-2'>
-            <div className="overflow-x-auto">
+            
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text-alt">DATE</span>
@@ -146,8 +146,6 @@ const RetailerCommission = () => {
                 <label className="form-control w-full max-w-xs pt-3">
                     <button onClick={handleSupplierPayment} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
                 </label>
-
-            </div>
         </div>
     )
 }

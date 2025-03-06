@@ -2,9 +2,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
 import Print from "@/app/components/Print";
-import CurrentMonthYear from "@/app/components/CurrentMonthYear";
-import DateToDate from "@/app/components/DateToDate";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
+import { MdOutlineEditNote } from "react-icons/md";
 
 type Product = {
     date: string;
@@ -15,6 +15,7 @@ type Product = {
     truckNo: string;
     dpRate: number;
     productQty: number;
+    productId: number;
 };
 
 
@@ -30,8 +31,16 @@ const Page = () => {
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
+    const router = useRouter();
 
+    const handleEdit = (productId: number) => {
+        if (!productId) {
+            toast.warning("Product id is required !");
+            return;
+        }
+        router.push(`/saleinfo-edit?productId=${productId}`);
 
+    }
     useEffect(() => {
         fetch(`${apiBaseUrl}/api/getDatewiseSoldProduct?username=${encodeURIComponent(username)}&startDate=${startDate}&endDate=${endDate}`)
             .then(response => response.json())
@@ -92,6 +101,7 @@ const Page = () => {
                                         <th>QTY</th>
                                         <th>SALE RATE</th>
                                         <th>SUB TOTAL</th>
+                                        <th>EDIT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -107,6 +117,7 @@ const Page = () => {
                                             <td>{product.productQty.toLocaleString('en-IN')}</td>
                                             <td>{Number(product.dpRate.toFixed(2)).toLocaleString('en-IN')}</td>
                                             <td>{Number((product.dpRate * product.productQty).toFixed(2)).toLocaleString('en-IN')}</td>
+                                             <td><button onClick={()=>handleEdit(product.productId)} className="btn btn-primary btn-xs"><MdOutlineEditNote size={24} /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>

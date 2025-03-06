@@ -76,15 +76,6 @@ const EmployeePayment = () => {
     }, [apiBaseUrl, username]);
 
     const [totalValue, setTotalValue] = useState(0);
-    // useEffect(() => {
-    //     if (!employeeName || !year || !month) return;
-    //     fetch(`${apiBaseUrl}/paymentApi/employee-total-taken?username=${username}&employeeName=${employeeName}&year=${year}&month=${month}`)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setTotalValue(data);
-    //         })
-    //         .catch(error => console.error('Error fetching products:', error));
-    // }, [apiBaseUrl, username, employeeName, year, month]);
 
     const handleMonthChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedMonth = e.target.value;
@@ -107,82 +98,79 @@ const EmployeePayment = () => {
 
     return (
         <div className='flex flex-col gap-2 items-center justify-center p-2'>
-            <div className="overflow-x-auto">
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text-alt">DATE</span>
-                    </div>
-                    <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
-                </label>
+            <label className="form-control w-full max-w-xs">
+                <div className="label">
+                    <span className="label-text-alt">DATE</span>
+                </div>
+                <input type="date" name="date" onChange={(e: any) => setDate(e.target.value)} max={maxDate} value={date} className="border rounded-md p-2 mt-1.5 bg-white text-black  w-full max-w-xs h-[40px]" />
+            </label>
 
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text-alt">PICK EMPLOYEE</span>
-                    </div>
-                    <Select className="text-black" name="employee" onChange={(selectedOption: any) => setEmployeeName(selectedOption.value)} options={employeeOption} />
-                </label>
+            <label className="form-control w-full max-w-xs">
+                <div className="label">
+                    <span className="label-text-alt">PICK EMPLOYEE</span>
+                </div>
+                <Select className="text-black" name="employee" onChange={(selectedOption: any) => setEmployeeName(selectedOption.value)} options={employeeOption} />
+            </label>
 
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text-alt">SELECT YEAR</span>
-                    </div>
-                    <select className='select select-bordered text-black bg-white' onChange={(e: any) => { setYear(e.target.value) }}>
-                        <option selected disabled>Select . . .</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2028">2028</option>
-                        <option value="2029">2029</option>
-                        <option value="2030">2030</option>
-                    </select>
-                </label>
+            <label className="form-control w-full max-w-xs">
+                <div className="label">
+                    <span className="label-text-alt">SELECT YEAR</span>
+                </div>
+                <select className='select select-bordered text-black bg-white' onChange={(e: any) => { setYear(e.target.value) }}>
+                    <option selected disabled>Select . . .</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                </select>
+            </label>
 
 
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text-alt">SELECT MONTH</span>
-                    </div>
-                    <select className='select select-bordered text-black bg-white' value={month} onChange={handleMonthChange}>
-                        <option value="" selected disabled>Select . . .</option>
-                        <option value="1">JANUARY</option>
-                        <option value="2">FEBRUARY</option>
-                        <option value="3">MARCH</option>
-                        <option value="4">APRIL</option>
-                        <option value="5">MAY</option>
-                        <option value="6">JUNE</option>
-                        <option value="7">JULY</option>
-                        <option value="8">AUGUST</option>
-                        <option value="9">SEPTEMBER</option>
-                        <option value="10">OCTOBER</option>
-                        <option value="11">NOVEMBER</option>
-                        <option value="12">DECEMBER</option>
-                    </select>
-                </label>
-                {totalValue > 0 && (
-                    <p className='pl-2 text-success font-bold'>Total Taken : {totalValue}</p>
-                )}
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text-alt">PAYMENT NOTE</span>
-                    </div>
-                    <input type="text" name='note' value={note} onChange={(e) => setPaymentNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs text-black bg-white" />
-                </label>
+            <label className="form-control w-full max-w-xs">
+                <div className="label">
+                    <span className="label-text-alt">SELECT MONTH</span>
+                </div>
+                <select className='select select-bordered text-black bg-white' value={month} onChange={handleMonthChange}>
+                    <option value="" selected disabled>Select . . .</option>
+                    <option value="1">JANUARY</option>
+                    <option value="2">FEBRUARY</option>
+                    <option value="3">MARCH</option>
+                    <option value="4">APRIL</option>
+                    <option value="5">MAY</option>
+                    <option value="6">JUNE</option>
+                    <option value="7">JULY</option>
+                    <option value="8">AUGUST</option>
+                    <option value="9">SEPTEMBER</option>
+                    <option value="10">OCTOBER</option>
+                    <option value="11">NOVEMBER</option>
+                    <option value="12">DECEMBER</option>
+                </select>
+            </label>
+            {totalValue > 0 && (
+                <p className='pl-2 text-success font-bold'>Total Taken : {totalValue}</p>
+            )}
+            <label className="form-control w-full max-w-xs">
+                <div className="label">
+                    <span className="label-text-alt">PAYMENT NOTE</span>
+                </div>
+                <input type="text" name='note' value={note} onChange={(e) => setPaymentNote(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs text-black bg-white" />
+            </label>
 
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text-alt">PAYMENT AMOUNT</span>
-                    </div>
-                    <input type="number" value={amount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs text-black bg-white" />
-                </label>
+            <label className="form-control w-full max-w-xs">
+                <div className="label">
+                    <span className="label-text-alt">PAYMENT AMOUNT</span>
+                </div>
+                <input type="number" value={amount} onChange={(e) => setPaymentAmount(e.target.value)} placeholder="Type here" className="input input-bordered w-full max-w-xs text-black bg-white" />
+            </label>
 
-                <label className="form-control w-full max-w-xs pt-3">
-                    <button onClick={handleEmployeePayment} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
-                </label>
-
-            </div>
+            <label className="form-control w-full max-w-xs pt-3">
+                <button onClick={handleEmployeePayment} className="btn btn-success btn-outline max-w-xs" disabled={pending} >{pending ? "Submitting..." : "SUBMIT"}</button>
+            </label>
         </div>
     )
 }

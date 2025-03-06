@@ -42,12 +42,22 @@ const Page = () => {
 
 
     useEffect(() => {
-        const filtered = allProducts.filter(product =>
-            (product.employeeName.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
-            (product.year.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
-            (product.month.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
-            (product.note.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
-        );
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+    
+        const filtered = allProducts.filter(product => {
+            const monthName = monthNames[parseInt(product?.month) - 1] || "";
+            return (
+                (product?.employeeName?.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+                (String(product?.year).toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+                (String(product?.month).toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+                (monthName.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
+                (product?.note?.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
+            );
+        });
+    
         setFilteredProducts(filtered);
     }, [filterCriteria, allProducts]);
 

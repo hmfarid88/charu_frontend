@@ -29,9 +29,9 @@ const HomeSummary = () => {
 
   const dashboardData = [
     { id: 1, title: "Product Stock" },
-    { id: 2, title: "Delivery Today" },
+    { id: 2, title: "Today's Delivery" },
     { id: 3, title: "Monthly Delivery" },
-    { id: 4, title: "Collection" },
+    { id: 4, title: "Achieve" },
     { id: 5, title: "Cash Balance" }
   ];
 
@@ -92,6 +92,8 @@ const HomeSummary = () => {
       })
       .catch(error => console.error('Error fetching products:', error));
   }, [apiBaseUrl]);
+
+   
   useEffect(() => {
     fetch(`${apiBaseUrl}/paymentApi/payments/today?username=${username}&date=${date}`)
       .then(response => response.json())
@@ -141,7 +143,7 @@ const HomeSummary = () => {
                 ))}
               </div>
             </div>
-          ) : item.title === "Delivery Today" ? (
+          ) : item.title === "Today's Delivery" ? (
             <div className='flex flex-col items-center justify-center'>
               <p>{item.title}</p><FcShipped size={32} />
               <p className='flex text-lg font-bold gap-2'> {Number(totalValue.toFixed(2)).toLocaleString('en-IN')}</p>
@@ -151,7 +153,7 @@ const HomeSummary = () => {
               <p>{item.title}</p><FcShop size={32} />
               <p className='flex text-lg font-bold gap-2'> {Number(monthlyTotalValue.toFixed(2)).toLocaleString('en-IN')}</p>
             </div>
-          ) : item.title === "Achievement" ? (
+          ) : item.title === "Achieve" ? (
             <div className='flex flex-col items-center justify-center'>
               <p>{item.title}</p><FcBullish size={32} />
               <p className='flex text-lg font-bold gap-2'> {Number((totalCollection*100/totalDistValue).toFixed(2))} %</p>

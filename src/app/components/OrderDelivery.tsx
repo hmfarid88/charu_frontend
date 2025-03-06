@@ -220,7 +220,7 @@ const OrderDelivery = () => {
                 const transformedData = data.map((item: any) => ({
                     id: item.id,
                     value: item.retailerName,
-                    label: `${item.retailerName} (${item.retailerCode})`
+                    label: item.retailerName
                 }));
                 setRetailerOption(transformedData);
             })
@@ -248,9 +248,10 @@ const OrderDelivery = () => {
     return (
         <div className="container w-full">
             <div className="flex items-center justify-center w-full p-3">
-                <a href="#my_modal_orderlist"><button className='btn btn-sm btn-outline btn-ghost'>ORDER LIST</button></a></div>
-            <div className="flex flex-col md:flex-row gap-5 w-full items-center justify-center">
-                <div className="flex flex-col min-h-80 w-1/2 items-center">
+                <a href="#my_modal_orderlist"><button className='btn btn-sm btn-outline btn-ghost'>ORDER LIST</button></a>
+            </div>
+            <div className="flex flex-col md:flex-row gap-5 w-full items-center justify-center p-2">
+                <div className="flex flex-col min-h-80 w-full md:w-1/2 gap-1 items-center">
                     <label className="form-control w-full max-w-xs">
                         <div className="label">
                             <span className="label-text-alt">DELIVERY DATE</span>
@@ -321,7 +322,7 @@ const OrderDelivery = () => {
                     </label>
                 </div>
 
-                <div className="flex flex-col w-1/2 items-center p-5">
+                <div className="flex flex-col w-full md:w-1/2 items-center p-2">
                     <div className="flex">
                         <div className="avatar-group -space-x-6 rtl:space-x-reverse">
                             <div className="avatar placeholder">
