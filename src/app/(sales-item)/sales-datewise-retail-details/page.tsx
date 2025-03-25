@@ -59,7 +59,10 @@ const Page = () => {
         setFilterCriteria(e.target.value);
     };
     let cumulativeBalance = 0;
-
+    const totalQty = filteredProducts.reduce((acc, item) => acc + item.productQty, 0);
+    const totalValue = filteredProducts.reduce((acc, item) => acc + item.productValue, 0);
+    const totalPayment = filteredProducts.reduce((acc, item) => acc + item.payment, 0);
+    const totalComm = filteredProducts.reduce((acc, item) => acc + item.commission, 0);
     return (
         <div className="container-2xl">
             <div className="flex flex-col w-full min-h-[calc(100vh-228px)] p-4 items-center justify-center">
@@ -116,7 +119,16 @@ const Page = () => {
                                         );
                                     })}
                                 </tbody>
-
+                                <tfoot>
+                                    <tr className="font-semibold text-lg">
+                                        <td colSpan={4}></td>
+                                        <td>{Number(totalQty.toFixed(2)).toLocaleString('en-IN')}</td>
+                                        <td></td>
+                                        <td>{Number(totalValue.toFixed(2)).toLocaleString('en-IN')}</td>
+                                        <td>{Number(totalPayment.toFixed(2)).toLocaleString('en-IN')}</td>
+                                        <td>{Number(totalComm.toFixed(2)).toLocaleString('en-IN')}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
