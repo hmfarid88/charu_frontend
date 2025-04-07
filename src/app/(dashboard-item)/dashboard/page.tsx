@@ -1,5 +1,4 @@
 "use client"
-
 import Barchart from "@/app/components/Barchart";
 import HomeSummary from "@/app/components/HomeSummary";
 

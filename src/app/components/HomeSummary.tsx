@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import { useAppSelector } from '../store';
 import { HiCurrencyBangladeshi } from "react-icons/hi";
