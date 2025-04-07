@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect, useState } from 'react'
+"use client";
+import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../store';
 import { HiCurrencyBangladeshi } from "react-icons/hi";
 import { FcShipped, FcOrganization, FcShop, FcBullish  } from "react-icons/fc";
