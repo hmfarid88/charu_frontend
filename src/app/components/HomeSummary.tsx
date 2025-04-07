@@ -139,7 +139,7 @@ const HomeSummary = () => {
                 {Object.entries(productStock).map(([productName, remainingQty]) => (
                   <p key={productName} className='flex justify-between text-sm'>
                     <span>{productName}: </span>
-                    <span className='font-bold'>{remainingQty.toLocaleString('en-IN')}</span>
+                    <span className='font-bold'> {remainingQty.toLocaleString('en-IN')}</span>
                   </p>
                 ))}
               </div>

@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { BarChart, Bar, YAxis, XAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 const data = [
