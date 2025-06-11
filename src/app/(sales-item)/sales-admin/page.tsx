@@ -1,3 +1,4 @@
+import UserChange from "@/app/components/UserChange"
 
 
 const Page = () => {
@@ -5,7 +6,7 @@ const Page = () => {
     return (
         <div className="container min-h-screen">
             <div className="flex w-full items-center justify-center">
-            <p> Comming Soon . . .</p>
+                <UserChange />
             </div>
         </div>
     )

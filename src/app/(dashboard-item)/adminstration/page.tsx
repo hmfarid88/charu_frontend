@@ -4,6 +4,7 @@ import ClosingSetup from "@/app/components/ClosingSetup"
 import EmployeeTarget from "@/app/components/EmployeeTarget"
 import ShopInfo from "@/app/components/ShopInfo"
 import Theme from "@/app/components/Theme"
+import UserChange from "@/app/components/UserChange"
 
 const Page = () => {
   return (
@@ -34,6 +35,10 @@ const Page = () => {
             <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="THEME SETUP" />
             <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
               <Theme />
+            </div>
+            <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="PASSWORD" />
+            <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+              <UserChange />
             </div>
           </div>
         </div>
