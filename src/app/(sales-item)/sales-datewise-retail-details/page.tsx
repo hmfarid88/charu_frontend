@@ -44,7 +44,19 @@ const Page = () => {
             })
             .catch(error => console.error('Error fetching products:', error));
     }, [apiBaseUrl, salesPerson, retailerName, startDate, endDate]);
-
+useEffect(() => {
+                const searchWords = filterCriteria.toLowerCase().split(" ");
+                const filtered = allProducts.filter(product =>
+                  searchWords.every(word =>
+                    (product.note?.toLowerCase().includes(word) || '') ||
+                    (product.date?.toLowerCase().includes(word) || '') ||
+                    (product.productName?.toLowerCase().includes(word) || '')
+                
+               )
+                );
+              
+                setFilteredProducts(filtered);
+              }, [filterCriteria, allProducts]);
 
     useEffect(() => {
         const filtered = allProducts.filter(product =>
@@ -83,7 +95,7 @@ const Page = () => {
                                 <h4>{startDate} TO {endDate}</h4>
                             </div>
                             <table className="table table-xs md:table-sm table-pin-rows">
-                                <thead>
+                                <thead className="sticky top-16 bg-base-100">
                                     <tr>
                                         <th>SN</th>
                                         <th>DATE</th>

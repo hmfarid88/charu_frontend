@@ -1,63 +1,52 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
+import Select from "react-select";
 import { useSearchParams } from 'next/navigation';
-import { useAppSelector } from '@/app/store';
 
 
 const Page = () => {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const uname = useAppSelector((state) => state.username.username);
-    const username = uname ? uname.username : 'Guest';
     const searchParams = useSearchParams();
-    const id = searchParams.get('id');
+    const employee = searchParams.get('employeeName');
     const [pending, setPending] = useState(false);
-    const [maxDate, setMaxDate] = useState('');
-    useEffect(() => {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
-        setMaxDate(formattedDate);
-        setDate(formattedDate);
-    }, []);
 
-    const [date, setDate] = useState("");
-    const [receiveName, setReceiveName] = useState("");
-    const [receiveNote, setReceiveNote] = useState("");
-    const [amount, setAmount] = useState("");
-
+    const [id, setId] = useState("");
+    const [employeeName, setEmployeeName] = useState("");
+    const [fatherName, setFatherName] = useState("");
+    const [address, setAddress] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
 
     useEffect(() => {
-        if (!id) return;
-        fetch(`${apiBaseUrl}/paymentApi/getOfficeReceiveInfo/${id}`)
+        if (!employee) return;
+        fetch(`${apiBaseUrl}/api/getEmployeeInfoByEmployee?employeeName=${employee}`)
             .then(response => response.json())
             .then(data => {
-                setDate(data.date);
-                setReceiveName(data.receiveName);
-                setReceiveNote(data.receiveNote);
-                setAmount(data.amount);
+                setId(data.id);
+                setEmployeeName(data.employeeName);
+                setFatherName(data.fatherName);
+                setAddress(data.address);
+                setPhoneNumber(data.phoneNumber);
 
             })
             .catch(error => console.error('Error fetching products:', error));
 
-    }, [apiBaseUrl, id]);
+    }, [apiBaseUrl, employee]);
 
     const handleUpdateSubmit = async (e: any) => {
         e.preventDefault();
-        if (!id || !date || !receiveName || !receiveNote || !amount) {
+        if (!employeeName || !fatherName || !address || !phoneNumber) {
             toast.warning("Item is empty !")
             return;
         }
         setPending(true);
         try {
-            const response = await fetch(`${apiBaseUrl}/paymentApi/updateOfficeRecdeiveInfo/${id}`, {
+            const response = await fetch(`${apiBaseUrl}/api/updateEmployeeInfo/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id, date, receiveName, receiveNote, amount }),
+                body: JSON.stringify({ employeeName, fatherName, address, phoneNumber }),
             });
 
             if (!response.ok) {
@@ -75,10 +64,10 @@ const Page = () => {
 
         }
     };
-    const handleDeleteSubmit = async (e: any) => {
+ const handleDeleteSubmit = async (e: any) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${apiBaseUrl}/api/deleteReceiveById/${id}`, {
+            const response = await fetch(`${apiBaseUrl}/api/deleteEmployeeById/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,9 +77,9 @@ const Page = () => {
 
             if (!response.ok) {
                 // const error = await response.json();
-                toast.error("Sorry, item is not deleted!");
+                toast.error("Sorry, employee is not deleted!");
             } else {
-                toast.success("Item deleted successfully.");
+                toast.success("Employee deleted successfully.");
 
             }
 
@@ -98,37 +87,54 @@ const Page = () => {
             toast.error(error.message)
         }
     }
+    const [personOption, setPersonOption] = useState([]);
+    useEffect(() => {
+
+        fetch(`${apiBaseUrl}/api/getEmployeeInfo`)
+            .then(response => response.json())
+            .then(data => {
+                const transformedData = data.map((item: any) => ({
+                    id: item.id,
+                    value: item.employeeName,
+                    label: item.employeeName
+                }));
+                setPersonOption(transformedData);
+            })
+            .catch(error => console.error('Error fetching products:', error));
+
+    }, [apiBaseUrl]);
+
+
     return (
         <div className='container-2xl min-h-screen pb-5'>
             <div className="flex flex-col w-full items-center justify-center p-2">
 
                 <label className="form-control w-full max-w-xs pt-2">
                     <div className="label">
-                        <span className="label-text-alt">DATE</span>
+                        <span className="label-text-alt">EMPLOYEE NAME</span>
                     </div>
-                    <div className="flex gap-2">
-                        <input type='text' className='input input-md h-[40px] w-[50%] bg-white text-black border rounded-md border-slate-300' value={date} readOnly />
-                        <input type='date' className='input input-bordered h-[40px] w-[50%] bg-white text-black' max={maxDate} onChange={(e) => setDate(e.target.value)} />
+                    <input type='text' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={employeeName} onChange={(e) => setEmployeeName(e.target.value)} />
+                </label>
+
+                <label className="form-control w-full max-w-xs pt-2">
+                    <div className="label">
+                        <span className="label-text-alt">FATHER NAME</span>
                     </div>
+                    <input type='text' name='father' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={fatherName} onChange={(e) => setFatherName(e.target.value)} placeholder='Type Here' />
                 </label>
                 <label className="form-control w-full max-w-xs pt-2">
                     <div className="label">
-                        <span className="label-text-alt">RECEIVE NAME</span>
+                        <span className="label-text-alt">ADDRESS</span>
                     </div>
-                    <input type='text' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={receiveName} onChange={(e: any) => setReceiveName(e.target.value)} placeholder='Type Here' />
+                    <input type='text' name='zilla' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={address} onChange={(e) => setAddress(e.target.value)} placeholder='Type Here' />
                 </label>
                 <label className="form-control w-full max-w-xs pt-2">
                     <div className="label">
-                        <span className="label-text-alt">NOTE</span>
+                        <span className="label-text-alt">PHONE NUMBER</span>
                     </div>
-                    <input type='text' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={receiveNote} onChange={(e: any) => setReceiveNote(e.target.value)} placeholder='Type Here' />
+                    <input type='text' name='area' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder='Type Here' />
                 </label>
-                <label className="form-control w-full max-w-xs pt-2">
-                    <div className="label">
-                        <span className="label-text-alt">AMOUNT</span>
-                    </div>
-                    <input type='number' step="any" name='rate' className='input input-md h-[40px] bg-white text-black border rounded-md border-slate-300' value={amount} onChange={(e) => setAmount(e.target.value)} placeholder='Type Here' />
-                </label>
+
                 <label className="form-control w-full max-w-xs pt-5">
                     <button
                         className="btn btn-success w-full"

@@ -23,6 +23,7 @@ const OfficePayment = () => {
     setMaxDate(formattedDate);
     setDate(formattedDate);
   }, []);
+  const [paymentId, setPaymentId] = useState("");
   const [paymentName, setPaymentName] = useState("");
   const [paymentNote, setPaymentNote] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
@@ -88,6 +89,29 @@ const OfficePayment = () => {
       setPaymentAmount("");
     }
   };
+   const handlePaymentNameDelete = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/deletePaymentName?paymentPerson=${paymentId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+      });
+
+      if (!response.ok) {
+        // const error = await response.json();
+        toast.error("Sorry, name is not deleted!");
+      } else {
+        toast.success("Name deleted successfully.");
+
+      }
+
+    } catch (error: any) {
+      toast.error(error.message)
+    }
+  }
   const [paymentPersonOption, setPaymentPersonOption] = useState([]);
   useEffect(() => {
 
@@ -153,6 +177,17 @@ const OfficePayment = () => {
               </div>
             </label>
           </div>
+          <div className="flex w-full justify-center pt-5">
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text-alt">DELETE PAYMENT NAME</span>
+                </div>
+                <div className="flex items-center justify-center gap-3">
+                  <Select className="text-black w-full" name="payment" onChange={(selectedOption: any) => setPaymentId(selectedOption.value)} options={paymentPersonOption} />
+                  <button onClick={handlePaymentNameDelete} className="btn btn-sm btn-square btn-error">X</button>
+                </div>
+              </label>
+            </div>
           <div className="modal-action">
             <a href="#" className="btn btn-square btn-ghost">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10">

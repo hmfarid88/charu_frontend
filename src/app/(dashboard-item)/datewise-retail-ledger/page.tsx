@@ -53,15 +53,20 @@ const Page = () => {
             .catch(error => console.error('Error fetching products:', error));
     }, [apiBaseUrl, username, newstartDate, newendDate]);
 
-
-    useEffect(() => {
-        const filtered = allProducts.filter(product =>
-            (product.retailerName.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
-            (product.retailerCode.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
-            (product.salesPerson.toLowerCase().includes(filterCriteria.toLowerCase()) || '')
-        );
-        setFilteredProducts(filtered);
-    }, [filterCriteria, allProducts]);
+useEffect(() => {
+                const searchWords = filterCriteria.toLowerCase().split(" ");
+                const filtered = allProducts.filter(product =>
+                  searchWords.every(word =>
+                    (product.retailerName?.toLowerCase().includes(word) || '') ||
+                    (product.retailerCode?.toLowerCase().includes(word) || '') ||
+                    (product.salesPerson?.toLowerCase().includes(word) || '')
+                   
+               )
+                );
+              
+                setFilteredProducts(filtered);
+              }, [filterCriteria, allProducts]);
+   
 
     const handleFilterChange = (e: any) => {
         setFilterCriteria(e.target.value);
@@ -102,7 +107,7 @@ const Page = () => {
                                 <h4>{newstartDate} TO {newendDate}</h4>
                             </div>
                             <table className="table table-xs md:table-sm table-pin-rows">
-                                <thead>
+                                <thead className="sticky top-16 bg-base-100">
                                     <tr>
                                         <th>SN</th>
                                         <th>RETAILER NAME</th>
