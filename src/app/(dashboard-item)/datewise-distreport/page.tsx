@@ -1,10 +1,12 @@
 'use client'
 import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
-import Print from "@/app/components/Print";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { MdOutlineEditNote } from "react-icons/md";
+import ExcelExport from "@/app/components/ExcellGeneration";
+import { FcPrint } from "react-icons/fc";
+import { useReactToPrint } from "react-to-print";
 
 type Product = {
     date: string;
@@ -26,8 +28,10 @@ const Page = () => {
     const searchParams = useSearchParams();
     const startDate = searchParams.get('startDate');
     const endDate = searchParams.get('endDate');
-    const contentToPrint = useRef<HTMLDivElement>(null);
-
+    const contentToPrint = useRef(null);
+    const handlePrint = useReactToPrint({
+        content: () => contentToPrint.current,
+    });
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -51,21 +55,21 @@ const Page = () => {
             .catch(error => console.error('Error fetching products:', error));
     }, [apiBaseUrl, username, startDate, endDate]);
 
-useEffect(() => {
-                const searchWords = filterCriteria.toLowerCase().split(" ");
-                const filtered = allProducts.filter(product =>
-                  searchWords.every(word =>
-                    (product.customer?.toLowerCase().includes(word) || '') ||
-                    (product.note?.toLowerCase().includes(word) || '') ||
-                    (product.date?.toLowerCase().includes(word) || '') ||
-                    (product.productName?.toLowerCase().includes(word) || '') ||
-                    (product.invoiceNo?.toLowerCase().includes(word) || '')
-               )
-                );
-              
-                setFilteredProducts(filtered);
-              }, [filterCriteria, allProducts]);
-    
+    useEffect(() => {
+        const searchWords = filterCriteria.toLowerCase().split(" ");
+        const filtered = allProducts.filter(product =>
+            searchWords.every(word =>
+                (product.customer?.toLowerCase().includes(word) || '') ||
+                (product.note?.toLowerCase().includes(word) || '') ||
+                (product.date?.toLowerCase().includes(word) || '') ||
+                (product.productName?.toLowerCase().includes(word) || '') ||
+                (product.invoiceNo?.toLowerCase().includes(word) || '')
+            )
+        );
+
+        setFilteredProducts(filtered);
+    }, [filterCriteria, allProducts]);
+
     const handleFilterChange = (e: any) => {
         setFilterCriteria(e.target.value);
     };
@@ -83,7 +87,10 @@ useEffect(() => {
                             <path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" />
                         </svg>
                     </label>
-                    <Print contentRef={contentToPrint} />
+                    <div className="flex gap-2">
+                        <ExcelExport tableRef={contentToPrint} fileName="delivery_ledger" />
+                        <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
+                    </div>
                 </div>
                 <div className="flex w-full justify-center">
                     <div className="overflow-x-auto">
@@ -120,7 +127,7 @@ useEffect(() => {
                                             <td>{product.productQty.toLocaleString('en-IN')}</td>
                                             <td>{Number(product.dpRate.toFixed(2)).toLocaleString('en-IN')}</td>
                                             <td>{Number((product.dpRate * product.productQty).toFixed(2)).toLocaleString('en-IN')}</td>
-                                             <td><button onClick={()=>handleEdit(product.productId)} className="btn btn-primary btn-xs"><MdOutlineEditNote size={24} /></button></td>
+                                            <td><button onClick={() => handleEdit(product.productId)} className="btn btn-primary btn-xs"><MdOutlineEditNote size={24} /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>

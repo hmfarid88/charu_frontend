@@ -6,6 +6,7 @@ import { useReactToPrint } from 'react-to-print';
 import { useRouter, useSearchParams } from "next/navigation";
 import { MdOutlineEditNote } from "react-icons/md";
 import { toast } from "react-toastify";
+import ExcelExport from "@/app/components/ExcellGeneration";
 
 type Product = {
     id: number;
@@ -80,7 +81,10 @@ const Page = () => {
                             <path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" />
                         </svg>
                     </label>
-                    <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
+                    <div className="flex gap-2">
+                        <ExcelExport tableRef={contentToPrint} fileName="officepay_ledger" />
+                        <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
+                    </div>
                 </div>
                 <div className="flex w-full justify-center">
                     <div className="overflow-x-auto">

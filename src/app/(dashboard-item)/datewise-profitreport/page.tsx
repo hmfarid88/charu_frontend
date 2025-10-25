@@ -1,8 +1,10 @@
 'use client'
 import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
-import Print from "@/app/components/Print";
 import { useSearchParams } from "next/navigation";
+import { FcPrint } from "react-icons/fc";
+import ExcelExport from "@/app/components/ExcellGeneration";
+import { useReactToPrint } from "react-to-print";
 
 type Product = {
     productName: string;
@@ -17,7 +19,10 @@ const Page = () => {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const uname = useAppSelector((state) => state.username.username);
     const username = uname ? uname.username : 'Guest';
-    const contentToPrint = useRef<HTMLDivElement>(null);
+     const contentToPrint = useRef(null);
+        const handlePrint = useReactToPrint({
+            content: () => contentToPrint.current,
+        });
 
 
     const searchParams = useSearchParams();
@@ -66,7 +71,10 @@ const Page = () => {
                             <path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" />
                         </svg>
                     </label>
-                    <Print contentRef={contentToPrint} />
+                    <div className="flex gap-2">
+                        <ExcelExport tableRef={contentToPrint} fileName="profit_ledger" />
+                        <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
+                    </div>
                 </div>
                 <div className="flex w-full justify-center">
                     <div className="overflow-x-auto">
