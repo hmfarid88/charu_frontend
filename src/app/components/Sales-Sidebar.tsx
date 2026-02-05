@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { IoHomeOutline } from "react-icons/io5";
-import { RiListUnordered } from "react-icons/ri";
+import { RiListUnordered, RiSecurePaymentLine } from "react-icons/ri";
 import { PiUserListDuotone } from "react-icons/pi";
 import { GrUserAdmin } from "react-icons/gr";
 import { BsReverseListColumnsReverse } from "react-icons/bs";
@@ -27,6 +27,7 @@ export const SalesSidebar = () => {
                         <li><Link href="/order-list"><BsReverseListColumnsReverse size={20} /> ORDER LIST</Link></li>
                         <li><Link href="/dist-report"><TbReportSearch size={20} /> DELIVERY REPORT</Link></li>
                         <li><Link href="/sales-retailer-ledger"><PiUserListDuotone size={20} /> RETAILER LEDGER</Link></li>
+                        <li><Link href="/sales-retailerpay-report"><RiSecurePaymentLine size={20} /> RETAILER PAYMENTS</Link></li>
                         <li><Link href="/sales-admin"><GrUserAdmin size={20} /> ADMINSTRATION</Link></li>
 
                     </ul>
