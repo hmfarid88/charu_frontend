@@ -39,7 +39,6 @@ const CashBook = () => {
   });
 
   const [payments, setPayments] = useState<Payment[]>([]);
-
   useEffect(() => {
     fetch(`${apiBaseUrl}/paymentApi/payments/today?username=${username}&date=${date}`)
       .then(response => response.json())
@@ -52,7 +51,6 @@ const CashBook = () => {
   };
 
   const [receives, setReceives] = useState<Receive[]>([]);
-
   useEffect(() => {
     fetch(`${apiBaseUrl}/paymentApi/receives/today?username=${username}&date=${date}`)
       .then(response => response.json())
