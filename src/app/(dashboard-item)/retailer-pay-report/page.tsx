@@ -30,7 +30,7 @@ const Page = () => {
     const [allProducts, setAllProducts] = useState<Product[]>([]);
 
     useEffect(() => {
-        fetch(`${apiBaseUrl}/paymentApi/getRetailerPayment?username=${encodeURIComponent(username)}`)
+        fetch(`${apiBaseUrl}/paymentApi/getRetailerPayment`)
             .then(response => response.json())
             .then(data => {
                 setAllProducts(data);
@@ -85,7 +85,6 @@ const Page = () => {
                                         <th>RETAILER NAME</th>
                                         <th>PAYMENT NOTE</th>
                                         <th>AMOUNT</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>

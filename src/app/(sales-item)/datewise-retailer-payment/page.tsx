@@ -33,8 +33,15 @@ const Page = () => {
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
-    
-   
+    const handleEdit = (id: number) => {
+        if (!id) {
+            toast.warning("Payment id is required !");
+            return;
+        }
+        router.push(`/retailer-payment-edit?id=${id}`);
+
+    }
+
     useEffect(() => {
         fetch(`${apiBaseUrl}/paymentApi/getEmployeeDatewiseRetailerPayment?username=${encodeURIComponent(username)}&startDate=${startDate}&endDate=${endDate}`)
             .then(response => response.json())
@@ -73,7 +80,7 @@ const Page = () => {
                             <path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" />
                         </svg>
                     </label>
-                 <div className="flex gap-2">
+                    <div className="flex gap-2">
                         <ExcelExport tableRef={contentToPrint} fileName="retailer_pay_ledger" />
                         <button onClick={handlePrint} className='btn btn-ghost btn-square'><FcPrint size={36} /></button>
                     </div>
@@ -85,14 +92,14 @@ const Page = () => {
                                 <h4>{startDate} TO {endDate}</h4>
                             </div>
                             <table className="table table-xs md:table-sm table-pin-rows">
-                               <thead className="sticky top-16 bg-base-100">
+                                <thead className="sticky top-16 bg-base-100">
                                     <tr>
                                         <th>SN</th>
                                         <th>DATE</th>
                                         <th>RETAILER NAME</th>
                                         <th>PAYMENT NOTE</th>
                                         <th>AMOUNT</th>
-                           
+                                        <th>EDIT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,7 +110,7 @@ const Page = () => {
                                             <td>{product.retailerName}</td>
                                             <td>{product.note}</td>
                                             <td>{Number(product.amount.toFixed(2)).toLocaleString('en-IN')}</td>
-                                            
+                                            <td><button onClick={() => handleEdit(product.id)} className="btn btn-primary btn-xs"><MdOutlineEditNote size={24} /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>

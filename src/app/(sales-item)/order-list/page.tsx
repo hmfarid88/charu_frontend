@@ -3,8 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAppSelector } from "@/app/store";
 import Print from "@/app/components/Print";
 import CurrentDate from "@/app/components/CurrentDate";
+import { MdOutlineEditNote } from "react-icons/md";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 type Product = {
+    orderId: number;
     date: string;
     retailer: string;
     orderNote: string;
@@ -20,7 +24,7 @@ const Page = () => {
     const uname = useAppSelector((state) => state.username.username);
     const username = uname ? uname.username : 'Guest';
     const contentToPrint = useRef<HTMLDivElement>(null);
-
+    const router = useRouter();
     const [filterCriteria, setFilterCriteria] = useState('');
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -36,6 +40,14 @@ const Page = () => {
             .catch(error => console.error('Error fetching products:', error));
     }, [apiBaseUrl, username]);
 
+    const handleEdit = (orderId: number) => {
+        if (!orderId) {
+            toast.warning("Order id is required !");
+            return;
+        }
+        router.push(`/order-edit?orderId=${encodeURIComponent(orderId)}`);
+
+    };
 
     useEffect(() => {
         const filtered = allProducts.filter(product =>
@@ -82,6 +94,7 @@ const Page = () => {
                                         <th>ORDER QTY</th>
                                         <th>DELIVERED QTY</th>
                                         <th>PENDING QTY</th>
+                                        <th>EDIT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,6 +109,7 @@ const Page = () => {
                                             <td>{Number(product.orderQty.toFixed(2)).toLocaleString('en-IN')}</td>
                                             <td>{Number((product.deliveredQty).toFixed(2)).toLocaleString('en-IN')}</td>
                                             <td>{Number((product.orderQty - product.deliveredQty).toFixed(2)).toLocaleString('en-IN')}</td>
+                                            <td><button onClick={() => handleEdit(product.orderId)} className="btn btn-primary btn-sm"><MdOutlineEditNote size={24} /></button></td>
                                         </tr>
                                     ))}
                                 </tbody>

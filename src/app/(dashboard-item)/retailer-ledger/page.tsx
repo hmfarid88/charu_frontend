@@ -40,7 +40,7 @@ const Page = () => {
       toast.warning("Retailer name is missing!");
       return;
     }
-    router.push(`/details-retailer-ledger?retailerName=${encodeURIComponent(retailerName)}&username=${encodeURIComponent(username)}`);
+    router.push(`/details-retailer-ledger?retailerName=${encodeURIComponent(retailerName)}`);
   };
 
   useEffect(() => {

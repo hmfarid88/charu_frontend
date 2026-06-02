@@ -27,7 +27,8 @@ export const SalesSidebar = () => {
                         <li><Link href="/order-list"><BsReverseListColumnsReverse size={20} /> ORDER LIST</Link></li>
                         <li><Link href="/dist-report"><TbReportSearch size={20} /> DELIVERY REPORT</Link></li>
                         <li><Link href="/sales-retailer-ledger"><PiUserListDuotone size={20} /> RETAILER LEDGER</Link></li>
-                        <li><Link href="/sales-retailerpay-report"><RiSecurePaymentLine size={20} /> RETAILER PAYMENTS</Link></li>
+                        <li><Link href="/retailer-payment"><RiSecurePaymentLine size={20} /> RETAILER PAYMENT</Link></li>
+                        <li><Link href="/sales-retailerpay-report"><RiListUnordered size={20} /> PAYMENT REPORT</Link></li>
                         <li><Link href="/sales-admin"><GrUserAdmin size={20} /> ADMINSTRATION</Link></li>
 
                     </ul>
