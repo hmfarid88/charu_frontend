@@ -102,7 +102,6 @@ const Page = () => {
                                         <th>PAYMENT NOTE</th>
                                         <th>AMOUNT</th>
                                         <th>EDIT</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
