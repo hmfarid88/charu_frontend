@@ -12,6 +12,7 @@ type Product = {
     id: number;
     date: string;
     retailerName: string;
+    username: string;
     note: string;
     amount: number;
 
@@ -97,6 +98,7 @@ const Page = () => {
                                         <th>SN</th>
                                         <th>DATE</th>
                                         <th>RETAILER NAME</th>
+                                        <th>RECEIVED BY</th>
                                         <th>PAYMENT NOTE</th>
                                         <th>AMOUNT</th>
                                         <th>EDIT</th>
@@ -108,8 +110,9 @@ const Page = () => {
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{product.date}</td>
-                                            <td>{product.retailerName}</td>
-                                            <td>{product.note}</td>
+                                            <td className="capitalize">{product.retailerName}</td>
+                                            <td className="capitalize">{product.username}</td>
+                                            <td className="capitalize">{product.note}</td>
                                             <td>{Number(product.amount.toFixed(2)).toLocaleString('en-IN')}</td>
                                             <td><button onClick={() => handleEdit(product.id)} className="btn btn-primary btn-xs"><MdOutlineEditNote size={24} /></button></td>
                                         </tr>
@@ -117,7 +120,7 @@ const Page = () => {
                                 </tbody>
                                 <tfoot>
                                     <tr className="font-semibold text-lg">
-                                        <td colSpan={3}></td>
+                                        <td colSpan={4}></td>
                                         <td>TOTAL</td>
                                         <td>{Number(totalValue.toFixed(2)).toLocaleString('en-IN')}</td>
                                     </tr>

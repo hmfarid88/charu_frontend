@@ -8,6 +8,7 @@ import DateToDate from "@/app/components/DateToDate";
 import ExcelExport from "@/app/components/ExcellGeneration";
 
 type Product = {
+    username: string;
     date: string;
     retailerName: string;
     note: string;
@@ -84,6 +85,7 @@ const Page = () => {
                                         <th>DATE</th>
                                         <th>RETAILER NAME</th>
                                         <th>PAYMENT NOTE</th>
+                                        <th>RECEIVED BY</th>
                                         <th>AMOUNT</th>
                                     </tr>
                                 </thead>
@@ -92,15 +94,16 @@ const Page = () => {
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{product.date}</td>
-                                            <td>{product.retailerName}</td>
-                                            <td>{product.note}</td>
+                                            <td className="capitalize">{product.retailerName}</td>
+                                            <td className="capitalize">{product.note}</td>
+                                            <td className="capitalize">{product.username}</td>
                                             <td>{Number(product.amount.toFixed(2)).toLocaleString('en-IN')}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                                 <tfoot>
                                     <tr className="font-semibold text-lg">
-                                        <td colSpan={3}></td>
+                                        <td colSpan={4}></td>
                                         <td>TOTAL</td>
                                         <td>{Number(totalValue.toFixed(2)).toLocaleString('en-IN')}</td>
                                     </tr>
