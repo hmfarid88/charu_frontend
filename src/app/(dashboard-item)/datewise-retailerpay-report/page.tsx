@@ -53,7 +53,6 @@ const Page = () => {
             .catch(error => console.error('Error fetching products:', error));
     }, [apiBaseUrl, username, startDate, endDate]);
 
-
     useEffect(() => {
         const filtered = allProducts.filter(product =>
             (product.retailerName.toLowerCase().includes(filterCriteria.toLowerCase()) || '') ||
